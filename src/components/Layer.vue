@@ -64,6 +64,7 @@
 </template>
 
 <script>
+
 import Column from '@/components/Column.vue'
 import ScaleSelector from '@/components/ScaleSelector.vue'
 import KeySelector from '@/components/KeySelector.vue'
@@ -206,3 +207,48 @@ export default {
     },
 }
 </script>
+
+<style lang="scss">
+.remove-btn-unified {
+    background-color: rgb(194, 194, 194);
+    margin-top: 2px;
+    text-align: center;
+}
+.layer{
+    display: inline-flex;
+    height: calc(var(--columnHeight) + 10px);
+    margin: 10px;
+}
+.keyboard {
+    display: inline-flex;
+    border-radius: 10px;
+    background-color: rgb(199, 202, 0);
+    border:3px solid rgb(19, 109, 116);
+}
+.column {
+    display: inline-block;
+    width: calc(var(--columnWidth) - 6px);
+    height: auto;
+    background-color: #c0a630;
+    border: 3px solid #0000004d;
+    border-radius: 8px;
+    margin: 5px;
+}
+.playing {
+    /* aspect */
+    border: 3px solid rgb(188, 180, 255);
+}
+.layer-labels{
+    margin-right: 10px;
+    margin-top: 8px;
+    width: auto;
+}
+.key-label{
+    border: 2px solid rgb(216, 216, 178);
+    background-color: bisque;
+    width: 90px;
+    height: 20px;
+    margin: 0px;
+    text-align: center;
+}
+</style>

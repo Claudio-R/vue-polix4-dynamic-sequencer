@@ -89,3 +89,29 @@ export default {
     },
 }
 </script>
+
+<style lang="scss">
+.inst_sel {
+    /* location */
+    position: relative;
+    top: 6px;
+    /* aspect */
+    width: calc(18px - 2 * var(--inst_sel_border));
+    height: calc(18px - 2 * var(--inst_sel_border));
+    background-color: var(--inst_sel_color);
+    padding: none;
+    border: var(--inst_sel_border) solid #0000004d;
+    border-radius: 100%;
+    margin: 5px;
+
+}
+
+.inst-menu {
+    margin-top:0px;
+    width: 200px;
+    position:absolute;
+    z-index: 9;
+    background-color: rgb(107, 216, 183);
+    left: -86px;
+}
+</style>

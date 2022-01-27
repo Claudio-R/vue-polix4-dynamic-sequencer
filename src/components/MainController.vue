@@ -64,3 +64,19 @@ export default {
     }
 }
 </script>
+
+<style lang="scss">
+.controller {
+    width: auto;
+    background-color: beige;
+    border-radius: 10px;
+    margin: 10px;
+    height: auto;
+    padding: 10px;
+}
+
+.inst-container{
+    display: inline-block;
+    position: relative;
+}
+</style>

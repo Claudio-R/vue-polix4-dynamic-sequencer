@@ -144,3 +144,33 @@ export default {
 
 }
 </script>
+
+<style lang="scss">
+.key {
+    /* location */
+    display: block;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* aspect */
+    width: 10px;
+    height: 10px;
+    background-color: #575757;
+    padding: none;
+    border: 2px solid #0000004d;
+    border-radius: 100%;
+
+}
+
+.active {
+    position: relative;
+    left: calc(var(--columnWidth)/2 - 6px + var(--inst_shift));
+    width: 14px;
+    height: 14px;
+    border-radius: 100%;
+    border: none;
+    background-color: var(--inst_color);
+    box-shadow: var(--shadow);
+}
+</style>

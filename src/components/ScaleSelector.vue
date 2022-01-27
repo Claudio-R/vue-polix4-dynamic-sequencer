@@ -1,5 +1,5 @@
 <template>
-    <div id="key-selector" class="selector"> {{ selectedScale }}
+    <div class="selector"> {{ selectedScale }}
         <MenuElement 
             v-for="(mode,index) in scales"
             class="menu-element"
@@ -37,3 +37,4 @@ export default {
     }
 }
 </script>
+

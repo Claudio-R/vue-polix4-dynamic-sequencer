@@ -14,9 +14,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-  #app{
-    background-color: rgb(19, 109, 116);
-  }
-</style>

@@ -1,5 +1,5 @@
 <template>
-    <div id="key-selector" class="selector">Selected key: {{ selectedKey }}
+    <div class="selector">Selected key: {{ selectedKey }}
             <MenuElement 
                 v-for="(note,index) in keys"
                 class="menu-element"
