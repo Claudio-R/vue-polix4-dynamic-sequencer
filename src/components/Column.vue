@@ -25,13 +25,13 @@
 </template>
 
 <script>
-import { KeyComponent } from '@/components/KeyComponent.vue'
+import Key from '@/components/Key.vue'
 
 export default ({
     name: 'Column',
 
     components : { 
-        KeyComponent
+        Key
     },
 
     props : ['beatId','inst_selected','duration','prelistenBeat','muteLayer','isPlaying','tonesInScale','scale_keyboard'],
@@ -39,6 +39,9 @@ export default ({
     data() {
         return {
             muteBeat: false,
+            key_state1: [], 
+            key_state2: [], 
+            key_state3: [], 
         }
     },
 
@@ -48,44 +51,55 @@ export default ({
         }
     },
 
+    computed: {
+        synth1() {
+            return this.$store.state.synth1
+        },
+        synth2() {
+            return this.$store.state.synth2
+        },
+        drum() {
+            return this.$store.state.drum
+        }
+    },
+
     methods : {
         playInst1(keyId){
-            synth1.triggerAttackRelease(this.scale_keyboard[keyId],this.duration[0])
+            this.synth1.triggerAttackRelease(this.scale_keyboard[keyId],this.duration[0])
         },
         playInst2(keyId){
-            synth2.triggerAttackRelease(this.scale_keyboard[keyId],this.duration[1])
+            this.synth2.triggerAttackRelease(this.scale_keyboard[keyId],this.duration[1])
         },
         playInst3(keyId){
-            drum[keyId].start();
+            this.drum[keyId].start();
         },
         getKeyProps() {
-            var key_state1 = []
-            var key_state2 = []
-            var key_state3 = []
-            for(j=0;j<this.tonesInScale;j++){
-                key_state1[j]=this.$refs.keys_refs[j].state1;
-                key_state2[j]=this.$refs.keys_refs[j].state2;
-                key_state3[j]=this.$refs.keys_refs[j].state3;
+            for(let j=0; j<this.tonesInScale; j++){
+                this.key_state1[j]=this.$refs.keys_refs[j].state1;
+                this.key_state2[j]=this.$refs.keys_refs[j].state2;
+                this.key_state3[j]=this.$refs.keys_refs[j].state3;
             }
-            return {key_state1,key_state2,key_state3}
+            return [this.key_state1, this.key_state2, this.key_state3]
+
         },
         setColumn(newvar){
-            key_state1=newvar.key_state1
-            key_state2=newvar.key_state2
-            key_state3=newvar.key_state3
-            for(j=0;j<this.tonesInScale;j++){
-                this.$refs.keys_refs[j].setKey(key_state1[j],key_state2[j],key_state3[j])
+            this.key_state1=newvar[0]
+            this.key_state2=newvar[1]
+            this.key_state3=newvar[2]
+            for(let j=0;j<this.tonesInScale;j++){
+                this.$refs.keys_refs[j].setKey(this.key_state1[j],this.key_state2[j],this.key_state3[j])
             }
         },
         monitorBeat(){
-            for(var idx=0; idx<tonesInScale; idx++) { 
+            for(let idx=0; idx<this.tonesInScale; idx++) { 
                 this.$refs.keys_refs[idx].playKey() }
         },
         clearAllKeys(){
-            for(var idx=0; idx<this.tonesInScale; idx++) { 
+            for(let idx=0; idx<this.tonesInScale; idx++) { 
                 this.$refs.keys_refs[idx].clearKey() 
             }
         }
     },
 })
+
 </script>

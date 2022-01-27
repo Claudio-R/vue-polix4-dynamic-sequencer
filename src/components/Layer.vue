@@ -64,6 +64,10 @@
 </template>
 
 <script>
+import Column from '@/components/Column.vue'
+import ScaleSelector from '@/components/ScaleSelector.vue'
+import KeySelector from '@/components/KeySelector.vue'
+
 export default {
     name: 'Layer',
     
@@ -119,10 +123,10 @@ export default {
     computed: {
         my_beat_duration() { return Number(this.total_duration/(this.num_beats)); },
         cssVars() {
-            var layerWidth = 1200;
-            var margin = 5;
-            var borderKey = 3;
-            var keyHeight = 18;
+            let layerWidth = 1200;
+            let margin = 5;
+            let borderKey = 3;
+            let keyHeight = 18;
             return {
                 '--columnWidth': (layerWidth - this.num_beats*2*margin)/(this.num_beats) + 'px', //157
                 '--columnHeight' : this.tonesInScale*(keyHeight + 2*borderKey) + 'px',
@@ -141,7 +145,7 @@ export default {
             this.keyboard = ["C","Db","D","Eb","E","F","Gb","G","Ab","A","Bb","B"]
             this.keyboard = this.keyboard.map(ele => ele + this.octaveLayer)
             while(this.keyLayer + this.octaveLayer != this.keyboard[0]){
-                first_element = this.keyboard.shift()
+                let first_element = this.keyboard.shift()
                 first_element = first_element.slice(0, -1) + (this.octaveLayer+1)
                 this.keyboard = this.keyboard.concat(first_element)
             }
@@ -186,17 +190,17 @@ export default {
             }
         },
         addLBar(){
-            Vue.nextTick(() =>{
+            this.$nextTick(() =>{
                 //column_states = Array(this.num_beats)
-                    for(i=0;i<this.num_beats;i++) {
-                    newvar = this.$refs.beats_refs[i].getKeyProps()
-                    this.$refs.beats_refs[i+(this.n_bars-1)*this.num_beats].setColumn(newvar)
-                    //column_states[i]=(newvar)
+                    for(let i=0;i<this.num_beats;i++) {
+                        let newvar = this.$refs.beats_refs[i].getKeyProps()
+                        this.$refs.beats_refs[i+(this.n_bars-1)*this.num_beats].setColumn(newvar)
+                        //column_states[i]=(newvar)
                     }
             })
         },
         clearLayer(){
-            for(var idx=0; idx<this.$refs.beats_refs.length; idx++) { 
+            for(let idx=0; idx<this.$refs.beats_refs.length; idx++) { 
                 this.$refs.beats_refs[idx].clearAllKeys() }
         },
     },

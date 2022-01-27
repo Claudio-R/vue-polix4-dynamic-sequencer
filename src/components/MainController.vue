@@ -6,15 +6,16 @@
         <button @click="$emit('stopAllEvent')">Stop</button>
         <button @click="$emit('unifiedControllerEvent')">Unify controller</button>
         <div id="instrumentContainer">
-        <label>Instrument:</label>
-        <InstrumentSelector 
-            v-for="k in num_inst"
-            :key="k"
-            :id="k"
-            :selected_inst=selected_inst
-            @instSelectionEvent="instSelection"
-            @durationChangeEvent="emitDuration">
-        </InstrumentSelector>
+            <label>Instrument:</label>
+            <InstrumentSelector 
+                v-for="k in num_inst"
+                :key="k"
+                :id="k"
+                :selected_inst=selected_inst
+                @instSelectionEvent="instSelection"
+                @durationChangeEvent="emitDuration">
+            </InstrumentSelector>
+        </div>
     </div>
 </template>
 
@@ -26,17 +27,12 @@ export default {
         InstrumentSelector
     },
 
-    props: {
-        selected_inst:{
-            default: 1,
-        }
-    },
-
     data() {
         return {
             newInput: '',
             bpm_value: '',
             num_inst: 3,
+            selected_inst: 1,
         }
     },
 

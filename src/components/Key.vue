@@ -40,61 +40,61 @@ export default {
     },
 
     computed: {
-       cssVars() {
-           CSScolors = ['rgb(255, 0, 0)','rgb(0, 0, 255)','rgb(0, 255, 0)']
-           if(this.state1 && this.state2 &&this.state3){
-               return {
-                   '--inst_color': CSScolors[3-this.very_last_color-this.last_color],
-                   '--shadow': '-7px 0 '+CSScolors[this.very_last_color]+',-14px 0 '+CSScolors[this.last_color],
-                   '--inst_shift': '7px',
-                   }
-               }
-           if(this.state1 && this.state2){
-               this.very_last_color = Math.abs(this.last_color-1)
-               return {
-                   '--inst_color': CSScolors[this.very_last_color],
-                   '--shadow': '-7px 0 '+ CSScolors[this.last_color],
-                   '--inst_shift': '3.5px',
-                   }
-               }
-           if(this.state2 && this.state3){
-               this.very_last_color = Math.abs(this.last_color-3)
-               return {
-                   '--inst_color': CSScolors[this.very_last_color],
-                   '--shadow': '-7px 0 '+CSScolors[this.last_color],
-                   '--inst_shift': '3.5px',
-                   }
-               }
-           if(this.state1 && this.state3){
-               this.very_last_color = Math.abs(this.last_color-2)
-               return {
-                   '--inst_color': CSScolors[this.very_last_color],
-                   '--shadow': '-7px 0 '+CSScolors[this.last_color],
-                   '--inst_shift': '3.5px',
-                   }
-               }
-           if(this.state1){
-               this.last_color = 0
-               return {
-                   '--inst_color': CSScolors[0],
-                   '--inst_shift': '0px',
-                   }
-               }
-           else if(this.state2){
-               this.last_color = 1
-               return {
-                   '--inst_color': CSScolors[1],
-                   '--inst_shift': '0px',
-                   }
-               }
-           else if(this.state3){
-               this.last_color = 2
-               return {
-                   '--inst_color': CSScolors[2],
-                   '--inst_shift': '0px',
-                   }
-               }
-       }
+        cssVars() {
+            var CSScolors = ['rgb(255, 0, 0)','rgb(0, 0, 255)','rgb(0, 255, 0)']
+            if(this.state1 && this.state2 &&this.state3){
+                return {
+                    '--inst_color': CSScolors[3-this.very_last_color-this.last_color],
+                    '--shadow': '-7px 0 '+CSScolors[this.very_last_color]+',-14px 0 '+CSScolors[this.last_color],
+                    '--inst_shift': '7px',
+                    }
+                }
+            if(this.state1 && this.state2){
+                this.very_last_color = Math.abs(this.last_color-1)
+                return {
+                    '--inst_color': CSScolors[this.very_last_color],
+                    '--shadow': '-7px 0 '+ CSScolors[this.last_color],
+                    '--inst_shift': '3.5px',
+                    }
+                }
+            if(this.state2 && this.state3){
+                this.very_last_color = Math.abs(this.last_color-3)
+                return {
+                    '--inst_color': CSScolors[this.very_last_color],
+                    '--shadow': '-7px 0 '+CSScolors[this.last_color],
+                    '--inst_shift': '3.5px',
+                    }
+                }
+            if(this.state1 && this.state3){
+                this.very_last_color = Math.abs(this.last_color-2)
+                return {
+                    '--inst_color': CSScolors[this.very_last_color],
+                    '--shadow': '-7px 0 '+CSScolors[this.last_color],
+                    '--inst_shift': '3.5px',
+                    }
+                }
+            if(this.state1){
+                this.last_color = 0
+                return {
+                    '--inst_color': CSScolors[0],
+                    '--inst_shift': '0px',
+                    }
+                }
+            else if(this.state2){
+                this.last_color = 1
+                return {
+                    '--inst_color': CSScolors[1],
+                    '--inst_shift': '0px',
+                    }
+                }
+            else if(this.state3){
+                this.last_color = 2
+                return {
+                    '--inst_color': CSScolors[2],
+                    '--inst_shift': '0px',
+                }
+            }
+        }
     },
 
     methods: {

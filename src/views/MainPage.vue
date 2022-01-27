@@ -1,17 +1,22 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <Sequencer msg="Welcome to Your Vue.js App"/>
+    <Sequencer></Sequencer>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
 import Sequencer from '@/components/Sequencer.vue'
 
 export default {
-  name: 'Main',
+  name: 'MainPage',
   components: {
     Sequencer
   }
 }
+</script>
+
+<style lang="scss">
+  #app{
+    background-color: rgb(19, 109, 116);
+  }
+</style>

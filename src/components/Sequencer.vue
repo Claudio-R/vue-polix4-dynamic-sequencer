@@ -4,8 +4,8 @@
         <div class="viewer">BPM: {{bpm}}</div>
         <div class="viewer">Selected instrument: {{inst_name[inst_id-1]}}</div>
         <div class="viewer">Bars: {{n_bars}}</div>
-        <button class="add btn" @click="if(n_bars<4){n_bars++; addBar()}"> + </button>
-        <button class="add btn" @click="if(n_bars>1){n_bars--}"> - </button>
+        <button class="add btn" @click="() => {if(n_bars<4){n_bars++; addBar()}}"> + </button>
+        <button class="add btn" @click="() => {if(n_bars>1){n_bars--}}"> - </button>
     </div>
     
     <MainController
@@ -56,12 +56,12 @@
                 :muteLayer="layer.muteLayer"
                 @restartEvent="restart(index)"
                 @removeLayerEvent="layers.splice(index,1)"
-                @addKeyEvent="if(!systemPlaying && layer.num_beats < 12 ) layer.num_beats++"
-                @removeKeyEvent="if(!systemPlaying && layer.num_beats > 1 ) layer.num_beats--"
-                @keySelectedEvent="function(val) {layer.keyLayer = val}"
-                @scaleSelectedEvent="function(val) {layer.scaleLayer = val}"
-                @moreOctaveEvent="if(layer.octaveLayer < 6) layer.octaveLayer++"
-                @lessOctaveEvent="if(layer.octaveLayer > 2) layer.octaveLayer--"
+                @addKeyEvent="() => {if(!systemPlaying && layer.num_beats < 12 ) layer.num_beats++}"
+                @removeKeyEvent="() => {if(!systemPlaying && layer.num_beats > 1 ) layer.num_beats--}"
+                @keySelectedEvent="(val) => {layer.keyLayer = val}"
+                @scaleSelectedEvent="(val) => {layer.scaleLayer = val}"
+                @moreOctaveEvent="() => {if(layer.octaveLayer < 6) layer.octaveLayer++}"
+                @lessOctaveEvent="() => {if(layer.octaveLayer > 2) layer.octaveLayer--}"
                 @togglePrelistenLayerEvent="layer.prelistenLayer = !layer.prelistenLayer"
                 @toggleMuteLayerEvent="layer.muteLayer = !layer.muteLayer"
             ></Layer>
@@ -70,26 +70,24 @@
 </template>
 
 <script>
+
+
 import Layer from '@/components/Layer.vue'
 import MainController from '@/components/MainController.vue'
 import ScaleSelector from '@/components/ScaleSelector.vue'
 import KeySelector from '@/components/KeySelector.vue'
 
 export default {
-  name: 'Sequencer',
-  
-  props: {
-    msg: String
-  },
+    name: 'Sequencer',
 
-  components: {
-    Layer, 
-    MainController, 
-    ScaleSelector, 
-    KeySelector
-  },
+    components: {
+        Layer, 
+        MainController, 
+        ScaleSelector, 
+        KeySelector
+    },
 
-  data(){
+    data(){
         return {
             /** sequencer controller */
             systemPlaying: false,
@@ -137,7 +135,7 @@ export default {
             if(this.layers[0]){
                 return this.layers[0].num_beats*60000/this.bpm;
             }
-        }
+        },
     },
 
     methods: {
@@ -161,7 +159,9 @@ export default {
             this.bpm = bpm_input
         },
         addBar(){
-            for(idx in this.layers) {
+            for(let idx in this.layers) {
+                console.log(this.$refs.layers_refs.length, idx);
+                console.log(this.$refs.layers_refs[idx]);
                 this.$refs.layers_refs[idx].addLBar()
             }
         },
@@ -173,16 +173,16 @@ export default {
         },
         playAll() {
             this.systemPlaying = true;
-            for(idx in this.layers) {
+            for(let idx in this.layers) {
                 this.$refs.layers_refs[idx].isPlaying = 0
             }
-            for(idx in this.layers) {
+            for(let idx in this.layers) {
                 this.$refs.layers_refs[idx].play()
             }
         },
         stopAll() {
             this.systemPlaying = false
-            for(idx in this.layers) {
+            for(let idx in this.layers) {
                 this.$refs.layers_refs[idx].stop()
             }
         },
@@ -196,20 +196,20 @@ export default {
         /** unified controller */
         changeKey(num_key){
             this.allLayersKey = num_key;
-            for(idx in this.layers) {
+            for(let idx in this.layers) {
                 this.layers[idx].keyLayer = this.allLayersKey;
             }
         },
         changeScale(num_scale){
             this.allLayersScale = num_scale;
-            for(idx in this.layers) {
+            for(let idx in this.layers) {
                 this.layers[idx].scaleLayer = this.allLayersScale;
             }
         },
         moreOctave(){
             if(this.allLayersOctave < 6){ 
                 this.allLayersOctave++;
-                for(idx in this.layers) {
+                for(let idx in this.layers) {
                     this.layers[idx].octaveLayer = this.allLayersOctave;
                 }
             }
@@ -217,7 +217,7 @@ export default {
         lessOctave(){
             if(this.allLayersOctave > 2){
                 this.allLayersOctave--;
-                for(idx in this.layers) {
+                for(let idx in this.layers) {
                     this.layers[idx].octaveLayer = this.allLayersOctave;
                     //this.$refs.layers_refs[idx].lessOctave()
                 }
@@ -225,39 +225,23 @@ export default {
         },
         togglePrelistenSystem() { 
             this.prelistenSystem = !this.prelistenSystem;
-            for(idx in this.layers) { 
+            for(let idx in this.layers) { 
                 this.layers[idx].prelistenLayer = this.prelistenSystem; 
             }
         },
         toggleMuteSystem() { 
             this.muteSystem = !this.muteSystem;
-            for(idx in this.layers) { 
+            for(let idx in this.layers) { 
                 this.layers[idx].muteLayer = this.muteSystem; 
             }
         },
         clearSystem() {
-            for(idx in this.layers) {
+            for(let idx in this.layers) {
                 this.$refs.layers_refs[idx].clearLayer();
             }
         },
     }
 }
+
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
