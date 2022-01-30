@@ -13,7 +13,8 @@
                 :id="k"
                 :selected_inst=selected_inst
                 @instSelectionEvent="instSelection"
-                @durationChangeEvent="emitDuration">
+                @durationChangeEvent="emitDuration"
+                @changeSynthEvent="emitSynth">
             </InstrumentSelector>
         </div>
     </div>
@@ -60,6 +61,9 @@ export default {
        },
        emitDuration(inst_id,duration){
         this.$emit('durationEvent', inst_id, duration)
+       },
+       emitSynth(inst_id){
+           this.$emit('synthEvent',inst_id)
        }
     }
 }
