@@ -58,6 +58,12 @@ export default {
             this.$store.state.synth_selection[this.id-1] = synth_number
             this.$emit('changeSynthEvent',this.id-1)
             this.$store.commit('synthsChanged')
+            if(this.id==3)
+                this.volume=this.drum[0].volume.value
+            else if(this.id==2)
+                this.volume=this.synth2.volume.value
+            else if(this.id==1)
+                this.volume=this.synth1.volume.value
         }
     },
 

@@ -99,7 +99,7 @@ export default {
             tonesInScale: 8,
             keyboard: '',
             scale_keyboard : ["C4","D4","E4","F4","G4","A4","B4","C5"],
-            drum_keyboard : ["kick", "snare", "tom 1","tom 2","closed hh", "open hh", "ride","cowbell"],
+            drum_keyboard : ["kick", "snare", "tom 1","tom 2","closed hh", "open hh", "ride","clap"],
         }
     },
     

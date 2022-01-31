@@ -118,8 +118,8 @@ getDownloadURL(ref(storage, path + '/TR808/808_H-OH_CLEAN_CFC.wav')).then(functi
 getDownloadURL(ref(storage, path + '/TR808/808_CYM_01_CLEAN_CFC.wav')).then(function(url) {
     drum[6] = new Tone.Player(url).toDestination(); /*ride*/
   })
-getDownloadURL(ref(storage, path + '/TR808/808_COW_CLEAN_CFC.wav')).then(function(url) {
-    drum[7] = new Tone.Player(url).toDestination(); /*cowbell*/
+getDownloadURL(ref(storage, path + '/TR808/808_CLAP_01_CLEAN_CFC.wav')).then(function(url) {
+    drum[7] = new Tone.Player(url).toDestination(); /*clap*/
   })
 
 /*drumkit #2*/
@@ -144,14 +144,39 @@ getDownloadURL(ref(storage, path + '/TR909/SampleMagic_tr909_openhat_01.wav')).t
 getDownloadURL(ref(storage, path + '/TR909/SampleMagic_tr909_ride_01.wav')).then(function(url) {
   drum[14] = new Tone.Player(url).toDestination(); /*ride*/
 })
-getDownloadURL(ref(storage, path + '/TR909/SampleMagic_tr909_rimshot.wav')).then(function(url) {
-  drum[15] = new Tone.Player(url).toDestination(); /*cowbell*/
+getDownloadURL(ref(storage, path + '/TR909/SampleMagic_tr909_clap.wav')).then(function(url) {
+  drum[15] = new Tone.Player(url).toDestination(); /*clap*/
 })
 /*drumkit #3*/
 
+getDownloadURL(ref(storage, path + '/VAPORWAVE/BVKER - Voyage - Kick 01.wav')).then(function(url) {
+  drum[16] = new Tone.Player(url).toDestination(); /*kick*/
+})
+getDownloadURL(ref(storage, path + '/VAPORWAVE/BVKER - Synthwave - Snare - 01.wav')).then(function(url) {
+  drum[17] = new Tone.Player(url).toDestination(); /*snare*/
+})
+getDownloadURL(ref(storage, path + '/VAPORWAVE/BVKER - Voyage - Tom 01.wav')).then(function(url) {
+  drum[18] = new Tone.Player(url).toDestination(); /*tom1*/
+})
+getDownloadURL(ref(storage, path + '/VAPORWAVE/BVKER - Synthwave - Tom - 10.wav')).then(function(url) {
+  drum[19] = new Tone.Player(url).toDestination(); /*tom2*/
+})
+getDownloadURL(ref(storage, path + '/VAPORWAVE/BVKER - Synthwave - Closed Hat - 01.wav')).then(function(url) {
+  drum[20] = new Tone.Player(url).toDestination(); /*hh close*/
+})
+getDownloadURL(ref(storage, path + '/VAPORWAVE/BVKER - Synthwave - Open Hat - 03.wav')).then(function(url) {
+  drum[21] = new Tone.Player(url).toDestination(); /*hh open*/
+})
+getDownloadURL(ref(storage, path + '/VAPORWAVE/BVKER - Synthwave - Ride - 17.wav')).then(function(url) {
+  drum[22] = new Tone.Player(url).toDestination(); /*ride*/
+})
+getDownloadURL(ref(storage, path + '/VAPORWAVE/BVKER - Synthwave - Clap - 12.wav')).then(function(url) {
+  drum[23] = new Tone.Player(url).toDestination(); /*clap*/
+})
+
 /*synth names and initial selections*/
 const synth_names = ['nome_synth1','nome_synth2','nome_synth3','nome_synth4','nome_synth5','nome_synth6','nome_synth7','nome_synth8']
-const drum_names = ['TR-808', 'TR-909','nome_drum3']
+const drum_names = ['TR-808', 'TR-909','VAPORWAVE']
 const synth_selection = [0,1,0]
 
 /** store the instruments using VUEX */
