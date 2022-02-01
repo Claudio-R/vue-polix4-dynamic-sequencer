@@ -1,5 +1,11 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+  <v-card 
+    class="about mx-auto"
+    color="primary"
+    width="200px"
+    >
+    <v-card-text>
+      This is an about page
+    </v-card-text>
+  </v-card>
 </template>
