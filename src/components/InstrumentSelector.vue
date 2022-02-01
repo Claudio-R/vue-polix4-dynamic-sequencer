@@ -16,13 +16,23 @@
                 <label>Duration:</label>
                 <input type="range" min="0" max="4" v-model="duration">
             </div>
+            <SynthSelector :selectedSynth="selectedSynthNumber"
+                    :id="id"
+                    @instrumentSelectorEvent="changeSynth">
+            </SynthSelector>
         </div>
     </div>
 </template>
 
 <script>
+import SynthSelector from './SynthSelector.vue'
+
 export default {
     name: 'InstrumentSelector',
+
+    components: {
+        SynthSelector
+    },
 
     props:{
         id: { type: Number, },
@@ -34,6 +44,7 @@ export default {
             menu: false,
             volume: 1,
             duration: 1,
+            selectedSynthNumber: this.$store.state.synth_selection[this.id-1]
         }
     },
 
@@ -42,6 +53,26 @@ export default {
            this.state = true
            this.$emit('instSelectionEvent', this.id)
        },
+       changeVolume(){
+           if(this.id==1) { 
+                this.synth1.volume.value = this.volume;
+            } 
+            if(this.id==2) { 
+                this.synth2.volume.value = this.volume;
+            }
+            if(this.id==3) { 
+                for(let i=0;i<8;i++){
+                this.drum[i].volume.value = this.volume;
+                }
+            }
+       },
+       changeSynth(synth_number){
+            this.selectedSynthNumber = synth_number
+            this.$store.state.synth_selection[this.id-1] = synth_number
+            this.$emit('changeSynthEvent',this.id-1)
+            this.$store.commit('synthsChanged')
+            this.changeVolume()
+        }
     },
 
     computed: {
@@ -71,17 +102,7 @@ export default {
 
     watch: {
         'volume': function() {
-            if(this.id==1) { 
-                this.synth1.volume.value = this.volume;
-            } 
-            if(this.id==2) { 
-                this.synth2.volume.value = this.volume;
-            }
-            if(this.id==3) { 
-                for(let i=0;i<8;i++){
-                this.drum[i].volume.value = this.volume;
-                }
-            }
+            this.changeVolume()
         },
         'duration': function() {
             this.$emit('durationChangeEvent', this.id, this.duration)

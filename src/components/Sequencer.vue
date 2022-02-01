@@ -17,6 +17,7 @@
       @bpmEvent="updateBPM"
       @instSelectionEvent="instSelected"
       @durationEvent="changeDuration"
+      @synthEvent="changeSynthName"
       @playAllEvent="playAll"
       @stopAllEvent="stopAll"
     ></MainController>
@@ -108,7 +109,7 @@ export default {
         allLayersScale: 'Major',
         prelistenSystem: true,
         muteSystem: false,
-        inst_name: ['nome_strumento1','nome_strumento2','drum: TR-808'],
+        inst_name: [this.$store.state.synth_names[this.$store.state.synth_selection[0]],this.$store.state.synth_names[this.$store.state.synth_selection[1]],this.$store.state.drum_names[this.$store.state.synth_selection[2]]],
         
       /** state variables */
       nextId: 2,
@@ -211,6 +212,14 @@ export default {
               this.layers[idx].scaleLayer = this.allLayersScale;
           }
       },
+      changeSynthName(id){
+        if(id!=2)
+            this.inst_name[id] = this.$store.state.synth_names[this.$store.state.synth_selection[id]]
+        else
+            this.inst_name[id] = this.$store.state.drum_names[this.$store.state.synth_selection[id]]
+        if(id+1==this.inst_id)
+        this.$forceUpdate();
+      },
       moreOctave(){
           if(this.allLayersOctave < 6){ 
               this.allLayersOctave++;
@@ -245,7 +254,7 @@ export default {
               this.$refs.layers_refs[idx].clearLayer();
           }
       },
-  }
+  },
 }
 
 </script>
