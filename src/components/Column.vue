@@ -2,7 +2,6 @@
     <div>
         <Key 
             v-for="k in tonesInScale"
-            class="keyback"
             ref="keys_refs"
             :key=tonesInScale-k
             :keyId=tonesInScale-k

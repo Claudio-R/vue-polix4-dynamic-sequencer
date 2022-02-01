@@ -1,66 +1,71 @@
 <template>
-    <div class="layer">
-            <div class="layer-labels">
-                <div v-if="inst_id==3">
-                    <p class="key-label" 
-                        v-for="k in tonesInScale"
-                        :key="k"
-                    >{{drum_keyboard[tonesInScale-k]}}
-                    </p>
-                </div>
-                <div v-else>
-                    <p class="key-label" 
-                        v-for="k in tonesInScale"
-                        :key="k"
-                    >{{scale_keyboard[tonesInScale-k].slice(0, -1)}}
-                    </p>
-                </div>
-                <button v-if="unifiedControl" class="remove-btn-unified" @click="$emit('removeLayerEvent')">Remove layer</button>
-            </div>
-            
-            <div v-for="j in n_bars" :key="j">
-                <div class="keyboard">
-                    <Column v-for="k in num_beats"
-                        class="column" :style="cssVars"
-                        ref = beats_refs
-                        :key="k"
-                        :class="{playing : k*j-(k-num_beats)*(j-1) === isPlaying + 1}"
-                        :beatId="k*j-1-(k-num_beats)*(j-1)"
-                        :inst_selected="inst_id"
-                        :duration="duration"
-                        :prelistenBeat="prelistenLayer"
-                        :muteLayer="muteLayer"
-                        :isPlaying="isPlaying"
-                        :tonesInScale="tonesInScale"
-                        :scale_keyboard="scale_keyboard"
-                    ></Column>
-                </div>
-            </div>
-            
-            <div v-if="!unifiedControl" class="layer-controller">
-                <div id="buttons">
-                    <button id="remove-btn" @click="$emit('removeLayerEvent')">Remove layer</button>
-                    <button id="addKey-btn" @click="$emit('addKeyEvent')"> + </button>
-                    <button id="removeKey-btn" @click="$emit('removeKeyEvent')"> - </button>
-                </div>
-                <KeySelector :selectedKey="keyLayer"
-                    @keySelectedEvent="function(val){$emit('keySelectedEvent',val)}"
-                ></KeySelector>
-                <ScaleSelector :selectedScale="scaleLayer"
-                    @scaleSelectedEvent="function(val){$emit('scaleSelectedEvent',val)}"
-                ></ScaleSelector>
-                <div id="octave-selector">
-                    <div class="octave-viewer">Octave: {{octaveLayer}} </div>
-                    <button class="layer-btn" @click="$emit('moreOctaveEvent')"> + </button>
-                    <button class="layer-btn" @click="$emit('lessOctaveEvent')"> - </button>
-                </div>
-                <div class="layer-sound-controller">
-                    <button class="layer-btn prelisten-btn" :class="{ prelistenActive : prelistenLayer }" @click="$emit('togglePrelistenLayerEvent')">L</button>
-                    <button class="layer-btn mute-btn" :class="{ muteActive : muteLayer }" @click="$emit('toggleMuteLayerEvent')">M</button>
-                    <button class="layer-btn clear-btn" @click="clearLayer">C</button>
-                </div>
-            </div>
-        </div>
+  <div class="layer">
+    <div class="layer-labels">
+      <div v-if="inst_id==3">
+        <p class="key-label" 
+            v-for="k in tonesInScale"
+            :key="k"
+        >{{drum_keyboard[tonesInScale-k]}}
+        </p>
+      </div>
+      <div v-else>
+        <p class="key-label" 
+            v-for="k in tonesInScale"
+            :key="k"
+        >{{scale_keyboard[tonesInScale-k].slice(0, -1)}}
+        </p>
+      </div>
+      <button v-if="unifiedControl" class="remove-btn-unified" @click="$emit('removeLayerEvent')">Remove layer</button>
+    </div>
+
+    <v-card v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`"
+        class="d-inline"
+        elevation="2"
+    >
+      <Column v-for="k in num_beats"
+          :key="`column-${layerId}-${j}-${k}`"
+          class="column" :style="cssVars"
+          ref = beats_refs
+          :class="{playing : k*j-(k-num_beats)*(j-1) === isPlaying + 1}"
+          :beatId="k*j-1-(k-num_beats)*(j-1)"
+          :inst_selected="inst_id"
+          :duration="duration"
+          :prelistenBeat="prelistenLayer"
+          :muteLayer="muteLayer"
+          :isPlaying="isPlaying"
+          :tonesInScale="tonesInScale"
+          :scale_keyboard="scale_keyboard"
+      ></Column>
+      <!--
+      <div class="keyboard">
+      </div>
+      -->
+    </v-card>
+      
+    <div v-if="!unifiedControl" class="layer-controller">
+      <div id="buttons">
+          <button id="remove-btn" @click="$emit('removeLayerEvent')">Remove layer</button>
+          <button id="addKey-btn" @click="$emit('addKeyEvent')"> + </button>
+          <button id="removeKey-btn" @click="$emit('removeKeyEvent')"> - </button>
+      </div>
+      <KeySelector :selectedKey="keyLayer"
+          @keySelectedEvent="function(val){$emit('keySelectedEvent',val)}"
+      ></KeySelector>
+      <ScaleSelector :selectedScale="scaleLayer"
+          @scaleSelectedEvent="function(val){$emit('scaleSelectedEvent',val)}"
+      ></ScaleSelector>
+      <div id="octave-selector">
+          <div class="octave-viewer">Octave: {{octaveLayer}} </div>
+          <button class="layer-btn" @click="$emit('moreOctaveEvent')"> + </button>
+          <button class="layer-btn" @click="$emit('lessOctaveEvent')"> - </button>
+      </div>
+      <div class="layer-sound-controller">
+          <button class="layer-btn prelisten-btn" :class="{ prelistenActive : prelistenLayer }" @click="$emit('togglePrelistenLayerEvent')">L</button>
+          <button class="layer-btn mute-btn" :class="{ muteActive : muteLayer }" @click="$emit('toggleMuteLayerEvent')">M</button>
+          <button class="layer-btn clear-btn" @click="clearLayer">C</button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -77,6 +82,7 @@ export default {
     },
     
     props : {
+        layerId: String,
         /** sequencer controller */
         unifiedControl: Boolean,
         n_bars: Number,
@@ -124,12 +130,12 @@ export default {
     computed: {
         my_beat_duration() { return Number(this.total_duration/(this.num_beats)); },
         cssVars() {
-            let layerWidth = 1200;
+            //let layerWidth = 1200;
             let margin = 5;
             let borderKey = 3;
             let keyHeight = 18;
             return {
-                '--columnWidth': (layerWidth - this.num_beats*2*margin)/(this.num_beats) + 'px', //157
+                '--columnWidth': parseFloat(90/(this.num_beats)) + '%', //157
                 '--columnHeight' : this.tonesInScale*(keyHeight + 2*borderKey) + 'px',
             }
         },
@@ -219,12 +225,14 @@ export default {
     height: calc(var(--columnHeight) + 10px);
     margin: 10px;
 }
+/**
 .keyboard {
     display: inline-flex;
     border-radius: 10px;
     background-color: rgb(199, 202, 0);
     border:3px solid rgb(19, 109, 116);
 }
+ */
 .column {
     display: inline-block;
     width: calc(var(--columnWidth) - 6px);
