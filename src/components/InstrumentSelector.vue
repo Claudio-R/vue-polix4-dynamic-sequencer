@@ -53,17 +53,25 @@ export default {
            this.state = true
            this.$emit('instSelectionEvent', this.id)
        },
+       changeVolume(){
+           if(this.id==1) { 
+                this.synth1.volume.value = this.volume;
+            } 
+            if(this.id==2) { 
+                this.synth2.volume.value = this.volume;
+            }
+            if(this.id==3) { 
+                for(let i=0;i<8;i++){
+                this.drum[i].volume.value = this.volume;
+                }
+            }
+       },
        changeSynth(synth_number){
             this.selectedSynthNumber = synth_number
             this.$store.state.synth_selection[this.id-1] = synth_number
             this.$emit('changeSynthEvent',this.id-1)
             this.$store.commit('synthsChanged')
-            if(this.id==3)
-                this.volume=this.drum[0].volume.value
-            else if(this.id==2)
-                this.volume=this.synth2.volume.value
-            else if(this.id==1)
-                this.volume=this.synth1.volume.value
+            this.changeVolume()
         }
     },
 
@@ -94,17 +102,7 @@ export default {
 
     watch: {
         'volume': function() {
-            if(this.id==1) { 
-                this.synth1.volume.value = this.volume;
-            } 
-            if(this.id==2) { 
-                this.synth2.volume.value = this.volume;
-            }
-            if(this.id==3) { 
-                for(let i=0;i<8;i++){
-                this.drum[i].volume.value = this.volume;
-                }
-            }
+            this.changeVolume()
         },
         'duration': function() {
             this.$emit('durationChangeEvent', this.id, this.duration)

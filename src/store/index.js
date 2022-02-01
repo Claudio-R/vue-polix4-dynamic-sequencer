@@ -73,8 +73,66 @@ synth[1].set({
         }
     }
 });
-synth[2] = new Tone.PolySynth(Tone.AMSynth).toDestination();
-synth[3] = new Tone.PolySynth(Tone.AMSynth).toDestination();
+synth[2] = new Tone.PolySynth(Tone.FMSynth).toDestination();
+synth[2].set({
+	"volume": 0,
+	"detune": 0,
+	"portamento": 0,
+	"harmonicity": 3,
+	"oscillator": {
+		"partialCount": 0,
+		"partials": [],
+		"phase": 0,
+		"type": "sine"
+	},
+	"envelope": {
+		"attack": 0.01,
+		"attackCurve": "linear",
+		"decay": 0.2,
+		"decayCurve": "exponential",
+		"release": 0.5,
+		"releaseCurve": "exponential",
+		"sustain": 1
+	},
+	"modulation": {
+		"partialCount": 0,
+		"partials": [],
+		"phase": 0,
+		"type": "square"
+	},
+	"modulationEnvelope": {
+		"attack": 0.2,
+		"attackCurve": "linear",
+		"decay": 0.01,
+		"decayCurve": "exponential",
+		"release": 0.5,
+		"releaseCurve": "exponential",
+		"sustain": 1
+	},
+	"modulationIndex": 12.22
+})
+synth[3] = new Tone.PolySynth().toDestination();
+synth[3].set({
+	"volume": 0,
+	"detune": 0,
+	"portamento": 0,
+	"envelope": {
+		"attack": 0.01,
+		"attackCurve": "exponential",
+		"decay": 0.1,
+		"decayCurve": "exponential",
+		"release": 0.4,
+		"releaseCurve": "exponential",
+		"sustain": 0.5
+	},
+	"oscillator": {
+		"partialCount": 0,
+		"partials": [],
+		"phase": 0,
+		"type": "fatsawtooth",
+		"count": 3,
+		"spread": 30
+}})
 synth[4] = new Tone.PolySynth(Tone.AMSynth).toDestination();
 synth[5] = new Tone.PolySynth(Tone.AMSynth).toDestination();
 synth[6] = new Tone.PolySynth(Tone.AMSynth).toDestination();
@@ -175,9 +233,9 @@ getDownloadURL(ref(storage, path + '/VAPORWAVE/BVKER - Synthwave - Clap - 12.wav
 })
 
 /*synth names and initial selections*/
-const synth_names = ['nome_synth1','nome_synth2','nome_synth3','nome_synth4','nome_synth5','nome_synth6','nome_synth7','nome_synth8']
+const synth_names = ['PULSQUARE','PULSAW','nome_synth3','HALEN','nome_synth5','nome_synth6','nome_synth7','nome_synth8']
 const drum_names = ['TR-808', 'TR-909','VAPORWAVE']
-const synth_selection = [0,1,0]
+const synth_selection = [0,3,0]
 
 /** store the instruments using VUEX */
 Vue.use(Vuex)
