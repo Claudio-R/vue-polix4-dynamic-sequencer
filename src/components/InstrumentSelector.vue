@@ -67,6 +67,8 @@ export default {
             }
        },
        changeSynth(synth_number){
+            if(synth_number==this.$store.state.synth_selection[2-this.id] && this.id!=3)
+                return;
             this.selectedSynthNumber = synth_number
             this.$store.state.synth_selection[this.id-1] = synth_number
             this.$emit('changeSynthEvent',this.id-1)
