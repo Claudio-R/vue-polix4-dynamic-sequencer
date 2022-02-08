@@ -72,7 +72,7 @@
         <v-col cols="6" sm="3">
           <v-card>
           <v-card-actions>
-            <v-text-field type="number" v-model="numBeatsNewLayer"
+            <v-text-field type="number" v-model.number="numBeatsNewLayer"
               label="Add a layer"
               outlined dense
               hint="Value from 1 to 12"

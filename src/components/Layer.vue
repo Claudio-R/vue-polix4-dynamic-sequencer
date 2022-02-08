@@ -313,10 +313,11 @@ export default {
     border-radius: 8px;
     //margin: 5px;
 }
-// .playing {
-//     /* aspect */
-//     //border: 3px solid rgb(188, 180, 255);
-// }
+
+.playing {
+    /* aspect */
+    //border: 3px solid rgb(188, 180, 255);
+}
 // .layer-labels{
 //     margin-right: 10px;
 //     margin-top: 8px;
