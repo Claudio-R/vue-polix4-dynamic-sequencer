@@ -3,6 +3,7 @@
 
     <v-card flat tile id="container-bar" class="primary pa-2" ref="container_ref">
       <v-row dense>
+       <!-- SELECT BPM -->
         <v-col cols="4" class="caption">
           <v-menu offset-y :close-on-content-click="false">
             <template v-slot:activator="{ on }">
@@ -21,7 +22,6 @@
             </v-list>
           </v-menu>
         </v-col>
-
         <!-- INSTRUMENT SELECTOR -->
         <v-col cols="4" class="caption">
           <v-menu offset-y :close-on-content-click="false">
@@ -45,7 +45,7 @@
             </v-row>
           </v-menu>
         </v-col>
-        
+        <!-- ADD BARS -->
         <v-col cols="4" class="caption">
           <v-menu offset-y :close-on-content-click="false">
             <template v-slot:activator="{ on }">

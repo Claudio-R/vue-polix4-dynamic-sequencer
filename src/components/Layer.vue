@@ -85,22 +85,24 @@
               <!-- OCTAVE -->
               <v-menu offset-y :close-on-content-click="false">
                 <template v-slot:activator="{ on }">
-                  <v-btn class="mt-2" block v-on="on">
+                  <v-btn class="mt-2 caption" block v-on="on">
                     <span>Octave: {{octaveLayer}}</span>
                   </v-btn>
                 </template>
-                <v-card>
-                  <v-btn small @click="$emit('moreOctaveEvent')">
-                    <v-icon small>mdi-plus</v-icon>
-                  </v-btn>
-                  <v-btn small @click="$emit('lessOctaveEvent')">
-                      <v-icon small>mdi-minus</v-icon>
-                  </v-btn>
-                </v-card>
+                <v-list>
+                  <v-list-item @click="$emit('moreOctaveEvent')">
+                    <v-icon left>mdi-plus</v-icon>
+                    <v-list-item-title class="">Add an octave</v-list-item-title> 
+                  </v-list-item>
+                  <v-list-item @click="$emit('lessOctaveEvent')">
+                    <v-icon left>mdi-minus</v-icon>
+                    <v-list-item-title class="">Remove octave</v-list-item-title> 
+                  </v-list-item>
+                </v-list>
               </v-menu>
                 
               <!-- KEY -->
-              <v-menu offset-y :close-on-content-click="false">
+              <v-menu offset-y :close-on-content-click="true">
                 <template v-slot:activator="{ on }">
                   <v-btn class="mt-2" block v-on="on">
                     <span class="caption">Selected key: {{keyLayer}}</span>
@@ -112,7 +114,7 @@
               </v-menu>
               
               <!-- SCALE -->
-              <v-menu offset-x :close-on-content-click="false">
+              <v-menu offset-x :close-on-content-click="true">
                 <template v-slot:activator="{ on }">
                   <v-btn class="mt-2" block v-on="on">
                     <span class="caption">{{scaleLayer}}</span>
