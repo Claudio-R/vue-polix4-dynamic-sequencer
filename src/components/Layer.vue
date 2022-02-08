@@ -1,45 +1,106 @@
 <template>
-  <v-card :height="`${singleLayerHeight}`" class="my-1 red">
-
-    <v-card class="yellow">
-
+  <v-card :height="`${singleLayerHeight}`">
       <v-row>
-      <!-- LABELS -->
+        <!-- LABELS -->
         <v-col cols="2">
-          <div class="layer-labels">
+          <v-container class="">
             <div v-if="inst_id==3">
-              <v-card class="key-label" v-for="k in tonesInScale" :key="k"
+              <v-card flat outlined class="text-center" v-for="k in tonesInScale" :key="k"
                 >{{drum_keyboard[tonesInScale-k]}}
               </v-card>
             </div>
             <div v-else>
-              <v-card class="key-label" 
-                  v-for="k in tonesInScale"
-                  :key="k"
-              >{{scale_keyboard[tonesInScale-k].slice(0, -1)}}
+              <v-card flat outlined class="text-center" v-for="k in tonesInScale" :key="k"
+                >{{scale_keyboard[tonesInScale-k].slice(0, -1)}}
               </v-card>
             </div>
-            <button v-if="unifiedControl" class="remove-btn-unified" @click="$emit('removeLayerEvent')">Remove layer</button>
-          </div>
+            <!-- <v-btn outlined block small v-if="unifiedControl" class="ma-1" @click="$emit('removeLayerEvent')">Remove</v-btn> -->
+            <v-btn v-if="unifiedControl" class="text-center" @click="$emit('removeLayerEvent')">Remove</v-btn>
+          </v-container>
         </v-col>
         <!-- BEATS -->
         <v-col cols="7">
-          <div class="keyboard" v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`">
-            <Column v-for="k in num_beats"
-              :key="`column-${layerId}-${j}-${k}`"
-              class="column" :style="cssVars"
-              ref = beats_refs
-              :class="{playing : k*j-(k-num_beats)*(j-1) === isPlaying + 1}"
-              :beatId="k*j-1-(k-num_beats)*(j-1)"
-              :inst_selected="inst_id"
-              :duration="duration"
-              :prelistenBeat="prelistenLayer"
-              :muteLayer="muteLayer"
-              :isPlaying="isPlaying"
-              :tonesInScale="tonesInScale"
-              :scale_keyboard="scale_keyboard"
-            ></Column>
-          </div>
+          <v-container v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`">
+            <v-row no-gutters class="justify-space-between">
+              <v-col :cols="num_cols" v-for="k in num_beats" :key="`column-${layerId}-${j}-${k}`">
+                <Column 
+                  class="column" :style="cssVars"
+                  ref = beats_refs
+                  :class="{playing : k*j-(k-num_beats)*(j-1) === isPlaying + 1}"
+                  :beatId="k*j-1-(k-num_beats)*(j-1)"
+                  :inst_selected="inst_id"
+                  :duration="duration"
+                  :prelistenBeat="prelistenLayer"
+                  :muteLayer="muteLayer"
+                  :isPlaying="isPlaying"
+                  :tonesInScale="tonesInScale"
+                  :scale_keyboard="scale_keyboard"
+                ></Column>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-col>
+        <!-- LAYER CONTROLLER -->
+        <v-col cols="3">
+          <v-container v-if="!unifiedControl" class="layer-controller">
+            <v-card flat :height="`${singleLayerHeight-37}`">
+              <v-btn class="text-center" @click="$emit('removeLayerEvent')">Remove</v-btn>
+              <v-btn icon small class="text-center" @click="$emit('addKeyEvent')">
+                <v-icon>mdi-plus</v-icon>
+              </v-btn>
+              <v-btn icon class="text-center" @click="$emit('removeKeyEvent')">
+                <v-icon>mdi-minus</v-icon>
+              </v-btn>
+
+              <!-- OCTAVE -->
+              <v-menu offset-y :close-on-content-click="false">
+                <template v-slot:activator="{ on }">
+                  <v-btn class="mt-2" block v-on="on">
+                    <span>Octave: {{octaveLayer}}</span>
+                  </v-btn>
+                </template>
+                <v-card>
+                  <v-btn small @click="$emit('moreOctaveEvent')">
+                    <v-icon small>mdi-plus</v-icon>
+                  </v-btn>
+                  <v-btn small @click="$emit('lessOctaveEvent')">
+                      <v-icon small>mdi-minus</v-icon>
+                  </v-btn>
+                </v-card>
+              </v-menu>
+                
+              <!-- KEY -->
+              <v-menu offset-y :close-on-content-click="false">
+                <template v-slot:activator="{ on }">
+                  <v-btn class="mt-2" block v-on="on">
+                    <span class="caption">Selected key: {{keyLayer}}</span>
+                  </v-btn>
+                </template>
+                <KeySelector @keySelectedEvent="function(val){$emit('keySelectedEvent',val)}"
+                  :selectedKey="keyLayer"
+                ></KeySelector>
+              </v-menu>
+              
+              <!-- SCALE -->
+              <v-menu offset-x :close-on-content-click="false">
+                <template v-slot:activator="{ on }">
+                  <v-btn class="mt-2" block v-on="on">
+                    <span class="caption">{{scaleLayer}}</span>
+                  </v-btn>
+                </template>
+                <ScaleSelector @scaleSelectedEvent="function(val){$emit('scaleSelectedEvent',val)}"
+                  :selectedScale="scaleLayer"
+                ></ScaleSelector>
+              </v-menu>
+
+              <v-card class="mt-2 d-flex justify-space-between">
+                <v-btn small class="layer-btn prelisten-btn" :class="{ prelistenActive : prelistenLayer }" @click="$emit('togglePrelistenLayerEvent')">L</v-btn>
+                <v-btn small class="layer-btn mute-btn" :class="{ muteActive : muteLayer }" @click="$emit('toggleMuteLayerEvent')">M</v-btn>
+                <v-btn small class="layer-btn clear-btn" @click="clearLayer">C</v-btn>
+              </v-card>
+
+            </v-card>
+          </v-container>
         </v-col>
       </v-row>
     </v-card>
@@ -86,7 +147,6 @@
           <button class="layer-btn clear-btn" @click="clearLayer">C</button>
       </div>
     </div> -->
-  </v-card>
 
 </template>
 
@@ -151,6 +211,7 @@ export default {
     },
     
     computed: {
+        num_cols() {return Math.max(1, Math.floor(12/this.num_beats))},
         my_beat_duration() { return Number(this.total_duration/(this.num_beats)); },
         cssVars() {
             //let layerWidth = 1200;
@@ -241,7 +302,7 @@ export default {
 .remove-btn-unified {
     background-color: rgb(194, 194, 194);
     // margin-top: 2px;
-    margin: 4px;
+    // margin: 4px;
     text-align: center;
 }
 .layer{
@@ -252,30 +313,30 @@ export default {
 
 .keyboard {
     display: inline-flex;
-     border-radius: 10px;
-     background-color: rgb(199, 202, 0);
-     border:3px solid rgb(19, 109, 116);
+    //border-radius: 10px;
+    background-color: rgb(199, 202, 0);
+    //border:3px solid rgb(19, 109, 116);
 }
 
 .column {
     display: inline-block;
-    width: calc(var(--columnWidth) - 6px);
+    //width: calc(var(--columnWidth) - 6px);
     height: auto;
     background-color: #c0a630;
-    border: 3px solid #0000004d;
+    //border: 3px solid #0000004d;
     border-radius: 8px;
-    margin: 5px;
+    //margin: 5px;
 }
-.playing {
-    /* aspect */
-    border: 3px solid rgb(188, 180, 255);
-}
-.layer-labels{
-    margin-right: 10px;
-    margin-top: 8px;
-    width: auto;
-}
-.key-label{
-  margin: 4px;
-}
+// .playing {
+//     /* aspect */
+//     //border: 3px solid rgb(188, 180, 255);
+// }
+// .layer-labels{
+//     margin-right: 10px;
+//     margin-top: 8px;
+//     width: auto;
+// }
+// .key-label{
+//   // margin: 4px;
+// }
 </style>

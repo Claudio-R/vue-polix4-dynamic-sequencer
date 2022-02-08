@@ -1,19 +1,10 @@
 <template>
-  <div @click="toggleActive">
-    <v-btn
-        block
-        elevation="2"
-        outlined
-        raised
-        rounded
-        small
-    >
-      <div class="key"
+  <v-card flat outlined class="text-center" @click="toggleActive">C
+      <!-- <div class="key"
         :class="{active : state1 || state2 || state3}"
         :style="cssVars">
-      </div>
-    </v-btn>    
-  </div>
+      </div> -->
+  </v-card>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <v-card flat outlined class="pa-1">
+  <v-card dense outlined class="pa-1">
     <v-row no-gutters>
       <v-col cols="2"  v-for="note in keys" :key="note">
       <v-btn

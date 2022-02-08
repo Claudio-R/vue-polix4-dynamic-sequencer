@@ -1,7 +1,7 @@
 <template>
   <div id="sequencer">
 
-    <v-container id="container-bar" class="primary ma-0" ref="container_ref">
+    <v-card flat tile id="container-bar" class="primary pa-2" ref="container_ref">
       <v-row dense>
         <v-col cols="4" class="caption">
           <v-menu offset-y :close-on-content-click="false">
@@ -165,6 +165,7 @@
                   ></KeySelector>
                 </v-expansion-panel-content>
               </v-expansion-panel>
+              <!-- SCALE -->
               <v-expansion-panel>
                 <v-expansion-panel-header>
                   Selected scale: {{allLayersScale}}
@@ -180,35 +181,9 @@
       </v-col>
 
       </v-row>
-    </v-container> 
+    </v-card> 
     
-    <!-- 
-    
-    <div v-if="unifiedControl" class="layer-controller unified">
-      <KeySelector @keySelectedEvent="changeKey"
-        :selectedKey="allLayersKey"
-      ></KeySelector>
-      <ScaleSelector @scaleSelectedEvent="changeScale"
-        :selectedScale="allLayersScale"
-      ></ScaleSelector>
-      <div class="octave-sound-controller">
-        <div id="octave-selector">
-          <div class="octave-viewer">Octave: {{allLayersOctave}} </div>
-          <button @click="moreOctave"> + </button>
-          <button @click="lessOctave"> - </button>
-        </div>
-        <div class="layer-sound-controller">
-          <button class="layer-btn prelisten-btn" :class="{ prelistenActive : prelistenSystem }" @click="togglePrelistenSystem">L</button>
-          <button class="layer-btn mute-btn" :class="{ muteActive : muteSystem }" @click="toggleMuteSystem">M</button>
-          <button class="layer-btn clear-btn" @click="clearSystem">C</button>
-        </div>
-      </div>
-    </div> -->
-
-    <!--
-    -->
-    
-    <v-card id="layers-container" class="d-flex flex-column ma-0">
+    <v-card id="layers-container" class="d-flex flex-column">
 
       <Layer v-for="(layer,index) in layers"
         ref="layers_refs"
@@ -225,7 +200,7 @@
         :scaleLayer="layer.scaleLayer"
         :prelistenLayer="layer.prelistenLayer"
         :muteLayer="layer.muteLayer"
-        :singleLayerHeight="window_height - container_height - 36"
+        :singleLayerHeight="window_height - container_height - 24"
         @restartEvent="restart(index)"
         @removeLayerEvent="layers.splice(index,1)"
         @addKeyEvent="() => {if(!systemPlaying && layer.num_beats < 12 ) layer.num_beats++}"
@@ -296,7 +271,7 @@ export default {
         },
         {
           id: 1,
-          num_beats: 2,
+          num_beats: 6,
           octaveLayer: 4,
           keyLayer: 'C',
           scaleLayer: 'Major',
@@ -306,15 +281,6 @@ export default {
       ], 
     }
   },
-
-  // watch: {
-  //   bpm(newVal, oldVal) {
-  //     console.log(newVal, oldVal)
-  //     if(this.bpm==""){ this.totalDuration = this.layers[0].num_beats*60000/120; }
-  //     else 
-  //     }
-  //   }
-  // },
 
   computed: {
     totalDuration() {
@@ -454,33 +420,33 @@ export default {
   z-index: 10;
 }
 
-#view-box {
-    display: inline-flex;
-    border-radius: 10px;
-    margin-top: 10px;
-    margin-left: 10px;
-    padding: 10px;
-    background-color: beige;
-}
+// #view-box {
+//     display: inline-flex;
+//     border-radius: 10px;
+//     margin-top: 10px;
+//     margin-left: 10px;
+//     padding: 10px;
+//     background-color: beige;
+// }
 
-.viewer{
-    width: auto;
-    height: 80%;
-    margin-right: 10px;
-    border: 2px solid rgb(216, 216, 178);
-    background-color: bisque;
-}
+// .viewer{
+//     width: auto;
+//     height: 80%;
+//     margin-right: 10px;
+//     border: 2px solid rgb(216, 216, 178);
+//     background-color: bisque;
+// }
 
-.unified {
-    margin: 10px;
-    padding: 5px;
-    background-color: #e2c957;
-    border: rgb(177, 161, 15) solid 3px;
-    border-radius: 10px;
-}
+// .unified {
+//     margin: 10px;
+//     padding: 5px;
+//     background-color: #e2c957;
+//     border: rgb(177, 161, 15) solid 3px;
+//     border-radius: 10px;
+// }
 
 #layers-container {
-    margin: 10px;
+    // margin: 10px;
     background-color: rgb(28, 140, 148);
 }
 

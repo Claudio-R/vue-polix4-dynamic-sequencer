@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <v-container  class="pa-0">
+      <div>
         <Key 
             v-for="k in tonesInScale"
             ref="keys_refs"
@@ -15,12 +16,15 @@
             @playSound2Event="playInst2"
             @playSound3Event="playInst3"
         ></Key>
-        <div id="beat-controller">
-            <button class="beat-btn monitor-btn" @click="monitorBeat">P</button>
-            <button class="beat-btn mute-btn" :class="{ muteActive : muteBeat }" @click="muteBeat=!muteBeat">M</button>
-            <button class="beat-btn clear-btn" @click="clearAllKeys">C</button>
-        </div>
-    </div>
+        <v-card outlined class="d-flex justify-space-around">
+          <v-card-actions>
+            <v-icon small @click="monitorBeat">mdi-delete</v-icon>
+            <v-icon small :class="{ muteActive : muteBeat }" @click="muteBeat=!muteBeat">mdi-delete</v-icon>
+            <v-icon small @click="clearAllKeys">mdi-delete</v-icon>
+          </v-card-actions>
+        </v-card>
+      </div>
+    </v-container>
 </template>
 
 <script>
@@ -106,16 +110,16 @@ export default ({
 <style lang="scss">
 .keyback {
     width: auto;
-    height: 18px;
+    //height: 18px;
     background-color: rgb(107, 216, 183);
-    border: 3px solid #0000004d;
+    //border: 3px solid #0000004d;
     border-radius: 8px;
 }
 #beat-controller {
     width: auto;
     height: auto;
-    margin: 1px;
-    border: 2px solid #575757;
+    //margin: 1px;
+    //border: 2px solid #575757;
     background-color: rgb(216, 216, 190);
     border-radius: 4px;
     display: flex;
