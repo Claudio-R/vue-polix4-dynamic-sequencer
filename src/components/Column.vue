@@ -1,5 +1,5 @@
 <template>
-    <v-container  class="pa-0">
+    <v-container class="pa-0">
       <div>
         <Key 
             v-for="k in tonesInScale"

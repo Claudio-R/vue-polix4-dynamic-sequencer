@@ -1,6 +1,6 @@
 <template>
   <v-card :height="`${singleLayerHeight}`" flat tile class="mt-2">
-      <v-row>
+      <v-row no-gutters>
         <!-- LABELS -->
         <v-col cols="2">
           <v-container class="">
@@ -16,7 +16,7 @@
                 >{{scale_keyboard[tonesInScale-k].slice(0, -1)}}
               </v-card>
             </div>
-            <v-btn v-if="unifiedControl" class="text-center" @click="$emit('removeLayerEvent')">Remove</v-btn>
+            <v-btn block v-if="unifiedControl" class="text-center" @click="$emit('removeLayerEvent')">Remove</v-btn>
           </v-container>
         </v-col>
 
