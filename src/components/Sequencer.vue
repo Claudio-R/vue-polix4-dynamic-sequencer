@@ -183,7 +183,7 @@
       </v-row>
     </v-card> 
     
-    <v-card id="layers-container" class="d-flex flex-column">
+    <v-card id="layers-container" flat tile class="d-flex flex-column">
 
       <Layer v-for="(layer,index) in layers"
         ref="layers_refs"

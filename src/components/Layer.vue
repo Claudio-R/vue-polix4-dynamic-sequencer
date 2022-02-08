@@ -1,25 +1,28 @@
 <template>
-  <v-card :height="`${singleLayerHeight}`">
+  <v-card :height="`${singleLayerHeight}`" flat tile class="mt-2">
       <v-row>
         <!-- LABELS -->
         <v-col cols="2">
           <v-container class="">
             <div v-if="inst_id==3">
-              <v-card flat outlined class="text-center" v-for="k in tonesInScale" :key="k"
+              <v-card flat outlined class="text-center" 
+                v-for="k in tonesInScale" :key="k"
                 >{{drum_keyboard[tonesInScale-k]}}
               </v-card>
             </div>
             <div v-else>
-              <v-card flat outlined class="text-center" v-for="k in tonesInScale" :key="k"
+              <v-card flat outlined class="text-center" 
+                v-for="k in tonesInScale" :key="k"
                 >{{scale_keyboard[tonesInScale-k].slice(0, -1)}}
               </v-card>
             </div>
-            <!-- <v-btn outlined block small v-if="unifiedControl" class="ma-1" @click="$emit('removeLayerEvent')">Remove</v-btn> -->
             <v-btn v-if="unifiedControl" class="text-center" @click="$emit('removeLayerEvent')">Remove</v-btn>
           </v-container>
         </v-col>
+
         <!-- BEATS -->
-        <v-col cols="7">
+        <!-- Unmerged Controller -->
+        <v-col v-if="!unifiedControl" cols="7">
           <v-container v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`">
             <v-row no-gutters class="justify-space-between">
               <v-col :cols="num_cols" v-for="k in num_beats" :key="`column-${layerId}-${j}-${k}`">
@@ -40,17 +43,44 @@
             </v-row>
           </v-container>
         </v-col>
+        <!-- Merged Controller -->
+        <v-col v-else cols="10">
+          <v-container v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`">
+            <v-row no-gutters class="justify-space-between">
+              <v-col :cols="num_cols" v-for="k in num_beats" :key="`column-${layerId}-${j}-${k}`">
+                <Column 
+                  class="column" :style="cssVars"
+                  ref = beats_refs
+                  :class="{playing : k*j-(k-num_beats)*(j-1) === isPlaying + 1}"
+                  :beatId="k*j-1-(k-num_beats)*(j-1)"
+                  :inst_selected="inst_id"
+                  :duration="duration"
+                  :prelistenBeat="prelistenLayer"
+                  :muteLayer="muteLayer"
+                  :isPlaying="isPlaying"
+                  :tonesInScale="tonesInScale"
+                  :scale_keyboard="scale_keyboard"
+                ></Column>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-col>
+
         <!-- LAYER CONTROLLER -->
-        <v-col cols="3">
-          <v-container v-if="!unifiedControl" class="layer-controller">
-            <v-card flat :height="`${singleLayerHeight-37}`">
+        <v-col v-if="!unifiedControl" cols="3">
+          <v-container class="layer-controller">
+            <v-card flat class="pa-1" :height="`${singleLayerHeight-37}`">
+            <div class="d-flex">
               <v-btn class="text-center" @click="$emit('removeLayerEvent')">Remove</v-btn>
-              <v-btn icon small class="text-center" @click="$emit('addKeyEvent')">
-                <v-icon>mdi-plus</v-icon>
-              </v-btn>
-              <v-btn icon class="text-center" @click="$emit('removeKeyEvent')">
-                <v-icon>mdi-minus</v-icon>
-              </v-btn>
+              <div class="pa-1">
+                <v-btn icon small class="text-center" @click="$emit('addKeyEvent')">
+                  <v-icon small>mdi-plus</v-icon>
+                </v-btn>
+                <v-btn icon small class="text-center" @click="$emit('removeKeyEvent')">
+                  <v-icon small>mdi-minus</v-icon>
+                </v-btn>
+              </div>
+            </div>
 
               <!-- OCTAVE -->
               <v-menu offset-y :close-on-content-click="false">
@@ -93,61 +123,17 @@
                 ></ScaleSelector>
               </v-menu>
 
-              <v-card class="mt-2 d-flex justify-space-between">
+              <div class="mt-2 d-flex justify-space-between">
                 <v-btn small class="layer-btn prelisten-btn" :class="{ prelistenActive : prelistenLayer }" @click="$emit('togglePrelistenLayerEvent')">L</v-btn>
                 <v-btn small class="layer-btn mute-btn" :class="{ muteActive : muteLayer }" @click="$emit('toggleMuteLayerEvent')">M</v-btn>
                 <v-btn small class="layer-btn clear-btn" @click="clearLayer">C</v-btn>
-              </v-card>
+              </div>
 
             </v-card>
           </v-container>
         </v-col>
       </v-row>
-    </v-card>
-
-    
-
-    <!-- <div class="keyboard" v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`">
-      <Column v-for="k in num_beats"
-        :key="`column-${layerId}-${j}-${k}`"
-        class="column" :style="cssVars"
-        ref = beats_refs
-        :class="{playing : k*j-(k-num_beats)*(j-1) === isPlaying + 1}"
-        :beatId="k*j-1-(k-num_beats)*(j-1)"
-        :inst_selected="inst_id"
-        :duration="duration"
-        :prelistenBeat="prelistenLayer"
-        :muteLayer="muteLayer"
-        :isPlaying="isPlaying"
-        :tonesInScale="tonesInScale"
-        :scale_keyboard="scale_keyboard"
-      ></Column>
-    </div>
-      
-    <div v-if="!unifiedControl" class="layer-controller">
-      <div id="buttons">
-          <button id="remove-btn" @click="$emit('removeLayerEvent')">Remove layer</button>
-          <button id="addKey-btn" @click="$emit('addKeyEvent')"> + </button>
-          <button id="removeKey-btn" @click="$emit('removeKeyEvent')"> - </button>
-      </div>
-      <KeySelector :selectedKey="keyLayer"
-          @keySelectedEvent="function(val){$emit('keySelectedEvent',val)}"
-      ></KeySelector>
-      <ScaleSelector :selectedScale="scaleLayer"
-          @scaleSelectedEvent="function(val){$emit('scaleSelectedEvent',val)}"
-      ></ScaleSelector>
-      <div id="octave-selector">
-          <div class="octave-viewer">Octave: {{octaveLayer}} </div>
-          <button class="layer-btn" @click="$emit('moreOctaveEvent')"> + </button>
-          <button class="layer-btn" @click="$emit('lessOctaveEvent')"> - </button>
-      </div>
-      <div class="layer-sound-controller">
-          <button class="layer-btn prelisten-btn" :class="{ prelistenActive : prelistenLayer }" @click="$emit('togglePrelistenLayerEvent')">L</button>
-          <button class="layer-btn mute-btn" :class="{ muteActive : muteLayer }" @click="$emit('toggleMuteLayerEvent')">M</button>
-          <button class="layer-btn clear-btn" @click="clearLayer">C</button>
-      </div>
-    </div> -->
-
+  </v-card>
 </template>
 
 <script>
