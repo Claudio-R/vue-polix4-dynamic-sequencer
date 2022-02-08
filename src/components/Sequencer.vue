@@ -283,9 +283,9 @@ export default {
   },
 
   computed: {
-    totalDuration() {
+    total_duration() {
       if(this.layers[0]){
-      return this.layers[0].num_beats*60000/this.bpm;
+        return this.layers[0].num_beats*60000/this.bpm;
       }
     },
   },

@@ -316,7 +316,7 @@ export default {
 
 .playing {
     /* aspect */
-    //border: 3px solid rgb(188, 180, 255);
+    border: 3px solid rgb(188, 180, 255);
 }
 // .layer-labels{
 //     margin-right: 10px;
