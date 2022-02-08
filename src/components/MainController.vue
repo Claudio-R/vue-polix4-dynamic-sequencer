@@ -1,11 +1,11 @@
 <template>
     <div class="controller">
-        <input type="number" v-model="newInput" placeholder="Add a layer (press enter)" @keyup.enter="addLayer">
-        <input type="number" v-model="bpm_value" placeholder="Select bpm (press enter)" @keyup.enter="updateBPM">
-        <button @click="$emit('playAllEvent')">Play</button>
-        <button @click="$emit('stopAllEvent')">Stop</button>
-        <button @click="$emit('unifiedControllerEvent')">Unify controller</button>
-        <div id="instrumentContainer">
+        <!-- <input type="number" v-model="newInput" placeholder="Add a layer (press enter)" @keyup.enter="addLayer"> -->
+        <!-- <input type="number" v-model="bpm_value" placeholder="Select bpm (press enter)" @keyup.enter="updateBPM"> -->
+        <!-- <button @click="$emit('playAllEvent')">Play</button>
+        <button @click="$emit('stopAllEvent')">Stop</button> -->
+        <!-- <button @click="$emit('unifiedControllerEvent')">Unify controller</button> -->
+        <!-- <div id="instrumentContainer">
             <label>Instrument:</label>
             <InstrumentSelector 
                 v-for="k in num_inst"
@@ -16,7 +16,7 @@
                 @durationChangeEvent="emitDuration"
                 @changeSynthEvent="emitSynth">
             </InstrumentSelector>
-        </div>
+        </div> -->
     </div>
 </template>
 

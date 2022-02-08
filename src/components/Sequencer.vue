@@ -1,28 +1,189 @@
 <template>
   <div id="sequencer">
 
-    <!--STATE VIEWER-->
-    <div id="view-box">
-      <div class="viewer">BPM: {{bpm}}</div>
-      <div class="viewer">Selected instrument: {{inst_name[inst_id-1]}}</div>
-      <div class="viewer">Bars: {{n_bars}}</div>
-      <button @click="() => {if(n_bars<4){n_bars++; addBar()}}"> + </button>
-      <button @click="() => {if(n_bars>1){n_bars--}}"> - </button>
-    </div>
+    <v-container id="container-bar" class="primary ma-0" ref="container_ref">
+      <v-row dense>
+        <v-col cols="4" class="caption">
+          <v-menu offset-y :close-on-content-click="false">
+            <template v-slot:activator="{ on }">
+              <v-btn small block v-on="on">
+                <v-icon left class="hidden-xs-only">mdi-metronome-tick</v-icon>
+                <span>BPM: {{bpm}}</span>
+              </v-btn>
+            </template>
+            <v-list>
+              <v-list-item>
+                <v-slider
+                    v-model="bpm"
+                    min="1" max="280"
+                ></v-slider>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </v-col>
+
+        <!-- INSTRUMENT SELECTOR -->
+        <v-col cols="4" class="caption">
+          <v-menu offset-y :close-on-content-click="false">
+            <template v-slot:activator="{ on }">
+              <v-btn small block v-on="on">
+                <v-icon left class="hidden-xs-only">mdi-guitar-electric</v-icon>
+                <span>{{inst_names[inst_id-1]}}</span>
+              </v-btn>
+            </template>
+            <v-row>
+              <v-col cols="4" v-for="(instrument_name, index) in inst_names" :key="instrument_name">
+                <v-card>
+                  <InstrumentSelector
+                    :id="index+1"
+                    :selected_inst="inst_id"
+                    @instSelectionEvent="instSelected"
+                    @durationChangeEvent="changeDuration"
+                  ></InstrumentSelector>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-menu>
+        </v-col>
+        
+        <v-col cols="4" class="caption">
+          <v-menu offset-y :close-on-content-click="false">
+            <template v-slot:activator="{ on }">
+              <v-btn small block v-on="on">
+                <span >Bars: {{n_bars}}</span>
+              </v-btn>
+            </template>
+            <v-list>
+              <v-list-item @click="() => {if(n_bars<4){n_bars++; addBar()}}">
+                <v-icon left>mdi-plus</v-icon>
+                <v-list-item-title class="">Add a new bar</v-list-item-title> 
+              </v-list-item>
+              <v-list-item @click="() => {if(n_bars>1){n_bars--}}">
+                <v-icon left>mdi-minus</v-icon>
+                <v-list-item-title class="">Add a new bar</v-list-item-title> 
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </v-col>    
+      </v-row>
+
+      <v-row dense class="d-flex align-center">
+        <!-- ADD LAYER -->
+        <v-col cols="6" sm="3">
+          <v-card>
+          <v-card-actions>
+            <v-text-field type="number" v-model="numBeatsNewLayer"
+              label="Add a layer"
+              outlined dense
+              hint="Value from 1 to 12"
+              hide-details="true"
+              append-outer-icon="mdi-plus-circle"
+              @click:append-outer="addLayer"
+            ></v-text-field>
+          </v-card-actions>
+          </v-card>
+        </v-col>
+
+        <!-- MAIN CONTROLLER -->
+        <v-col cols="6">
+          <v-card flat>
+            <!-- FIRST ROW -->
+            <v-row no-gutters>
+              <v-col cols="12" sm="6">
+                <v-card-actions class="d-flex justify-space-around">
+                  <v-btn small class="" depressed @click="playAll">
+                    <v-icon>mdi-play</v-icon>
+                  </v-btn>
+                  <v-btn small class="" depressed @click="stopAll">
+                    <v-icon>mdi-stop</v-icon>  
+                  </v-btn>
+                  <v-btn small class="" depressed>
+                    <v-icon>mdi-delete</v-icon>
+                  </v-btn>
+                </v-card-actions>
+              </v-col>
+              <!-- UNMERGE BUTTON ON SM -->
+              <v-col sm="6" class="hidden-xs-only">
+                <v-card-actions>
+                  <v-btn v-if="unifiedControl" small depressed block 
+                  @click="unifiedControl=!unifiedControl"
+                  >Unmerge</v-btn>
+                  <v-btn v-else small depressed block 
+                  @click="unifiedControl=!unifiedControl"
+                  >Merge</v-btn>
+                </v-card-actions>
+              </v-col>
+            </v-row>
+            <!-- SECOND ROW ON XS ONLY -->
+            <v-row class="hidden-sm-and-up" no-gutters>
+              <v-col cols="12" sm="6">
+                <v-card-actions>
+                  <v-btn v-if="unifiedControl" small depressed block 
+                  @click="unifiedControl=!unifiedControl"
+                  >Unmerge</v-btn>
+                  <v-btn v-else small depressed block 
+                  @click="unifiedControl=!unifiedControl"
+                  >Merge</v-btn>
+                </v-card-actions>
+              </v-col>
+            </v-row>
+          </v-card>
+        </v-col>
+
+        <v-col sm="3" class="hidden-xs-only">
+          <!-- dare classe disabled -->
+          <v-menu offset-y :disabled="!unifiedControl" :close-on-content-click="false">
+            <template v-slot:activator="{ on }">
+              <v-btn block v-on="on">
+                <v-icon left class="hidden-xs-only">mdi-menu</v-icon>
+                <span>Main controller</span>
+              </v-btn>
+            </template>
+            <v-expansion-panels multiple accordion>
+              <!-- OCTAVE -->
+              <v-expansion-panel>
+                <v-expansion-panel-header>
+                  Octave: {{allLayersOctave}}
+                </v-expansion-panel-header>
+                <v-expansion-panel-content>
+                  <v-btn small @click="moreOctave">
+                    <v-icon small>mdi-plus</v-icon>
+                  </v-btn>
+                  <v-btn small @click="lessOctave">
+                      <v-icon small>mdi-minus</v-icon>
+                  </v-btn>
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+              <!-- KEY -->
+              <v-expansion-panel>
+                <v-expansion-panel-header>
+                  Selected key: {{allLayersKey}}
+                </v-expansion-panel-header>
+                <v-expansion-panel-content>
+                  <KeySelector @keySelectedEvent="changeKey"
+                    :selectedKey="allLayersKey"
+                  ></KeySelector>
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+              <v-expansion-panel>
+                <v-expansion-panel-header>
+                  Selected scale: {{allLayersScale}}
+                </v-expansion-panel-header>
+                <v-expansion-panel-content>
+                  <ScaleSelector @scaleSelectedEvent="changeScale"
+                  :selectedScale="allLayersScale"
+                ></ScaleSelector>
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+          </v-expansion-panels>
+        </v-menu>
+      </v-col>
+
+      </v-row>
+    </v-container> 
     
-    <!--SEQUENCER CONTROLLER-->
-    <MainController
-      @unifiedControllerEvent="unifiedControl=!unifiedControl"
-      @newLayerEvent="addLayer"
-      @bpmEvent="updateBPM"
-      @instSelectionEvent="instSelected"
-      @durationEvent="changeDuration"
-      @synthEvent="changeSynthName"
-      @playAllEvent="playAll"
-      @stopAllEvent="stopAll"
-    ></MainController>
+    <!-- 
     
-    <!--UNIFIED CONTROLLER-->
     <div v-if="unifiedControl" class="layer-controller unified">
       <KeySelector @keySelectedEvent="changeKey"
         :selectedKey="allLayersKey"
@@ -42,10 +203,13 @@
           <button class="layer-btn clear-btn" @click="clearSystem">C</button>
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <!--LAYERS CONTAINER-->        
-    <div id="layers-container">
+    <!--
+    -->
+    
+    <v-card id="layers-container" class="d-flex flex-column ma-0">
+
       <Layer v-for="(layer,index) in layers"
         ref="layers_refs"
         :key="`layer-${layer.id}`"
@@ -61,6 +225,7 @@
         :scaleLayer="layer.scaleLayer"
         :prelistenLayer="layer.prelistenLayer"
         :muteLayer="layer.muteLayer"
+        :singleLayerHeight="window_height - container_height - 36"
         @restartEvent="restart(index)"
         @removeLayerEvent="layers.splice(index,1)"
         @addKeyEvent="() => {if(!systemPlaying && layer.num_beats < 12 ) layer.num_beats++}"
@@ -72,32 +237,38 @@
         @togglePrelistenLayerEvent="layer.prelistenLayer = !layer.prelistenLayer"
         @toggleMuteLayerEvent="layer.muteLayer = !layer.muteLayer"
       ></Layer>
-    </div>
+    </v-card>
+
   </div>
 </template>
 
 <script>
 
 import Layer from '@/components/Layer.vue'
-import MainController from '@/components/MainController.vue'
 import ScaleSelector from '@/components/ScaleSelector.vue'
 import KeySelector from '@/components/KeySelector.vue'
+import InstrumentSelector from '@/components/InstrumentSelector'
+import SynthSelector from '@/components/SynthSelector'
 
 export default {
   name: 'Sequencer',
 
   components: {
-      Layer, 
-      MainController, 
+      Layer,
       ScaleSelector, 
-      KeySelector
+      KeySelector,
+      InstrumentSelector,
+      SynthSelector
   },
 
   data(){
     return {
+        window_height: Number,
+        container_height: Number,
         /** sequencer controller */
         systemPlaying: false,
         bpm: 120,
+        numBeatsNewLayer: '',
         unifiedControl: true,
         n_bars:1,
         inst_id: 1,
@@ -109,7 +280,7 @@ export default {
         allLayersScale: 'Major',
         prelistenSystem: true,
         muteSystem: false,
-        inst_name: [this.$store.state.synth_names[this.$store.state.synth_selection[0]],this.$store.state.synth_names[this.$store.state.synth_selection[1]],this.$store.state.drum_names[this.$store.state.synth_selection[2]]],
+        inst_names: [this.$store.state.synth_names[this.$store.state.synth_selection[0]],this.$store.state.synth_names[this.$store.state.synth_selection[1]],this.$store.state.drum_names[this.$store.state.synth_selection[2]]],
         
       /** state variables */
       nextId: 2,
@@ -132,26 +303,42 @@ export default {
           prelistenLayer: true,
           muteLayer: false,
         },
-      ],   
+      ], 
     }
   },
 
+  // watch: {
+  //   bpm(newVal, oldVal) {
+  //     console.log(newVal, oldVal)
+  //     if(this.bpm==""){ this.totalDuration = this.layers[0].num_beats*60000/120; }
+  //     else 
+  //     }
+  //   }
+  // },
+
   computed: {
-      total_duration() {
-          if(this.layers[0]){
-              return this.layers[0].num_beats*60000/this.bpm;
-          }
-      },
+    totalDuration() {
+      if(this.layers[0]){
+      return this.layers[0].num_beats*60000/this.bpm;
+      }
+    },
+  },
+
+  mounted() {
+    this.container_height = this.$refs.container_ref.offsetHeight;
+    this.window_height = window.screen.height;
   },
 
   methods: {
       /** sequencer controller */
-      addLayer(num_beats_input) {
-          if(num_beats_input > 12) num_beats_input = 12;
+      // addLayer(num_beats_input) {
+      addLayer() {
+          console.log(this.numBeatsNewLayer)
+          if(this.numBeatsNewLayer > 12) this.numBeatsNewLayer = 12;
           this.layers.push(
               {   
                   id: this.nextId,
-                  num_beats: num_beats_input,
+                  num_beats: this.numBeatsNewLayer,
                   octaveLayer: this.allLayersOctave,
                   keyLayer: this.allLayersKey,
                   scaleLayer: this.allLayersScale,
@@ -161,9 +348,9 @@ export default {
           )
           this.nextId += 1;
       },
-      updateBPM(bpm_input) {
-          this.bpm = bpm_input
-      },
+      // updateBPM(bpm_input) {
+      //     this.bpm = bpm_input
+      // },
       addBar(){
           for(let idx in this.layers) {
               console.log(this.$refs.layers_refs.length, idx);
@@ -214,9 +401,9 @@ export default {
       },
       changeSynthName(id){
         if(id!=2)
-            this.inst_name[id] = this.$store.state.synth_names[this.$store.state.synth_selection[id]]
+            this.inst_names[id] = this.$store.state.synth_names[this.$store.state.synth_selection[id]]
         else
-            this.inst_name[id] = this.$store.state.drum_names[this.$store.state.synth_selection[id]]
+            this.inst_names[id] = this.$store.state.drum_names[this.$store.state.synth_selection[id]]
         if(id+1==this.inst_id)
         this.$forceUpdate();
       },
@@ -260,8 +447,11 @@ export default {
 </script>
 
 <style lang="scss">
-#sequencer {
-    background-color: rgb(19, 109, 116);
+
+#container-bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 #view-box {

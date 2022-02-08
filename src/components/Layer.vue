@@ -1,46 +1,67 @@
 <template>
-  <div class="layer">
-    <div class="layer-labels">
-      <div v-if="inst_id==3">
-        <p class="key-label" 
-            v-for="k in tonesInScale"
-            :key="k"
-        >{{drum_keyboard[tonesInScale-k]}}
-        </p>
-      </div>
-      <div v-else>
-        <p class="key-label" 
-            v-for="k in tonesInScale"
-            :key="k"
-        >{{scale_keyboard[tonesInScale-k].slice(0, -1)}}
-        </p>
-      </div>
-      <button v-if="unifiedControl" class="remove-btn-unified" @click="$emit('removeLayerEvent')">Remove layer</button>
-    </div>
+  <v-card :height="`${singleLayerHeight}`" class="my-1 red">
 
-    <v-card v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`"
-        class="d-inline"
-        elevation="2"
-    >
-      <Column v-for="k in num_beats"
-          :key="`column-${layerId}-${j}-${k}`"
-          class="column" :style="cssVars"
-          ref = beats_refs
-          :class="{playing : k*j-(k-num_beats)*(j-1) === isPlaying + 1}"
-          :beatId="k*j-1-(k-num_beats)*(j-1)"
-          :inst_selected="inst_id"
-          :duration="duration"
-          :prelistenBeat="prelistenLayer"
-          :muteLayer="muteLayer"
-          :isPlaying="isPlaying"
-          :tonesInScale="tonesInScale"
-          :scale_keyboard="scale_keyboard"
-      ></Column>
-      <!--
-      <div class="keyboard">
-      </div>
-      -->
+    <v-card class="yellow">
+
+      <v-row>
+      <!-- LABELS -->
+        <v-col cols="2">
+          <div class="layer-labels">
+            <div v-if="inst_id==3">
+              <v-card class="key-label" v-for="k in tonesInScale" :key="k"
+                >{{drum_keyboard[tonesInScale-k]}}
+              </v-card>
+            </div>
+            <div v-else>
+              <v-card class="key-label" 
+                  v-for="k in tonesInScale"
+                  :key="k"
+              >{{scale_keyboard[tonesInScale-k].slice(0, -1)}}
+              </v-card>
+            </div>
+            <button v-if="unifiedControl" class="remove-btn-unified" @click="$emit('removeLayerEvent')">Remove layer</button>
+          </div>
+        </v-col>
+        <!-- BEATS -->
+        <v-col cols="7">
+          <div class="keyboard" v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`">
+            <Column v-for="k in num_beats"
+              :key="`column-${layerId}-${j}-${k}`"
+              class="column" :style="cssVars"
+              ref = beats_refs
+              :class="{playing : k*j-(k-num_beats)*(j-1) === isPlaying + 1}"
+              :beatId="k*j-1-(k-num_beats)*(j-1)"
+              :inst_selected="inst_id"
+              :duration="duration"
+              :prelistenBeat="prelistenLayer"
+              :muteLayer="muteLayer"
+              :isPlaying="isPlaying"
+              :tonesInScale="tonesInScale"
+              :scale_keyboard="scale_keyboard"
+            ></Column>
+          </div>
+        </v-col>
+      </v-row>
     </v-card>
+
+    
+
+    <!-- <div class="keyboard" v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`">
+      <Column v-for="k in num_beats"
+        :key="`column-${layerId}-${j}-${k}`"
+        class="column" :style="cssVars"
+        ref = beats_refs
+        :class="{playing : k*j-(k-num_beats)*(j-1) === isPlaying + 1}"
+        :beatId="k*j-1-(k-num_beats)*(j-1)"
+        :inst_selected="inst_id"
+        :duration="duration"
+        :prelistenBeat="prelistenLayer"
+        :muteLayer="muteLayer"
+        :isPlaying="isPlaying"
+        :tonesInScale="tonesInScale"
+        :scale_keyboard="scale_keyboard"
+      ></Column>
+    </div>
       
     <div v-if="!unifiedControl" class="layer-controller">
       <div id="buttons">
@@ -64,8 +85,9 @@
           <button class="layer-btn mute-btn" :class="{ muteActive : muteLayer }" @click="$emit('toggleMuteLayerEvent')">M</button>
           <button class="layer-btn clear-btn" @click="clearLayer">C</button>
       </div>
-    </div>
-  </div>
+    </div> -->
+  </v-card>
+
 </template>
 
 <script>
@@ -96,6 +118,7 @@ export default {
         scaleLayer: String,
         prelistenLayer: Boolean,
         muteLayer: Boolean,
+        singleLayerHeight: Number,
     },
     
     data() {
@@ -217,22 +240,23 @@ export default {
 <style lang="scss">
 .remove-btn-unified {
     background-color: rgb(194, 194, 194);
-    margin-top: 2px;
+    // margin-top: 2px;
+    margin: 4px;
     text-align: center;
 }
 .layer{
     display: inline-flex;
-    height: calc(var(--columnHeight) + 10px);
-    margin: 10px;
+    // height: calc(var(--columnHeight) + 10px);
+
 }
-/**
+
 .keyboard {
     display: inline-flex;
-    border-radius: 10px;
-    background-color: rgb(199, 202, 0);
-    border:3px solid rgb(19, 109, 116);
+     border-radius: 10px;
+     background-color: rgb(199, 202, 0);
+     border:3px solid rgb(19, 109, 116);
 }
- */
+
 .column {
     display: inline-block;
     width: calc(var(--columnWidth) - 6px);
@@ -252,11 +276,6 @@ export default {
     width: auto;
 }
 .key-label{
-    border: 2px solid rgb(216, 216, 178);
-    background-color: bisque;
-    width: 90px;
-    height: 20px;
-    margin: 0px;
-    text-align: center;
+  margin: 4px;
 }
 </style>
