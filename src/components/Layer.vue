@@ -185,6 +185,7 @@ export default {
         prelistenLayer: Boolean,
         muteLayer: Boolean,
         singleLayerHeight: Number,
+        automaticSlideControl: true,
     },
     
     data() {
@@ -201,9 +202,10 @@ export default {
     
     watch: {
         'isPlaying': function(val) {
-            if(val==0){ this.$emit('restartEvent'); 
+            if(val==0){ this.$emit('restartEvent'); }
+            if(this.automaticSlideControl){
+              this.model=Math.floor(this.isPlaying/this.num_beats)
             }
-            this.model=Math.floor(this.isPlaying/this.num_beats)
         },
         'keyLayer': function(val) {
             this.$emit('changedKeyEvent', val);
@@ -290,14 +292,14 @@ export default {
             }
         },
         addLBar(){
-            this.$nextTick(() =>{
-                //column_states = Array(this.num_beats)
-                    for(let i=0;i<this.num_beats;i++) {
-                        let newvar = this.$refs.beats_refs[i].getKeyProps()
-                        this.$refs.beats_refs[i+(this.n_bars-1)*this.num_beats].setColumn(newvar)
-                        //column_states[i]=(newvar)
-                    }
-            })
+          this.$nextTick(() =>{
+            //column_states = Array(this.num_beats)
+              for(let i=0;i<this.num_beats;i++) {
+                let newvar = this.$refs.beats_refs[i].getKeyProps()
+                this.$refs.beats_refs[i+(this.n_bars-1)*this.num_beats].setColumn(newvar)
+                //column_states[i]=(newvar)
+            }
+          })
         },
         clearLayer(){
           for(let idx=0; idx<this.num_beats; idx++) { 

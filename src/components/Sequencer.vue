@@ -90,7 +90,7 @@
           <v-card flat>
             <!-- FIRST ROW -->
             <v-row no-gutters>
-              <v-col cols="12" sm="7">
+              <v-col cols="12" sm="8">
                 <v-card-actions class="d-flex justify-space-around">
                   <v-btn small class="" depressed @click="playAll">
                     <v-icon>mdi-play</v-icon>
@@ -101,13 +101,16 @@
                   <v-btn small class="" depressed @click="clearAll">
                     <v-icon>mdi-delete</v-icon>
                   </v-btn>
+                  <v-btn small depressed @click="automaticSlideControl=!automaticSlideControl">
+                    <v-icon>mdi-arrow-right-circle-outline</v-icon>
+                  </v-btn>
                   <v-btn small :disabled="!unifiedControl" depressed @click="toggleMuteSystem">
                     <v-icon>mdi-volume-mute</v-icon>
                   </v-btn>
                 </v-card-actions>
               </v-col>
               <!-- UNMERGE BUTTON ON SM -->
-              <v-col sm="5" class="hidden-xs-only">
+              <v-col sm="4" class="hidden-xs-only">
                 <v-card-actions>
                   <v-btn v-if="unifiedControl" small depressed block 
                   @click="unifiedControl=!unifiedControl"
@@ -207,6 +210,7 @@
           :scaleLayer="layer.scaleLayer"
           :prelistenLayer="layer.prelistenLayer"
           :muteLayer="layer.muteLayer"
+          :automaticSlideControl="automaticSlideControl"
           @restartEvent="restart(index)"
           @removeLayerEvent="layers.splice(index,1)"
           @addKeyEvent="() => {if(!systemPlaying && layer.num_beats < 12 ) layer.num_beats++}"
@@ -255,6 +259,7 @@ export default {
         n_bars:1,
         inst_id: 0,
         duration:["16n","16n"],
+        automaticSlideControl: true,
         
         /** unified controller */
         allLayersOctave: 4,
