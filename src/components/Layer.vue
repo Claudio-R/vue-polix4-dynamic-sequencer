@@ -24,25 +24,29 @@
         <!-- BEATS -->
         <!-- Unmerged Controller -->
         <v-col v-if="!unifiedControl" cols="7">
-          <v-container v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`">
-            <v-row no-gutters class="justify-space-between">
-              <v-col :cols="num_cols" v-for="k in num_beats" :key="`column-${layerId}-${j}-${k}`">
-                <Column 
-                  class="column" :style="cssVars"
-                  ref = "beats_refs"
-                  :class="{playing : k*j-(k-num_beats)*(j-1) === isPlaying + 1}"
-                  :beatId="k*j-1-(k-num_beats)*(j-1)"
-                  :inst_selected="inst_id"
-                  :duration="duration"
-                  :prelistenBeat="prelistenLayer"
-                  :muteLayer="muteLayer"
-                  :isPlaying="isPlaying"
-                  :tonesInScale="tonesInScale"
-                  :scale_keyboard="scale_keyboard"
-                ></Column>
-              </v-col>
-            </v-row>
-          </v-container>
+          <v-carousel hide-delimiters
+          height="100%"
+          :continuous="false">
+            <v-carousel-item v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`" class="spacing-playground pa-3">
+              <v-row no-gutters class="justify-space-between">
+                <v-col :cols="num_cols" v-for="k in num_beats" :key="`column-${layerId}-${j}-${k}`">
+                  <Column 
+                    class="column" :style="cssVars"
+                    ref = "beats_refs"
+                    :class="{playing : k*j-(k-num_beats)*(j-1) === isPlaying + 1}"
+                    :beatId="k*j-1-(k-num_beats)*(j-1)"
+                    :inst_selected="inst_id"
+                    :duration="duration"
+                    :prelistenBeat="prelistenLayer"
+                    :muteLayer="muteLayer"
+                    :isPlaying="isPlaying"
+                    :tonesInScale="tonesInScale"
+                    :scale_keyboard="scale_keyboard"
+                  ></Column>
+                </v-col>
+              </v-row>
+            </v-carousel-item>
+          </v-carousel>
         </v-col>
         <!-- Merged Controller -->
         <v-col v-else cols="10">
