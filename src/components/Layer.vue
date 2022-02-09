@@ -4,7 +4,7 @@
         <!-- LABELS -->
         <v-col cols="2">
           <v-container class="">
-            <div v-if="inst_id==3">
+            <div v-if="inst_id==2">
               <v-card flat outlined class="text-center" 
                 v-for="k in tonesInScale" :key="k"
                 >{{drum_keyboard[tonesInScale-k]}}

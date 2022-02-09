@@ -1,7 +1,5 @@
 <template>
 
-  
-
   <v-card outlined class="pa-2 d-flex flex-column">
     <v-card-text class="caption">Setting instrument {{id+1}}</v-card-text>
     <div>
@@ -46,7 +44,6 @@ export default {
     },
     props:{
         id: { type: Number, },
-        selected_inst:{ type: Number, },
     },
 
     data(){
@@ -69,25 +66,26 @@ export default {
         }
       },
       instrumentSelection(){
-        this.$emit('instSelectionEvent',this.id+1)
-      }
+        this.$emit('instSelectionEvent',this.id)
+      },
 
-      // changeSynth(synth_number){
-      //     this.selectedSynthNumber = synth_number
-      //     this.$store.state.synth_selection[this.id-1] = synth_number
-      //     this.$emit('changeSynthEvent',this.id-1)
-      //     this.$store.commit('synthsChanged')
-      //     this.changeVolume()
-      // }
+      changeSynth(synth_number){
+        console.log(synth_number)
+        this.selectedSynthNumber = synth_number
+        this.$store.state.synth_selection[this.id] = synth_number
+        this.$emit('changeSynthEvent',this.id)
+        this.$store.commit('synthsChanged')
+        // this.changeVolume()
+      }
     },
 
     computed: {
         
         myInstrument() {
           // return this.$store.state.instruments[this.id]}
-          if(id==0) { return this.$store.state.synth1 }
-          if(id==1) { return this.$store.state.synth2 }
-          if(id==2) { return this.$store.state.drum }
+          if(this.id==0) { return this.$store.state.synth1 }
+          if(this.id==1) { return this.$store.state.synth2 }
+          if(this.id==2) { return this.$store.state.drum }
         }
     },
     

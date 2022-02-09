@@ -29,7 +29,7 @@
             <template v-slot:activator="{ on }">
               <v-btn small block v-on="on">
                 <v-icon left class="hidden-xs-only">mdi-guitar-electric</v-icon>
-                <span>{{inst_names[inst_id-1]}}</span>
+                <span>{{inst_names[inst_id]}}</span>
               </v-btn>
             </template>
             <v-card class="pa-8">
@@ -37,7 +37,6 @@
               <v-col cols="4" v-for="(instrument_name, index) in inst_names" :key="instrument_name">
                 <InstrumentSelector
                   :id="index"
-                  :selected_inst="inst_id"
                   @instSelectionEvent="instSelected"
                   @durationChangeEvent="changeDuration"
                 ></InstrumentSelector>
@@ -246,7 +245,7 @@ export default {
         numBeatsNewLayer: '',
         unifiedControl: true,
         n_bars:1,
-        inst_id: 1,
+        inst_id: 0,
         duration:["16n","16n"],
         
         /** unified controller */
@@ -326,9 +325,10 @@ export default {
       },
       instSelected(inst_id) {
           this.inst_id=inst_id
+          console.log(inst_id)
       },
       changeDuration(inst_id,duration){
-          this.duration[inst_id-1]=20-duration*4+"n"
+          this.duration[inst_id]=20-duration*4+"n"
       },
       playAll() {
           this.systemPlaying = true;
@@ -370,7 +370,7 @@ export default {
             this.inst_names[id] = this.$store.state.synth_names[this.$store.state.synth_selection[id]]
         else
             this.inst_names[id] = this.$store.state.drum_names[this.$store.state.synth_selection[id]]
-        if(id+1==this.inst_id)
+        if(id==this.inst_id)
         this.$forceUpdate();
       },
       moreOctave(){

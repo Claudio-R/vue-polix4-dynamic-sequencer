@@ -108,17 +108,17 @@ export default {
     methods: {
       toggleActive() {
         switch(this.inst_selected){
-          case 1:
+          case 0:
               this.state1 = !this.state1
               if(!this.muteBeat && this.prelistenBeat && this.state1){
                   this.$emit('playSound1Event',this.keyId)
               } break;
-          case 2: 
+          case 1: 
               this.state2 = !this.state2
               if(!this.muteBeat && this.prelistenBeat && this.state2){
                   this.$emit('playSound2Event',this.keyId)
               } break; 
-          case 3: 
+          case 2: 
               this.state3 = !this.state3
               if(!this.muteBeat && this.prelistenBeat && this.state3){
                   this.$emit('playSound3Event',this.keyId)

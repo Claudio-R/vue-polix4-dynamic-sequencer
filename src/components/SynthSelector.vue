@@ -63,7 +63,7 @@ export default {
 
     methods: {
         selectSynth(element) {
-          if(this.id!=3)
+          if(this.id!=2)
           this.$emit('instrumentSelectorEvent', this.synths.indexOf(element))
           else
           this.$emit('instrumentSelectorEvent', this.drums.indexOf(element))
