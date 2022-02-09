@@ -1,6 +1,6 @@
 <template>
 <v-carousel-item>
-  <v-card height="100%" flat tile class="my-0">
+  <v-card :height="heightHorizontal" flat tile class="my-0">
       <v-row no-gutters>
         <!-- LABELS -->
         <v-col cols="2">
@@ -235,6 +235,15 @@ export default {
                 '--columnHeight' : this.tonesInScale*(keyHeight + 2*borderKey) + 'px',
             }
         },
+        heightHorizontal () {
+        switch (this.$vuetify.breakpoint.name) {
+          case 'xs': return '73vh'
+          case 'sm': return '73vh'
+          case 'md': return '85vh'
+          case 'lg': return '82vh'
+          case 'xl': return '82vh'
+        }
+      },
     },
 
     methods: {

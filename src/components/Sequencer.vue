@@ -1,7 +1,6 @@
 <template>
   <div id="sequencer">
-
-    <v-card flat tile id="container-bar" class="primary pa-2" ref="container_ref" height="27vh">
+    <v-card flat tile id="container-bar" class="primary pa-2" ref="container_ref" :height="heightHorizontal">
       <v-row dense>
        <!-- SELECT BPM -->
         <v-col cols="4" class="caption">
@@ -192,7 +191,7 @@
     
     <v-card id="layers-container" flat tile class="d-flex flex-column">
       <v-carousel :vertical="true"
-      height="73vh"
+      height="auto"
       :show-arrows="false"
       :vertical-delimiters="'left'">
         <Layer v-for="(layer,index) in layers"
@@ -300,6 +299,15 @@ export default {
         return this.layers[0].num_beats*60000/this.bpm;
       }
     },
+    heightHorizontal () {
+        switch (this.$vuetify.breakpoint.name) {
+          case 'xs': return '27vh'
+          case 'sm': return '27vh'
+          case 'md': return '15vh'
+          case 'lg': return '18vh'
+          case 'xl': return '18vh'
+        }
+      },
   },
 
   // mounted() {
