@@ -1,25 +1,36 @@
 <template>
-  <div>
-    <SynthSelector :selectedSynth="selectedSynthNumber"
-      :id="id"
-      @instrumentSelectorEvent="changeSynth">
-    </SynthSelector>
-    <v-slider
-      v-model="volumeSlider.val"
-      :color="volumeSlider.color"
-      :label="volumeSlider.label"
-      min="-40" max="3" step="5"
-    ></v-slider>
-    <v-slider v-if="id!=3"
-      v-model="durationSlider.val"
-      :color="durationSlider.color"
-      :label="durationSlider.label"
-      min="0" max="4" step="1"
-    ></v-slider>
-    <v-btn @click="instrumentSelection">
+
+  <v-card outlined class="pa-2 d-flex flex-column">
+    <v-card-text class="caption">Setting instrument {{id+1}}</v-card-text>
+    <div>
+      <SynthSelector :selectedSynth="selectedSynthNumber"
+        :id="id"
+        @instrumentSelectorEvent="changeSynth">
+      </SynthSelector>
+    </div>
+    <div class="mt-3">
+      <v-slider
+        v-model="volumeSlider.val"
+        :color="volumeSlider.color"
+        min="-40" max="3" step="5"
+        :thumb-label="true"
+        prepend-icon="mdi-volume-high"
+      ></v-slider>
+    </div>
+
+    <div class="mt-3">
+      <v-slider v-if="id!=2"
+        v-model="durationSlider.val"
+        :color="durationSlider.color"
+        min="0" max="4" step="0.1"
+        :thumb-label="true"
+        prepend-icon="mdi-sine-wave"
+      ></v-slider>
+    </div>
+    <v-btn block @click="instrumentSelection">
       select
     </v-btn>
-  </div>
+  </v-card>
 </template>
 
 <script>
@@ -33,12 +44,11 @@ export default {
     },
     props:{
         id: { type: Number, },
-        selected_inst:{ type: Number, },
     },
 
     data(){
       return {
-        selectedSynthNumber: this.$store.state.synth_selection[this.id-1],
+        selectedSynthNumber: this.$store.state.synth_selection[this.id],
         volumeSlider: { label: 'volume', val: -0, color: 'orange darken-3' },
         durationSlider: { label: 'duration', val: 2, color: 'green lighten-1' },
       }
@@ -56,25 +66,26 @@ export default {
         }
       },
       instrumentSelection(){
-        this.$emit('instSelectionEvent',this.id+1)
-      }
+        this.$emit('instSelectionEvent',this.id)
+      },
 
-      // changeSynth(synth_number){
-      //     this.selectedSynthNumber = synth_number
-      //     this.$store.state.synth_selection[this.id-1] = synth_number
-      //     this.$emit('changeSynthEvent',this.id-1)
-      //     this.$store.commit('synthsChanged')
-      //     this.changeVolume()
-      // }
+      changeSynth(synth_number){
+        console.log(synth_number)
+        this.selectedSynthNumber = synth_number
+        this.$store.state.synth_selection[this.id] = synth_number
+        this.$emit('changeSynthEvent',this.id)
+        this.$store.commit('synthsChanged')
+        // this.changeVolume()
+      }
     },
 
     computed: {
         
         myInstrument() {
           // return this.$store.state.instruments[this.id]}
-          if(id==0) { return this.$store.state.synth1 }
-          if(id==1) { return this.$store.state.synth2 }
-          if(id==2) { return this.$store.state.drum }
+          if(this.id==0) { return this.$store.state.synth1 }
+          if(this.id==1) { return this.$store.state.synth2 }
+          if(this.id==2) { return this.$store.state.drum }
         }
     },
     

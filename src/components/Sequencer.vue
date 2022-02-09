@@ -12,37 +12,37 @@
                 <span>BPM: {{bpm}}</span>
               </v-btn>
             </template>
-            <v-list>
-              <v-list-item>
-                <v-slider
-                    v-model="bpm"
-                    min="1" max="280"
+            <v-card>
+              <div class="my-1">
+                <v-card-text class="caption">Selected bpm: {{bpm}}</v-card-text>
+                <v-slider v-model="bpm"
+                  min="1" max="280"
                 ></v-slider>
-              </v-list-item>
-            </v-list>
+              </div>
+            </v-card>
           </v-menu>
         </v-col>
+        
         <!-- INSTRUMENT SELECTOR -->
         <v-col cols="4" class="caption">
           <v-menu offset-y :close-on-content-click="false">
             <template v-slot:activator="{ on }">
               <v-btn small block v-on="on">
                 <v-icon left class="hidden-xs-only">mdi-guitar-electric</v-icon>
-                <span>{{inst_names[inst_id-1]}}</span>
+                <span>{{inst_names[inst_id]}}</span>
               </v-btn>
             </template>
+            <v-card class="pa-8">
             <v-row>
               <v-col cols="4" v-for="(instrument_name, index) in inst_names" :key="instrument_name">
-                <v-card>
-                  <InstrumentSelector
-                    :id="index+1"
-                    :selected_inst="inst_id"
-                    @instSelectionEvent="instSelected"
-                    @durationChangeEvent="changeDuration"
-                  ></InstrumentSelector>
-                </v-card>
+                <InstrumentSelector
+                  :id="index"
+                  @instSelectionEvent="instSelected"
+                  @durationChangeEvent="changeDuration"
+                ></InstrumentSelector>
               </v-col>
             </v-row>
+            </v-card>
           </v-menu>
         </v-col>
         <!-- ADD BARS -->
@@ -71,16 +71,16 @@
         <!-- ADD LAYER -->
         <v-col cols="6" sm="3">
           <v-card>
-          <v-card-actions>
-            <v-text-field type="number" v-model.number="numBeatsNewLayer"
-              label="Add a layer"
-              outlined dense
-              hint="Value from 1 to 12"
-              hide-details="true"
-              append-outer-icon="mdi-plus-circle"
-              @click:append-outer="addLayer"
-            ></v-text-field>
-          </v-card-actions>
+            <v-card-actions>
+              <v-text-field type="number" v-model.number="numBeatsNewLayer"
+                label="Add a layer"
+                outlined dense
+                hint="Value from 1 to 12"
+                hide-details="true"
+                append-outer-icon="mdi-plus-circle"
+                @click:append-outer="addLayer"
+              ></v-text-field>
+            </v-card-actions>
           </v-card>
         </v-col>
 
@@ -203,7 +203,6 @@
           :scaleLayer="layer.scaleLayer"
           :prelistenLayer="layer.prelistenLayer"
           :muteLayer="layer.muteLayer"
-          :singleLayerHeight="window_height - container_height - 24"
           @restartEvent="restart(index)"
           @removeLayerEvent="layers.splice(index,1)"
           @addKeyEvent="() => {if(!systemPlaying && layer.num_beats < 12 ) layer.num_beats++}"
@@ -250,7 +249,7 @@ export default {
         numBeatsNewLayer: '',
         unifiedControl: true,
         n_bars:1,
-        inst_id: 1,
+        inst_id: 0,
         duration:["16n","16n"],
         
         /** unified controller */
@@ -330,9 +329,10 @@ export default {
       },
       instSelected(inst_id) {
           this.inst_id=inst_id
+          console.log(inst_id)
       },
       changeDuration(inst_id,duration){
-          this.duration[inst_id-1]=20-duration*4+"n"
+          this.duration[inst_id]=20-duration*4+"n"
       },
       playAll() {
           this.systemPlaying = true;
@@ -374,7 +374,7 @@ export default {
             this.inst_names[id] = this.$store.state.synth_names[this.$store.state.synth_selection[id]]
         else
             this.inst_names[id] = this.$store.state.drum_names[this.$store.state.synth_selection[id]]
-        if(id+1==this.inst_id)
+        if(id==this.inst_id)
         this.$forceUpdate();
       },
       moreOctave(){
@@ -421,7 +421,7 @@ export default {
 #container-bar {
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 1;
 }
 
 // #view-box {
