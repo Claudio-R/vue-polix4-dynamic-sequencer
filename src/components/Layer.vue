@@ -52,10 +52,11 @@
         <v-col v-else cols="10">
           <v-carousel hide-delimiters
           height="100%"
-          :continuous="false">
-              <v-carousel-item v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`">
+          :continuous="false"
+          v-model="model">
+              <v-carousel-item v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`" class="spacing-playground pa-3">
                 <v-row no-gutters class="justify-space-between">
-                  <v-col :cols="num_cols" v-for="k in num_beats" :key="`column-${layerId}-${j}-${k}`" class="spacing-playground pa-3">
+                  <v-col :cols="num_cols" v-for="k in num_beats" :key="`column-${layerId}-${j}-${k}`">
                     <Column 
                       class="column" :style="cssVars"
                       ref = "beats_refs"
@@ -187,12 +188,16 @@ export default {
             keyboard: '',
             scale_keyboard : ["C4","D4","E4","F4","G4","A4","B4","C5"],
             drum_keyboard : ["kick", "snare", "tom 1","tom 2","closed hh", "open hh", "ride","clap"],
+            model: 0,
         }
     },
     
     watch: {
         'isPlaying': function(val) {
-            if(val==0){ this.$emit('restartEvent'); }
+            if(val==0){ this.$emit('restartEvent'); 
+            }
+            this.model=Math.floor(this.isPlaying/this.num_beats)
+            console.log(this.model)
         },
         'keyLayer': function(val) {
             this.$emit('changedKeyEvent', val);
