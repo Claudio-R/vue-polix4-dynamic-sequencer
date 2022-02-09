@@ -1,7 +1,7 @@
 <template>
   <div id="sequencer">
 
-    <v-card flat tile id="container-bar" class="primary pa-2" ref="container_ref">
+    <v-card flat tile id="container-bar" class="primary pa-2" ref="container_ref" height="27vh">
       <v-row dense>
        <!-- SELECT BPM -->
         <v-col cols="4" class="caption">
@@ -184,34 +184,38 @@
     </v-card> 
     
     <v-card id="layers-container" flat tile class="d-flex flex-column">
-
-      <Layer v-for="(layer,index) in layers"
-        ref="layers_refs"
-        :key="`layer-${layer.id}`"
-        :layerId="`layer-${layer.id}`"
-        :unifiedControl="unifiedControl"
-        :n_bars="n_bars"
-        :inst_id="inst_id"
-        :duration="duration"
-        :total_duration="total_duration"
-        :num_beats="layer.num_beats"
-        :octaveLayer="layer.octaveLayer"
-        :keyLayer="layer.keyLayer"
-        :scaleLayer="layer.scaleLayer"
-        :prelistenLayer="layer.prelistenLayer"
-        :muteLayer="layer.muteLayer"
-        :singleLayerHeight="window_height - container_height - 24"
-        @restartEvent="restart(index)"
-        @removeLayerEvent="layers.splice(index,1)"
-        @addKeyEvent="() => {if(!systemPlaying && layer.num_beats < 12 ) layer.num_beats++}"
-        @removeKeyEvent="() => {if(!systemPlaying && layer.num_beats > 1 ) layer.num_beats--}"
-        @keySelectedEvent="(val) => {layer.keyLayer = val}"
-        @scaleSelectedEvent="(val) => {layer.scaleLayer = val}"
-        @moreOctaveEvent="() => {if(layer.octaveLayer < 6) layer.octaveLayer++}"
-        @lessOctaveEvent="() => {if(layer.octaveLayer > 2) layer.octaveLayer--}"
-        @togglePrelistenLayerEvent="layer.prelistenLayer = !layer.prelistenLayer"
-        @toggleMuteLayerEvent="layer.muteLayer = !layer.muteLayer"
-      ></Layer>
+      <v-carousel :vertical="true"
+      height="73vh"
+      :show-arrows="false"
+      :vertical-delimiters="'left'">
+        <Layer v-for="(layer,index) in layers"
+          ref="layers_refs"
+          :key="`layer-${layer.id}`"
+          :layerId="`layer-${layer.id}`"
+          :unifiedControl="unifiedControl"
+          :n_bars="n_bars"
+          :inst_id="inst_id"
+          :duration="duration"
+          :total_duration="total_duration"
+          :num_beats="layer.num_beats"
+          :octaveLayer="layer.octaveLayer"
+          :keyLayer="layer.keyLayer"
+          :scaleLayer="layer.scaleLayer"
+          :prelistenLayer="layer.prelistenLayer"
+          :muteLayer="layer.muteLayer"
+          :singleLayerHeight="window_height - container_height - 24"
+          @restartEvent="restart(index)"
+          @removeLayerEvent="layers.splice(index,1)"
+          @addKeyEvent="() => {if(!systemPlaying && layer.num_beats < 12 ) layer.num_beats++}"
+          @removeKeyEvent="() => {if(!systemPlaying && layer.num_beats > 1 ) layer.num_beats--}"
+          @keySelectedEvent="(val) => {layer.keyLayer = val}"
+          @scaleSelectedEvent="(val) => {layer.scaleLayer = val}"
+          @moreOctaveEvent="() => {if(layer.octaveLayer < 6) layer.octaveLayer++}"
+          @lessOctaveEvent="() => {if(layer.octaveLayer > 2) layer.octaveLayer--}"
+          @togglePrelistenLayerEvent="layer.prelistenLayer = !layer.prelistenLayer"
+          @toggleMuteLayerEvent="layer.muteLayer = !layer.muteLayer"
+        ></Layer>
+      </v-carousel>
     </v-card>
 
   </div>

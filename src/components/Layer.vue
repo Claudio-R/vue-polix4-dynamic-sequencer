@@ -1,5 +1,6 @@
 <template>
-  <v-card :height="`${singleLayerHeight}`" flat tile class="mt-2">
+<v-carousel-item>
+  <v-card height="100%" flat tile class="my-0">
       <v-row no-gutters>
         <!-- LABELS -->
         <v-col cols="2">
@@ -28,7 +29,7 @@
               <v-col :cols="num_cols" v-for="k in num_beats" :key="`column-${layerId}-${j}-${k}`">
                 <Column 
                   class="column" :style="cssVars"
-                  ref = beats_refs
+                  ref = "beats_refs"
                   :class="{playing : k*j-(k-num_beats)*(j-1) === isPlaying + 1}"
                   :beatId="k*j-1-(k-num_beats)*(j-1)"
                   :inst_selected="inst_id"
@@ -45,25 +46,29 @@
         </v-col>
         <!-- Merged Controller -->
         <v-col v-else cols="10">
-          <v-container v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`">
-            <v-row no-gutters class="justify-space-between">
-              <v-col :cols="num_cols" v-for="k in num_beats" :key="`column-${layerId}-${j}-${k}`">
-                <Column 
-                  class="column" :style="cssVars"
-                  ref = beats_refs
-                  :class="{playing : k*j-(k-num_beats)*(j-1) === isPlaying + 1}"
-                  :beatId="k*j-1-(k-num_beats)*(j-1)"
-                  :inst_selected="inst_id"
-                  :duration="duration"
-                  :prelistenBeat="prelistenLayer"
-                  :muteLayer="muteLayer"
-                  :isPlaying="isPlaying"
-                  :tonesInScale="tonesInScale"
-                  :scale_keyboard="scale_keyboard"
-                ></Column>
-              </v-col>
-            </v-row>
-          </v-container>
+          <v-carousel :hide-delimiters="true">
+            <v-container v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`">
+              <v-carousel-item>
+                <v-row no-gutters class="justify-space-between">
+                  <v-col :cols="num_cols" v-for="k in num_beats" :key="`column-${layerId}-${j}-${k}`">
+                    <Column 
+                      class="column" :style="cssVars"
+                      ref = "beats_refs"
+                      :class="{playing : k*j-(k-num_beats)*(j-1) === isPlaying + 1}"
+                      :beatId="k*j-1-(k-num_beats)*(j-1)"
+                      :inst_selected="inst_id"
+                      :duration="duration"
+                      :prelistenBeat="prelistenLayer"
+                      :muteLayer="muteLayer"
+                      :isPlaying="isPlaying"
+                      :tonesInScale="tonesInScale"
+                      :scale_keyboard="scale_keyboard"
+                    ></Column>
+                  </v-col>
+                </v-row>
+              </v-carousel-item>
+            </v-container>
+          </v-carousel>
         </v-col>
 
         <!-- LAYER CONTROLLER -->
@@ -136,6 +141,7 @@
         </v-col>
       </v-row>
   </v-card>
+  </v-carousel-item>
 </template>
 
 <script>
