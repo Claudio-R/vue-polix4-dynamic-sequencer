@@ -57,11 +57,11 @@ export default {
     methods: {
       changeVolume(){
         if(this.id==0 || this.id==1) { 
-            this.myInstrument.volume.value = this.volume;
+            this.myInstrument.volume.value = this.volumeSlider.val;
         }
         if(this.id==2) { 
             for(let i=0;i<8;i++){
-            this.myInstrument[i].volume.value = this.volume;
+            this.myInstrument[i].volume.value = this.volumeSlider.val;
             }
         }
       },
@@ -75,7 +75,7 @@ export default {
         this.$store.state.synth_selection[this.id] = synth_number
         this.$emit('changeSynthEvent',this.id)
         this.$store.commit('synthsChanged')
-        // this.changeVolume()
+        this.changeVolume()
       }
     },
 
@@ -90,11 +90,12 @@ export default {
     },
     
     watch: {
-        'volume': function() {
-            this.changeVolume()
+        'volumeSlider.val': function() {
+          this.changeVolume()
         },
-        'duration': function() {
-            this.$emit('durationChangeEvent', this.id, this.duration)
+        'durationSlider.val': function() {
+          console.log(this.durationSlider.val)
+          this.$emit('durationChangeEvent', this.id, this.durationSlider.val)
         },
     }
 }
