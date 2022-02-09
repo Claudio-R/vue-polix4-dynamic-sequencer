@@ -4,10 +4,6 @@
       :style="cssVars"
       >mdi-circle
     </v-icon>
-      <!-- <div class="key"
-        :class="{active : state1 || state2 || state3}"
-        :style="cssVars">
-      </div> -->
   </v-card>
 </template>
 

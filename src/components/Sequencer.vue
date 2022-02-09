@@ -34,7 +34,7 @@
             </template>
             <v-card class="pa-8">
             <v-row>
-              <v-col cols="4" v-for="(instrument_name, index) in inst_names" :key="instrument_name">
+              <v-col cols="4" v-for="(instrument_name, index) in inst_names" :key="`sequencer-${index}-${instrument_name}`">
                 <InstrumentSelector
                   :id="index"
                   @instSelectionEvent="instSelected"
@@ -98,14 +98,14 @@
                   <v-btn small class="" depressed @click="stopAll">
                     <v-icon>mdi-stop</v-icon>  
                   </v-btn>
+                  <v-btn small :disabled="!unifiedControl" depressed @click="toggleMuteSystem">
+                    <v-icon>mdi-volume-mute</v-icon>
+                  </v-btn>
                   <v-btn small class="" depressed @click="clearAll">
                     <v-icon>mdi-delete</v-icon>
                   </v-btn>
                   <v-btn small depressed @click="automaticSlideControl=!automaticSlideControl">
                     <v-icon>mdi-arrow-right-circle-outline</v-icon>
-                  </v-btn>
-                  <v-btn small :disabled="!unifiedControl" depressed @click="toggleMuteSystem">
-                    <v-icon>mdi-volume-mute</v-icon>
                   </v-btn>
                 </v-card-actions>
               </v-col>
@@ -146,7 +146,7 @@
                 <span>Main controller</span>
               </v-btn>
             </template>
-            <v-expansion-panels multiple accordion>
+            <v-expansion-panels accordion>
               <!-- OCTAVE -->
               <v-expansion-panel>
                 <v-expansion-panel-header>
@@ -195,11 +195,13 @@
       height="73vh"
       :show-arrows="false"
       :vertical-delimiters="'left'">
+        <!-- :prelistenLayer="layer.prelistenLayer" -->
         <Layer v-for="(layer,index) in layers"
           ref="layers_refs"
           :key="`layer-${layer.id}`"
           :layerId="`layer-${layer.id}`"
           :unifiedControl="unifiedControl"
+          :systemPlaying="systemPlaying"
           :n_bars="n_bars"
           :inst_id="inst_id"
           :duration="duration"
@@ -208,7 +210,6 @@
           :octaveLayer="layer.octaveLayer"
           :keyLayer="layer.keyLayer"
           :scaleLayer="layer.scaleLayer"
-          :prelistenLayer="layer.prelistenLayer"
           :muteLayer="layer.muteLayer"
           :automaticSlideControl="automaticSlideControl"
           @restartEvent="restart(index)"

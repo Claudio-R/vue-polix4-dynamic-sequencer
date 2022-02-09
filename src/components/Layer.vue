@@ -4,19 +4,19 @@
       <v-row no-gutters>
         <!-- LABELS -->
         <v-col cols="2">
-          <v-container class="">
-            <div v-if="inst_id==2">
-              <v-card flat outlined class="text-center" 
-                v-for="k in tonesInScale" :key="k"
-                >{{drum_keyboard[tonesInScale-k]}}
-              </v-card>
-            </div>
-            <div v-else>
-              <v-card flat outlined class="text-center" 
+          <v-container class="labels-container my-3 mx-1 pa-0">
+            <v-container v-if="inst_id!=2" class="pa-0">
+              <v-card outlined class="text-center grey--text" 
                 v-for="k in tonesInScale" :key="k"
                 >{{scale_keyboard[tonesInScale-k].slice(0, -1)}}
               </v-card>
-            </div>
+            </v-container>
+            <v-container v-else class="pa-0">
+              <v-card outlined class="text-center grey--text" 
+                v-for="k in tonesInScale" :key="k"
+                >{{drum_keyboard[tonesInScale-k]}}
+              </v-card>
+            </v-container>
             <v-btn block v-if="unifiedControl" class="text-center" @click="$emit('removeLayerEvent')">Remove</v-btn>
           </v-container>
         </v-col>
@@ -76,23 +76,24 @@
                 </v-row>
               </v-carousel-item>
           </v-carousel>
+
         </v-col>
 
         <!-- LAYER CONTROLLER -->
         <v-col v-if="!unifiedControl" cols="3">
           <v-container class="layer-controller">
             <v-card flat class="pa-1" :height="`${singleLayerHeight-37}`">
-            <div class="d-flex">
+            <v-card flat class="d-flex justify-space-around">
               <v-btn class="text-center" @click="$emit('removeLayerEvent')">Remove</v-btn>
-              <div class="pa-1">
-                <v-btn icon small class="text-center" @click="$emit('addKeyEvent')">
-                  <v-icon small>mdi-plus</v-icon>
+              <v-card class="pa-1">
+                <v-btn icon :disabled="systemPlaying" small class="text-center mr-2" @click="$emit('addKeyEvent')">
+                  <v-icon >mdi-plus</v-icon>
                 </v-btn>
-                <v-btn icon small class="text-center" @click="$emit('removeKeyEvent')">
-                  <v-icon small>mdi-minus</v-icon>
+                <v-btn icon :disabled="systemPlaying" small class="text-center ml-2" @click="$emit('removeKeyEvent')">
+                  <v-icon >mdi-minus</v-icon>
                 </v-btn>
-              </div>
-            </div>
+              </v-card>
+            </v-card>
 
               <!-- OCTAVE -->
               <v-menu offset-y :close-on-content-click="false">
@@ -137,17 +138,17 @@
                 ></ScaleSelector>
               </v-menu>
 
-              <div class="mt-2 d-flex justify-space-between">
-                <v-btn small class="layer-btn prelisten-btn" :class="{ prelistenActive : prelistenLayer }" @click="$emit('togglePrelistenLayerEvent')">
+              <v-card flat class="mt-2 d-flex justify-space-around">
+                <v-btn small class="layer-btn prelisten-btn" :class="{ green : prelistenLayer }" @click="prelistenLayer=!prelistenLayer">
                   <v-icon>mdi-headphones-off</v-icon> 
                 </v-btn>
-                <v-btn small class="layer-btn mute-btn" :class="{ muteActive : muteLayer }" @click="$emit('toggleMuteLayerEvent')">
+                <v-btn small class="layer-btn mute-btn" :class="{red : muteLayer }" @click="$emit('toggleMuteLayerEvent')">
                   <v-icon>mdi-volume-mute</v-icon>
                 </v-btn>
                 <v-btn small class="layer-btn clear-btn" @click="clearLayer">
                   <v-icon>mdi-delete</v-icon>
                 </v-btn>
-              </div>
+              </v-card>
 
             </v-card>
           </v-container>
@@ -183,10 +184,11 @@ export default {
         octaveLayer: Number,
         keyLayer: String,
         scaleLayer: String,
-        prelistenLayer: Boolean,
+        // prelistenLayer: Boolean,
         muteLayer: Boolean,
         singleLayerHeight: Number,
         automaticSlideControl: true,
+        systemPlaying: Boolean
     },
     
     data() {
@@ -195,6 +197,7 @@ export default {
             my_clock: '',
             tonesInScale: 8,
             keyboard: '',
+            prelistenLayer: true,
             scale_keyboard : ["C4","D4","E4","F4","G4","A4","B4","C5"],
             drum_keyboard : ["kick", "snare", "tom 1","tom 2","closed hh", "open hh", "ride","clap"],
             model: 0,
@@ -311,6 +314,13 @@ export default {
 </script>
 
 <style lang="scss">
+
+.labels-container{
+  border: 3px solid rgb(199, 202, 0);
+  border-radius: 8px;
+}
+
+
 .remove-btn-unified {
     background-color: rgb(194, 194, 194);
     // margin-top: 2px;
@@ -333,8 +343,7 @@ export default {
 .column {
     display: inline-block;
     //width: calc(var(--columnWidth) - 6px);
-    height: auto;
-    background-color: #c0a630;
+    border: 3px solid #c0a630;
     //border: 3px solid #0000004d;
     border-radius: 8px;
     //margin: 5px;

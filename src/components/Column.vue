@@ -17,9 +17,19 @@
             @playSound3Event="playInst3"
         ></Key>
         <v-card v-if="num_beats<=6" outlined class="d-flex justify-space-around py-2">
-          <v-icon dense @click="monitorBeat">mdi-headphones</v-icon>
-          <v-icon dense :class="{ muteActive : muteBeat }" @click="muteBeat=!muteBeat">mdi-volume-mute</v-icon>
-          <v-icon dense @click="clearAllKeys">mdi-delete</v-icon>
+          <!-- <v-icon dense @click="monitorBeat">mdi-headphones</v-icon>
+          <v-icon dense :class="{ red : muteBeat }" @click="muteBeat=!muteBeat">mdi-volume-mute</v-icon>
+          <v-icon dense @click="clearAllKeys">mdi-delete</v-icon> -->
+          <v-btn small icon @click="monitorBeat">
+            <v-icon >mdi-headphones</v-icon>
+          </v-btn>
+          <v-btn icon small :class="{ red : muteBeat }"
+            @click="muteBeat=!muteBeat">
+            <v-icon >mdi-volume-mute</v-icon>
+          </v-btn>
+          <v-btn icon small @click="clearAllKeys">
+            <v-icon >mdi-delete</v-icon>
+          </v-btn>
         </v-card>
         <v-card v-else outlined>
           <v-menu offset-x :close-on-content-click="false">
@@ -27,9 +37,16 @@
               <v-icon v-on="on">mdi-menu-right</v-icon>
             </template>
             <v-card outlined class="d-flex justify-space-around py-2">
-              <v-icon dense class="mx-2" @click="monitorBeat">mdi-headphones</v-icon>
-              <v-icon dense class="mx-2" :class="{ muteActive : muteBeat }" @click="muteBeat=!muteBeat">mdi-volume-mute</v-icon>
-              <v-icon dense class="mx-2" @click="clearAllKeys">mdi-delete</v-icon>
+              <v-btn icon class="mx-2" @click="monitorBeat">
+                <v-icon dense>mdi-headphones</v-icon>
+              </v-btn>
+              <v-btn icon class="mx-2" :class="{ red : muteBeat }"
+                @click="muteBeat=!muteBeat">
+                <v-icon dense>mdi-volume-mute</v-icon>
+              </v-btn>
+              <v-btn icon class="mx-2" @click="clearAllKeys">
+                <v-icon dense>mdi-delete</v-icon>
+              </v-btn>
             </v-card>
           </v-menu>
         </v-card>
