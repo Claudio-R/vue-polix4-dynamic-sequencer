@@ -85,7 +85,7 @@
         </v-col>
 
         <!-- MAIN CONTROLLER -->
-        <v-col cols="12" sm="8" md="6">
+        <v-col cols="10" sm="8" md="6">
           <v-card flat>
             <!-- FIRST ROW -->
             <v-row no-gutters>
@@ -123,7 +123,7 @@
           </v-card>
         </v-col>
 
-        <v-col cols="2" md="3" class="hidden-xs-only">
+        <v-col cols="2" md="3">
           <!-- dare classe disabled -->
           <v-menu offset-y :disabled="!unifiedControl" :close-on-content-click="false">
             <template v-slot:activator="{ on }">
@@ -264,7 +264,7 @@ export default {
         },
         {
           id: 1,
-          num_beats: 6,
+          num_beats: 5,
           octaveLayer: 4,
           keyLayer: 'C',
           scaleLayer: 'Major',
