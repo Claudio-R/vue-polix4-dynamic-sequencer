@@ -22,6 +22,7 @@
             </v-list>
           </v-menu>
         </v-col>
+        
         <!-- INSTRUMENT SELECTOR -->
         <v-col cols="4" class="caption">
           <v-menu offset-y :close-on-content-click="false">
@@ -31,18 +32,18 @@
                 <span>{{inst_names[inst_id-1]}}</span>
               </v-btn>
             </template>
+            <v-card class="pa-8">
             <v-row>
               <v-col cols="4" v-for="(instrument_name, index) in inst_names" :key="instrument_name">
-                <v-card>
-                  <InstrumentSelector
-                    :id="index+1"
-                    :selected_inst="inst_id"
-                    @instSelectionEvent="instSelected"
-                    @durationChangeEvent="changeDuration"
-                  ></InstrumentSelector>
-                </v-card>
+                <InstrumentSelector
+                  :id="index+1"
+                  :selected_inst="inst_id"
+                  @instSelectionEvent="instSelected"
+                  @durationChangeEvent="changeDuration"
+                ></InstrumentSelector>
               </v-col>
             </v-row>
+            </v-card>
           </v-menu>
         </v-col>
         <!-- ADD BARS -->
@@ -71,16 +72,16 @@
         <!-- ADD LAYER -->
         <v-col cols="6" sm="3">
           <v-card>
-          <v-card-actions>
-            <v-text-field type="number" v-model.number="numBeatsNewLayer"
-              label="Add a layer"
-              outlined dense
-              hint="Value from 1 to 12"
-              hide-details="true"
-              append-outer-icon="mdi-plus-circle"
-              @click:append-outer="addLayer"
-            ></v-text-field>
-          </v-card-actions>
+            <v-card-actions>
+              <v-text-field type="number" v-model.number="numBeatsNewLayer"
+                label="Add a layer"
+                outlined dense
+                hint="Value from 1 to 12"
+                hide-details="true"
+                append-outer-icon="mdi-plus-circle"
+                @click:append-outer="addLayer"
+              ></v-text-field>
+            </v-card-actions>
           </v-card>
         </v-col>
 
@@ -184,7 +185,6 @@
     </v-card> 
     
     <v-card id="layers-container" flat tile class="d-flex flex-column">
-
       <Layer v-for="(layer,index) in layers"
         ref="layers_refs"
         :key="`layer-${layer.id}`"

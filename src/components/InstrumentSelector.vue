@@ -1,25 +1,38 @@
 <template>
-  <div>
-    <SynthSelector :selectedSynth="selectedSynthNumber"
-      :id="id"
-      @instrumentSelectorEvent="changeSynth">
-    </SynthSelector>
-    <v-slider
-      v-model="volumeSlider.val"
-      :color="volumeSlider.color"
-      :label="volumeSlider.label"
-      min="-40" max="3" step="5"
-    ></v-slider>
-    <v-slider v-if="id!=3"
-      v-model="durationSlider.val"
-      :color="durationSlider.color"
-      :label="durationSlider.label"
-      min="0" max="4" step="1"
-    ></v-slider>
-    <v-btn @click="instrumentSelection">
+
+  
+
+  <v-card outlined class="pa-2 d-flex flex-column">
+    <v-card-text class="caption">Setting instrument {{id}}</v-card-text>
+    <div>
+      <SynthSelector :selectedSynth="selectedSynthNumber"
+        :id="id"
+        @instrumentSelectorEvent="changeSynth">
+      </SynthSelector>
+    </div>
+    <div class="mt-3">
+      <v-slider
+        v-model="volumeSlider.val"
+        :color="volumeSlider.color"
+        min="-40" max="3" step="5"
+        :thumb-label="true"
+        prepend-icon="mdi-volume-high"
+      ></v-slider>
+    </div>
+
+    <div class="mt-3">
+      <v-slider v-if="id!=3"
+        v-model="durationSlider.val"
+        :color="durationSlider.color"
+        min="0" max="4" step="0.1"
+        :thumb-label="true"
+        prepend-icon="mdi-sine-wave"
+      ></v-slider>
+    </div>
+    <v-btn block @click="instrumentSelection">
       select
     </v-btn>
-  </div>
+  </v-card>
 </template>
 
 <script>
