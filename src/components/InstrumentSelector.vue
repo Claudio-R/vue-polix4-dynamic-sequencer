@@ -24,7 +24,7 @@
         :color="durationSlider.color"
         min="0" max="4" step="1"
         :thumb-label="true"
-        prepend-icon="mdi-sine-wave"
+        prepend-icon="mdi-clock"
       ></v-slider>
     </div>
     <v-btn block @click="instrumentSelection">

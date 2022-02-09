@@ -301,8 +301,6 @@ export default {
   },
 
   methods: {
-      /** sequencer controller */
-      // addLayer(num_beats_input) {
       addLayer() {
           console.log(this.numBeatsNewLayer)
           if(this.numBeatsNewLayer > 12) this.numBeatsNewLayer = 12;
@@ -319,9 +317,6 @@ export default {
           )
           this.nextId += 1;
       },
-      // updateBPM(bpm_input) {
-      //     this.bpm = bpm_input
-      // },
       addBar(){
           for(let idx in this.layers) {
               console.log(this.$refs.layers_refs.length, idx);
