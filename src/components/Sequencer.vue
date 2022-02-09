@@ -1,5 +1,5 @@
 <template>
-  <div id="sequencer">
+  <v-card id="sequencer" min-width="370px">
     <v-card flat tile id="container-bar" class="primary pa-2" ref="container_ref" :min-height="heightHorizontal">
       <v-row dense>
        <!-- SELECT BPM -->
@@ -206,7 +206,7 @@
         ></Layer>
     </v-card>
 
-  </div>
+  </v-card>
 </template>
 
 <script>
