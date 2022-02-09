@@ -1,6 +1,5 @@
 <template>
-<v-carousel-item>
-  <v-card :height="heightHorizontal" flat tile class="my-0">
+  <v-card :min-height="heightHorizontal" flat tile class="my-0">
       <v-row no-gutters>
         <!-- LABELS -->
         <v-col cols="2">
@@ -17,13 +16,13 @@
                 >{{scale_keyboard[tonesInScale-k].slice(0, -1)}}
               </v-card>
             </div>
-            <v-btn block v-if="unifiedControl" class="text-center" @click="$emit('removeLayerEvent')">Remove</v-btn>
+            <v-btn block v-if="unifiedControl" class="text-center hidden-xs-only" @click="$emit('removeLayerEvent')">Remove</v-btn>
           </v-container>
         </v-col>
 
         <!-- BEATS -->
         <!-- Unmerged Controller -->
-        <v-col v-if="!unifiedControl" cols="7">
+        <v-col v-if="!unifiedControl" cols="10" sm="7">
           <v-carousel hide-delimiters
           height="100%"
           :continuous="false">
@@ -79,7 +78,7 @@
         </v-col>
 
         <!-- LAYER CONTROLLER -->
-        <v-col v-if="!unifiedControl" cols="3">
+        <v-col v-if="!unifiedControl" cols="3" class="hidden-xs-only">
           <v-container class="layer-controller">
             <v-card flat class="pa-1" :height="`${singleLayerHeight-37}`">
             <div class="d-flex">
@@ -154,7 +153,6 @@
         </v-col>
       </v-row>
   </v-card>
-  </v-carousel-item>
 </template>
 
 <script>
@@ -237,11 +235,11 @@ export default {
         },
         heightHorizontal () {
         switch (this.$vuetify.breakpoint.name) {
-          case 'xs': return '73vh'
-          case 'sm': return '73vh'
-          case 'md': return '85vh'
-          case 'lg': return '82vh'
-          case 'xl': return '82vh'
+          case 'xs': return '73%'
+          case 'sm': return '73%'
+          case 'md': return '80%'
+          case 'lg': return '82%'
+          case 'xl': return '82%'
         }
       },
     },

@@ -16,12 +16,12 @@
             @playSound2Event="playInst2"
             @playSound3Event="playInst3"
         ></Key>
-        <v-card v-if="num_beats<=6" outlined class="d-flex justify-space-around py-2">
+        <v-card v-if="num_beats<=6" outlined class="d-none d-sm-flex justify-space-around py-2">
           <v-icon dense @click="monitorBeat">mdi-headphones</v-icon>
           <v-icon dense :class="{ muteActive : muteBeat }" @click="muteBeat=!muteBeat">mdi-volume-mute</v-icon>
           <v-icon dense @click="clearAllKeys">mdi-delete</v-icon>
         </v-card>
-        <v-card v-else outlined>
+        <v-card v-else outlined class="hidden-xs-only">
           <v-menu offset-x :close-on-content-click="false">
             <template v-slot:activator="{ on }">
               <v-icon v-on="on">mdi-menu-right</v-icon>
