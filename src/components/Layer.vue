@@ -47,10 +47,9 @@
         <!-- Merged Controller -->
         <v-col v-else cols="10">
           <v-carousel :hide-delimiters="true">
-            <v-container v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`">
-              <v-carousel-item>
+              <v-carousel-item v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`">
                 <v-row no-gutters class="justify-space-between">
-                  <v-col :cols="num_cols" v-for="k in num_beats" :key="`column-${layerId}-${j}-${k}`">
+                  <v-col :cols="num_cols" v-for="k in num_beats" :key="`column-${layerId}-${j}-${k}`" class="spacing-playground pa-3">
                     <Column 
                       class="column" :style="cssVars"
                       ref = "beats_refs"
@@ -67,7 +66,6 @@
                   </v-col>
                 </v-row>
               </v-carousel-item>
-            </v-container>
           </v-carousel>
         </v-col>
 
