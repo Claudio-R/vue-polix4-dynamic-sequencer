@@ -56,13 +56,13 @@ export default ({
 
     computed: {
         synth1() {
-            return this.$store.state.synth1
+          return this.$store.state.synth1
         },
         synth2() {
-            return this.$store.state.synth2
+          return this.$store.state.synth2
         },
         drum() {
-            return this.$store.state.drum
+          return this.$store.state.drum
         }
     },
 
