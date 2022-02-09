@@ -1,6 +1,6 @@
 <template>
   <!-- SYNTHS -->
-  <div v-if="id!=3">
+  <div v-if="id!=2">
     <v-menu offset-y :close-on-content-click="true">
       <template v-slot:activator="{ on }">
         <v-btn outlined class="mt-2" block v-on="on">

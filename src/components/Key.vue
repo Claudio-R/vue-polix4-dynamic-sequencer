@@ -1,6 +1,7 @@
 <template>
   <v-card flat outlined class="text-center" @click="toggleActive">
     <v-icon small :class="{active : state1 || state2 || state3}"
+      :style="cssVars"
       >mdi-circle
     </v-icon>
       <!-- <div class="key"
@@ -44,12 +45,12 @@ export default {
 
     computed: {
         cssVars() {
-            var CSScolors = ['rgb(255, 0, 0)','rgb(0, 0, 255)','rgb(0, 255, 0)']
+            let CSScolors = ['rgb(255, 0, 0)','rgb(0, 0, 255)','rgb(0, 255, 0)']
             if(this.state1 && this.state2 && this.state3){
                 return {
                     '--inst_color': CSScolors[3-this.very_last_color-this.last_color],
                     '--shadow': '-7px 0 '+CSScolors[this.very_last_color]+',-14px 0 '+CSScolors[this.last_color],
-                    '--inst_shift': '7px',
+                    '--inst_shift': '50%',
                     }
                 }
             if(this.state1 && this.state2){
@@ -57,7 +58,8 @@ export default {
                 return {
                     '--inst_color': CSScolors[this.very_last_color],
                     '--shadow': '-7px 0 '+ CSScolors[this.last_color],
-                    '--inst_shift': '3.5px',
+                    // '--inst_shift': '3.5px',
+                    '--inst_shift': '25%',
                     }
                 }
             if(this.state2 && this.state3){
@@ -65,7 +67,8 @@ export default {
                 return {
                     '--inst_color': CSScolors[this.very_last_color],
                     '--shadow': '-7px 0 '+CSScolors[this.last_color],
-                    '--inst_shift': '3.5px',
+                    // '--inst_shift': '3.5px',
+                    '--inst_shift': '25%',
                     }
                 }
             if(this.state1 && this.state3){
@@ -73,28 +76,30 @@ export default {
                 return {
                     '--inst_color': CSScolors[this.very_last_color],
                     '--shadow': '-7px 0 '+CSScolors[this.last_color],
-                    '--inst_shift': '3.5px',
+                    '--inst_shift': '25%',
                     }
                 }
             if(this.state1){
                 this.last_color = 0
                 return {
                     '--inst_color': CSScolors[0],
-                    '--inst_shift': '0px',
+                    // '--inst_shift': '0px',
+                    '--inst_shift': '-0%',
                     }
                 }
             else if(this.state2){
                 this.last_color = 1
                 return {
                     '--inst_color': CSScolors[1],
-                    '--inst_shift': '0px',
+                    // '--inst_shift': '0px',
+                    '--inst_shift': '-0%',
                     }
                 }
             else if(this.state3){
                 this.last_color = 2
                 return {
                     '--inst_color': CSScolors[2],
-                    '--inst_shift': '0px',
+                    '--inst_shift': '-0%',
                 }
             }
         }
@@ -168,8 +173,8 @@ export default {
 
 .active {
     position: relative;
-    // left: calc(var(--columnWidth)/2 - 6px + var(--inst_shift));
-    // transform: translate(-50%, -50%);
+    // left: calc(4px + var(--inst_shift));
+    transform: translate(var(--inst_shift));
     background: var(--inst_color);
     box-shadow: var(--shadow);
 }

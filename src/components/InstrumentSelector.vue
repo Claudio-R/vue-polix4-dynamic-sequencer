@@ -3,7 +3,7 @@
   
 
   <v-card outlined class="pa-2 d-flex flex-column">
-    <v-card-text class="caption">Setting instrument {{id}}</v-card-text>
+    <v-card-text class="caption">Setting instrument {{id+1}}</v-card-text>
     <div>
       <SynthSelector :selectedSynth="selectedSynthNumber"
         :id="id"
@@ -21,7 +21,7 @@
     </div>
 
     <div class="mt-3">
-      <v-slider v-if="id!=3"
+      <v-slider v-if="id!=2"
         v-model="durationSlider.val"
         :color="durationSlider.color"
         min="0" max="4" step="0.1"
@@ -51,7 +51,7 @@ export default {
 
     data(){
       return {
-        selectedSynthNumber: this.$store.state.synth_selection[this.id-1],
+        selectedSynthNumber: this.$store.state.synth_selection[this.id],
         volumeSlider: { label: 'volume', val: -0, color: 'orange darken-3' },
         durationSlider: { label: 'duration', val: 2, color: 'green lighten-1' },
       }
