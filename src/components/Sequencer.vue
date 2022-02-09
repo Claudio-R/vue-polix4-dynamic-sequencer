@@ -125,7 +125,7 @@
 
         <v-col cols="2" md="3">
           <!-- dare classe disabled -->
-          <v-menu offset-y :disabled="!unifiedControl" :close-on-content-click="false">
+          <v-menu offset-y :disabled="!unifiedControl" :close-on-content-click="false" max-width="100%">
             <template v-slot:activator="{ on }">
               <v-btn block :disabled="!unifiedControl" v-on="on">
                 <v-icon left>mdi-menu</v-icon>
