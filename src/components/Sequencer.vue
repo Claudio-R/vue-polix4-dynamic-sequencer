@@ -85,7 +85,7 @@
         </v-col>
 
         <!-- MAIN CONTROLLER -->
-        <v-col cols="8" md="6">
+        <v-col cols="12" sm="8" md="6">
           <v-card flat>
             <!-- FIRST ROW -->
             <v-row no-gutters>
@@ -103,7 +103,7 @@
                   <v-btn small depressed @click="automaticSlideControl=!automaticSlideControl">
                     <v-icon>mdi-arrow-right-circle-outline</v-icon>
                   </v-btn>
-                  <v-btn small :disabled="!unifiedControl" depressed @click="toggleMuteSystem" class="hidden-xs-only">
+                  <v-btn small :disabled="!unifiedControl" depressed @click="toggleMuteSystem">
                     <v-icon>mdi-volume-mute</v-icon>
                   </v-btn>
                 </v-card-actions>
