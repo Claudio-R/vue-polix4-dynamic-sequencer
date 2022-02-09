@@ -43,14 +43,14 @@
 </template>
 
 <script>
-import MenuElement from '@/components/MenuElement.vue'
+// import MenuElement from '@/components/MenuElement.vue'
 
 export default {
     name: 'SynthSelector',
 
-    components: {
-        MenuElement
-    },
+    // components: {
+    //     MenuElement
+    // },
 
     props: ['selectedSynth','id'],
 

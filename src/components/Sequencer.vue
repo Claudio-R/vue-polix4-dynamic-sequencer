@@ -12,14 +12,14 @@
                 <span>BPM: {{bpm}}</span>
               </v-btn>
             </template>
-            <v-list>
-              <v-list-item>
-                <v-slider
-                    v-model="bpm"
-                    min="1" max="280"
+            <v-card>
+              <div class="my-1">
+                <v-card-text class="caption">Selected bpm: {{bpm}}</v-card-text>
+                <v-slider v-model="bpm"
+                  min="1" max="280"
                 ></v-slider>
-              </v-list-item>
-            </v-list>
+              </div>
+            </v-card>
           </v-menu>
         </v-col>
         
@@ -36,7 +36,7 @@
             <v-row>
               <v-col cols="4" v-for="(instrument_name, index) in inst_names" :key="instrument_name">
                 <InstrumentSelector
-                  :id="index+1"
+                  :id="index"
                   :selected_inst="inst_id"
                   @instSelectionEvent="instSelected"
                   @durationChangeEvent="changeDuration"
@@ -417,7 +417,7 @@ export default {
 #container-bar {
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 1;
 }
 
 // #view-box {
