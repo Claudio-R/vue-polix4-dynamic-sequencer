@@ -39,6 +39,7 @@
                   :id="index"
                   @instSelectionEvent="instSelected"
                   @durationChangeEvent="changeDuration"
+                  @changeSynthEvent="changeSynthName"
                 ></InstrumentSelector>
               </v-col>
             </v-row>
