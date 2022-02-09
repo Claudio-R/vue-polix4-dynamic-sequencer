@@ -46,7 +46,9 @@
         </v-col>
         <!-- Merged Controller -->
         <v-col v-else cols="10">
-          <v-carousel :hide-delimiters="true">
+          <v-carousel hide-delimiters
+          height="100%"
+          :continuous="false">
               <v-carousel-item v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`">
                 <v-row no-gutters class="justify-space-between">
                   <v-col :cols="num_cols" v-for="k in num_beats" :key="`column-${layerId}-${j}-${k}`" class="spacing-playground pa-3">
