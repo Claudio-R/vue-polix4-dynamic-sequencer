@@ -22,7 +22,7 @@
       <v-slider v-if="id!=2"
         v-model="durationSlider.val"
         :color="durationSlider.color"
-        min="0" max="4" step="1"
+        min="0" max="4" step="0.1"
         :thumb-label="true"
         prepend-icon="mdi-sine-wave"
       ></v-slider>
@@ -80,6 +80,7 @@ export default {
     },
 
     computed: {
+        
         myInstrument() {
           // return this.$store.state.instruments[this.id]}
           if(this.id==0) { return this.$store.state.synth1 }
