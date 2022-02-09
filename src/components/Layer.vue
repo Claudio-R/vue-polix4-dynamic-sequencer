@@ -36,6 +36,7 @@
                     :class="{playing : k*j-(k-num_beats)*(j-1) === isPlaying + 1}"
                     :beatId="k*j-1-(k-num_beats)*(j-1)"
                     :inst_selected="inst_id"
+                    :num_beats="num_beats"
                     :duration="duration"
                     :prelistenBeat="prelistenLayer"
                     :muteLayer="muteLayer"
@@ -138,7 +139,7 @@
 
               <div class="mt-2 d-flex justify-space-between">
                 <v-btn small class="layer-btn prelisten-btn" :class="{ prelistenActive : prelistenLayer }" @click="$emit('togglePrelistenLayerEvent')">
-                  <v-icon>mdi-headphones</v-icon> 
+                  <v-icon>mdi-headphones-off</v-icon> 
                 </v-btn>
                 <v-btn small class="layer-btn mute-btn" :class="{ muteActive : muteLayer }" @click="$emit('toggleMuteLayerEvent')">
                   <v-icon>mdi-volume-mute</v-icon>

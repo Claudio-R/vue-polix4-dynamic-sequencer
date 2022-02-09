@@ -249,8 +249,8 @@ export default {
 
   data(){
     return {
-        window_height: Number,
-        container_height: Number,
+        // window_height: Number,
+        // container_height: Number,
         /** sequencer controller */
         systemPlaying: false,
         bpm: 120,
@@ -302,10 +302,10 @@ export default {
     },
   },
 
-  mounted() {
-    this.container_height = this.$refs.container_ref.offsetHeight;
-    this.window_height = window.screen.height;
-  },
+  // mounted() {
+  //   this.container_height = this.$refs.container_ref.offsetHeight;
+  //   this.window_height = window.screen.height;
+  // },
 
   methods: {
       addLayer() {
