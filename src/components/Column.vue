@@ -16,12 +16,22 @@
             @playSound2Event="playInst2"
             @playSound3Event="playInst3"
         ></Key>
-        <v-card outlined class="d-flex justify-space-around">
-          <v-card-actions>
-            <v-icon small @click="monitorBeat">mdi-delete</v-icon>
-            <v-icon small :class="{ muteActive : muteBeat }" @click="muteBeat=!muteBeat">mdi-delete</v-icon>
-            <v-icon small @click="clearAllKeys">mdi-delete</v-icon>
-          </v-card-actions>
+        <v-card v-if="num_beats<=6" outlined class="d-flex justify-space-around py-2">
+          <v-icon dense @click="monitorBeat">mdi-headphones</v-icon>
+          <v-icon dense :class="{ muteActive : muteBeat }" @click="muteBeat=!muteBeat">mdi-volume-mute</v-icon>
+          <v-icon dense @click="clearAllKeys">mdi-delete</v-icon>
+        </v-card>
+        <v-card v-else outlined>
+          <v-menu offset-x :close-on-content-click="false">
+            <template v-slot:activator="{ on }">
+              <v-icon v-on="on">mdi-menu-right</v-icon>
+            </template>
+            <v-card outlined class="d-flex justify-space-around py-2">
+              <v-icon dense class="mx-2" @click="monitorBeat">mdi-headphones</v-icon>
+              <v-icon dense class="mx-2" :class="{ muteActive : muteBeat }" @click="muteBeat=!muteBeat">mdi-volume-mute</v-icon>
+              <v-icon dense class="mx-2" @click="clearAllKeys">mdi-delete</v-icon>
+            </v-card>
+          </v-menu>
         </v-card>
       </div>
     </v-container>
@@ -37,7 +47,7 @@ export default ({
         Key
     },
 
-    props : ['beatId','inst_selected','duration','prelistenBeat','muteLayer','isPlaying','tonesInScale','scale_keyboard'],
+    props : ['beatId','num_beats','inst_selected','duration','prelistenBeat','muteLayer','isPlaying','tonesInScale','scale_keyboard'],
     
     data() {
         return {

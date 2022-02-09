@@ -90,7 +90,7 @@
           <v-card flat>
             <!-- FIRST ROW -->
             <v-row no-gutters>
-              <v-col cols="12" sm="6">
+              <v-col cols="12" sm="7">
                 <v-card-actions class="d-flex justify-space-around">
                   <v-btn small class="" depressed @click="playAll">
                     <v-icon>mdi-play</v-icon>
@@ -98,13 +98,16 @@
                   <v-btn small class="" depressed @click="stopAll">
                     <v-icon>mdi-stop</v-icon>  
                   </v-btn>
-                  <v-btn small class="" depressed>
+                  <v-btn small class="" depressed @click="clearAll">
                     <v-icon>mdi-delete</v-icon>
+                  </v-btn>
+                  <v-btn small :disabled="!unifiedControl" depressed @click="toggleMuteSystem">
+                    <v-icon>mdi-volume-mute</v-icon>
                   </v-btn>
                 </v-card-actions>
               </v-col>
               <!-- UNMERGE BUTTON ON SM -->
-              <v-col sm="6" class="hidden-xs-only">
+              <v-col sm="5" class="hidden-xs-only">
                 <v-card-actions>
                   <v-btn v-if="unifiedControl" small depressed block 
                   @click="unifiedControl=!unifiedControl"
@@ -135,7 +138,7 @@
           <!-- dare classe disabled -->
           <v-menu offset-y :disabled="!unifiedControl" :close-on-content-click="false">
             <template v-slot:activator="{ on }">
-              <v-btn block v-on="on">
+              <v-btn block :disabled="!unifiedControl" v-on="on">
                 <v-icon left class="hidden-xs-only">mdi-menu</v-icon>
                 <span>Main controller</span>
               </v-btn>
@@ -403,7 +406,7 @@ export default {
               this.layers[idx].muteLayer = this.muteSystem; 
           }
       },
-      clearSystem() {
+      clearAll() {
           for(let idx in this.layers) {
               this.$refs.layers_refs[idx].clearLayer();
           }

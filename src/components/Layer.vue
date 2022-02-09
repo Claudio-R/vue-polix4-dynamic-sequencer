@@ -33,6 +33,7 @@
                   :class="{playing : k*j-(k-num_beats)*(j-1) === isPlaying + 1}"
                   :beatId="k*j-1-(k-num_beats)*(j-1)"
                   :inst_selected="inst_id"
+                  :num_beats="num_beats"
                   :duration="duration"
                   :prelistenBeat="prelistenLayer"
                   :muteLayer="muteLayer"
@@ -50,7 +51,7 @@
           height="100%"
           :continuous="false">
               <v-carousel-item v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`">
-                <v-row no-gutters class="justify-space-between">
+                <v-row no-gutters class="d-flex justify-space-around">
                   <v-col :cols="num_cols" v-for="k in num_beats" :key="`column-${layerId}-${j}-${k}`" class="spacing-playground pa-3">
                     <Column 
                       class="column" :style="cssVars"
@@ -58,6 +59,7 @@
                       :class="{playing : k*j-(k-num_beats)*(j-1) === isPlaying + 1}"
                       :beatId="k*j-1-(k-num_beats)*(j-1)"
                       :inst_selected="inst_id"
+                      :num_beats="num_beats"
                       :duration="duration"
                       :prelistenBeat="prelistenLayer"
                       :muteLayer="muteLayer"
@@ -131,9 +133,15 @@
               </v-menu>
 
               <div class="mt-2 d-flex justify-space-between">
-                <v-btn small class="layer-btn prelisten-btn" :class="{ prelistenActive : prelistenLayer }" @click="$emit('togglePrelistenLayerEvent')">L</v-btn>
-                <v-btn small class="layer-btn mute-btn" :class="{ muteActive : muteLayer }" @click="$emit('toggleMuteLayerEvent')">M</v-btn>
-                <v-btn small class="layer-btn clear-btn" @click="clearLayer">C</v-btn>
+                <v-btn small class="layer-btn prelisten-btn" :class="{ prelistenActive : prelistenLayer }" @click="$emit('togglePrelistenLayerEvent')">
+                  <v-icon>mdi-headphones</v-icon> 
+                </v-btn>
+                <v-btn small class="layer-btn mute-btn" :class="{ muteActive : muteLayer }" @click="$emit('toggleMuteLayerEvent')">
+                  <v-icon>mdi-volume-mute</v-icon>
+                </v-btn>
+                <v-btn small class="layer-btn clear-btn" @click="clearLayer">
+                  <v-icon>mdi-delete</v-icon>
+                </v-btn>
               </div>
 
             </v-card>
@@ -205,7 +213,7 @@ export default {
     },
     
     computed: {
-        num_cols() {return Math.max(1, Math.floor(12/this.num_beats))},
+        num_cols() {return Math.floor(12/this.num_beats)},
         my_beat_duration() { return Number(this.total_duration/(this.num_beats)); },
         cssVars() {
             //let layerWidth = 1200;
@@ -285,8 +293,8 @@ export default {
             })
         },
         clearLayer(){
-            for(let idx=0; idx<this.$refs.beats_refs.length; idx++) { 
-                this.$refs.beats_refs[idx].clearAllKeys() }
+          for(let idx=0; idx<this.num_beats; idx++) { 
+            this.$refs.beats_refs[idx].clearAllKeys() }
         },
     },
 }

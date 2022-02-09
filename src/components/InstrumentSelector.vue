@@ -1,5 +1,4 @@
 <template>
-
   <v-card outlined class="pa-2 d-flex flex-column">
     <v-card-text class="caption">Setting instrument {{id+1}}</v-card-text>
     <div>
