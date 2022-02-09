@@ -79,6 +79,7 @@ export default {
     },
 
     computed: {
+        
         myInstrument() {
           // return this.$store.state.instruments[this.id]}
           if(this.id==0) { return this.$store.state.synth1 }

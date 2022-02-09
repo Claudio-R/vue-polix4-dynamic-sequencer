@@ -29,12 +29,12 @@
             <template v-slot:activator="{ on }">
               <v-btn small block v-on="on">
                 <v-icon left class="hidden-xs-only">mdi-guitar-electric</v-icon>
-                <span>{{currentInstrument}}</span>
+                <span>{{inst_names[inst_id]}}</span>
               </v-btn>
             </template>
             <v-card class="pa-8">
             <v-row>
-              <v-col cols="4" v-for="(instrument_name, index) in instruments" :key="instrument_name">
+              <v-col cols="4" v-for="(instrument_name, index) in inst_names" :key="instrument_name">
                 <InstrumentSelector
                   :id="index"
                   @instSelectionEvent="instSelected"
@@ -262,8 +262,7 @@ export default {
         allLayersScale: 'Major',
         prelistenSystem: true,
         muteSystem: false,
-        instruments: ['synth1','synth2','drum'],
-        currentInstrument: this.$store.state.synth_names[this.$store.state.synth_selection[0]],
+        inst_names: [this.$store.state.synth_names[this.$store.state.synth_selection[0]],this.$store.state.synth_names[this.$store.state.synth_selection[1]],this.$store.state.drum_names[this.$store.state.synth_selection[2]]],
         
       /** state variables */
       nextId: 2,
@@ -329,7 +328,7 @@ export default {
       },
       instSelected(inst_id) {
           this.inst_id=inst_id
-          this.changeSynthName(inst_id)
+          console.log(inst_id)
       },
       changeDuration(inst_id,duration){
           this.duration[inst_id]=20-duration*4+"n"
@@ -371,11 +370,11 @@ export default {
       },
       changeSynthName(id){
         if(id!=2)
-          this.currentInstrument = this.$store.state.synth_names[this.$store.state.synth_selection[id]]
+            this.inst_names[id] = this.$store.state.synth_names[this.$store.state.synth_selection[id]]
         else
-          this.currentInstrument = this.$store.state.drum_names[this.$store.state.synth_selection[id]]
+            this.inst_names[id] = this.$store.state.drum_names[this.$store.state.synth_selection[id]]
         if(id==this.inst_id)
-          this.$forceUpdate();
+        this.$forceUpdate();
       },
       moreOctave(){
           if(this.allLayersOctave < 6){ 

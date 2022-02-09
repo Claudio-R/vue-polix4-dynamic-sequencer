@@ -329,7 +329,6 @@ export default new Vuex.Store({
     'synth_selection' : synth_selection,
     'synth1' : synth[synth_selection[0]],
     'synth2' : synth[synth_selection[1]],
-    // 'instruments' : synth[synth_selection],
     'synth_names' : synth_names,
     'drum' : drum,
     'drum_names' : drum_names,
