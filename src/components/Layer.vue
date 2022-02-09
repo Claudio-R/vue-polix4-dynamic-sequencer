@@ -197,7 +197,6 @@ export default {
             if(val==0){ this.$emit('restartEvent'); 
             }
             this.model=Math.floor(this.isPlaying/this.num_beats)
-            console.log(this.model)
         },
         'keyLayer': function(val) {
             this.$emit('changedKeyEvent', val);
