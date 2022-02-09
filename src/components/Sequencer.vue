@@ -24,7 +24,7 @@
         
         <!-- INSTRUMENT SELECTOR -->
         <v-col cols="4" class="caption">
-          <v-menu offset-y :close-on-content-click="false">
+          <v-menu offset-y :close-on-content-click="false" max-width="100%">
             <template v-slot:activator="{ on }">
               <v-btn small block v-on="on">
                 <v-icon left class="hidden-xs-only">mdi-guitar-electric</v-icon>

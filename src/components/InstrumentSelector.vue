@@ -1,6 +1,6 @@
 <template>
   <v-card outlined class="pa-2 d-flex flex-column">
-    <v-card-text class="caption">Setting instrument {{id+1}}</v-card-text>
+    <v-card-text class="caption d-none d-md-flex">Setting instrument {{id+1}}</v-card-text>
     <div>
       <SynthSelector :selectedSynth="selectedSynthNumber"
         :id="id"

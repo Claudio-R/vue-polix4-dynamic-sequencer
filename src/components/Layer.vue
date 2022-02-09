@@ -5,7 +5,7 @@
         <v-col cols="2">
           <v-container class="">
             <div v-if="inst_id==2">
-              <v-card flat outlined class="text-center" 
+              <v-card flat outlined class="text-center hidden-xs-only" 
                 v-for="k in tonesInScale" :key="k"
                 >{{drum_keyboard[tonesInScale-k]}}
               </v-card>
