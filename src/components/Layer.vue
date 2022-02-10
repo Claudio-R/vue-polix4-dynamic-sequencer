@@ -362,6 +362,7 @@ export default {
     border-top: 3px solid rgb(188, 180, 255);
     background: rgb(188, 180, 255);
     // border-bottom: 3px solid rgb(188, 180, 255);
+    margin-top:-3px;
 }
 // .layer-labels{
 //     margin-right: 10px;
@@ -371,4 +372,9 @@ export default {
 // .key-label{
 //   // margin: 4px;
 // }
+.v-responsive{
+  margin-top: -3px; 
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
 </style>
