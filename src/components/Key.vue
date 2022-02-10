@@ -1,11 +1,11 @@
 <template>
-  <v-card flat outlined class="text-center" @click="toggleActive">
-    <v-icon small :class="{active : state1 || state2 || state3}"
-      :style="cssVars"
-      disabled
-      >mdi-circle
-    </v-icon>
+  <v-card flat outlined class="text-center" @click="toggleActive" style="min-height: 26px; max-height: 26px"
+    :class="{'green accent-2' : state3}">
+    <v-icon v-if="!(state1 || state2)" small>mdi-circle</v-icon>
+    <v-icon v-if="state1" small color="red">mdi-circle</v-icon>
+    <v-icon v-if="state2" small color="blue">mdi-circle</v-icon>
   </v-card>
+
 </template>
 
 <script>
@@ -40,67 +40,72 @@ export default {
         }
     },
 
-    computed: {
-        cssVars() {
-            let CSScolors = ['rgb(255, 0, 0)','rgb(0, 0, 255)','rgb(0, 255, 0)']
-            if(this.state1 && this.state2 && this.state3){
-                return {
-                    '--inst_color': CSScolors[3-this.very_last_color-this.last_color],
-                    '--shadow': '-7px 0 '+CSScolors[this.very_last_color]+',-14px 0 '+CSScolors[this.last_color],
-                    '--inst_shift': '50%',
-                    }
-                }
-            if(this.state1 && this.state2){
-                this.very_last_color = Math.abs(this.last_color-1)
-                return {
-                    '--inst_color': CSScolors[this.very_last_color],
-                    '--shadow': '-7px 0 '+ CSScolors[this.last_color],
-                    // '--inst_shift': '3.5px',
-                    '--inst_shift': '25%',
-                    }
-                }
-            if(this.state2 && this.state3){
-                this.very_last_color = Math.abs(this.last_color-3)
-                return {
-                    '--inst_color': CSScolors[this.very_last_color],
-                    '--shadow': '-7px 0 '+CSScolors[this.last_color],
-                    // '--inst_shift': '3.5px',
-                    '--inst_shift': '25%',
-                    }
-                }
-            if(this.state1 && this.state3){
-                this.very_last_color = Math.abs(this.last_color-2)
-                return {
-                    '--inst_color': CSScolors[this.very_last_color],
-                    '--shadow': '-7px 0 '+CSScolors[this.last_color],
-                    '--inst_shift': '25%',
-                    }
-                }
-            if(this.state1){
-                this.last_color = 0
-                return {
-                    '--inst_color': CSScolors[0],
-                    // '--inst_shift': '0px',
-                    '--inst_shift': '-0%',
-                    }
-                }
-            else if(this.state2){
-                this.last_color = 1
-                return {
-                    '--inst_color': CSScolors[1],
-                    // '--inst_shift': '0px',
-                    '--inst_shift': '-0%',
-                    }
-                }
-            else if(this.state3){
-                this.last_color = 2
-                return {
-                    '--inst_color': CSScolors[2],
-                    '--inst_shift': '-0%',
-                }
-            }
-        }
-    },
+    // computed: {
+    //   current_color() {
+    //     if(this.state1 && !(this.state2 && this.state3)){ return 'red' }
+    //     if(this.state2 && !(this.state1 && this.state3)){ return 'blue' }
+    //     if(this.state3 && !(this.state1 && this.state2)){ return 'green' }
+    //   },
+    //     cssVars() {
+    //         let CSScolors = ['red','blue','green']
+    //         if(this.state1 && this.state2 && this.state3){
+    //             return {
+    //                 '--inst_color': CSScolors[3-this.very_last_color-this.last_color],
+    //                 '--shadow': '-7px 0 '+CSScolors[this.very_last_color]+',-14px 0 '+CSScolors[this.last_color],
+    //                 '--inst_shift': '50%',
+    //                 }
+    //             }
+    //         if(this.state1 && this.state2){
+    //             this.very_last_color = Math.abs(this.last_color-1)
+    //             return {
+    //                 '--inst_color': CSScolors[this.very_last_color],
+    //                 '--shadow': '-7px 0 '+ CSScolors[this.last_color],
+    //                 // '--inst_shift': '3.5px',
+    //                 '--inst_shift': '25%',
+    //                 }
+    //             }
+    //         if(this.state2 && this.state3){
+    //             this.very_last_color = Math.abs(this.last_color-3)
+    //             return {
+    //                 '--inst_color': CSScolors[this.very_last_color],
+    //                 '--shadow': '-7px 0 '+CSScolors[this.last_color],
+    //                 // '--inst_shift': '3.5px',
+    //                 '--inst_shift': '25%',
+    //                 }
+    //             }
+    //         if(this.state1 && this.state3){
+    //             this.very_last_color = Math.abs(this.last_color-2)
+    //             return {
+    //                 '--inst_color': CSScolors[this.very_last_color],
+    //                 '--shadow': '-7px 0 '+CSScolors[this.last_color],
+    //                 '--inst_shift': '25%',
+    //                 }
+    //             }
+    //         if(this.state1){
+    //             this.last_color = 0
+    //             return {
+    //                 '--inst_color': CSScolors[0],
+    //                 // '--inst_shift': '0px',
+    //                 '--inst_shift': '-0%',
+    //                 }
+    //             }
+    //         else if(this.state2){
+    //             this.last_color = 1
+    //             return {
+    //                 '--inst_color': CSScolors[1],
+    //                 // '--inst_shift': '0px',
+    //                 '--inst_shift': '-0%',
+    //                 }
+    //             }
+    //         else if(this.state3){
+    //             this.last_color = 2
+    //             return {
+    //                 '--inst_color': CSScolors[2],
+    //                 '--inst_shift': '-0%',
+    //             }
+    //         }
+    //     }
+    // },
 
     methods: {
       toggleActive() {
@@ -150,7 +155,7 @@ export default {
 </script>
 
 <style lang="scss">
-.key {
+//.key {
     /* location */
     // display: block;
     // position: relative;
@@ -164,9 +169,9 @@ export default {
     // padding: none;
     // border: 2px solid #0000004d;
     // border-radius: 100%;
-    background: blue;
+    // background: blue;
 
-}
+//}
 
 .active {
     position: relative;
@@ -175,4 +180,5 @@ export default {
     background: var(--inst_color);
     box-shadow: var(--shadow);
 }
+
 </style>
