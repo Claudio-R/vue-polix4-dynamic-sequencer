@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="main">
     <Sequencer></Sequencer>
   </div>
 </template>
@@ -8,7 +8,7 @@
 import Sequencer from '@/components/Sequencer.vue'
 
 export default {
-  name: 'MainPage',
+  name: 'Main',
   components: {
     Sequencer
   }
