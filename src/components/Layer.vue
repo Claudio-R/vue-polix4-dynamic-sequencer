@@ -3,26 +3,26 @@
       <v-row no-gutters>
         <!-- LABELS -->
         <v-col cols="2">
-          <v-container class="labels-container my-3 mx-1 pa-0">
-            <v-container v-if="inst_id!=2" class="pa-0">
+          <v-container class="">
+            <div v-if="inst_id!=2" class="">
               <v-card flat outlined class="text-center hidden-xs-only" 
                 v-for="k in tonesInScale" :key="k"
                 >{{scale_keyboard[tonesInScale-k].slice(0, -1)}}
               </v-card>
-            </v-container>
-            <v-container v-else class="pa-0">
-              <v-card outlined class="text-center grey--text" 
+            </div>
+            <div v-else class="">
+              <v-card outlined flat class="text-center grey--text hidden-xs-only" 
                 v-for="k in tonesInScale" :key="k"
                 >{{drum_keyboard[tonesInScale-k]}}
               </v-card>
-            </v-container>
-            <v-btn block v-if="unifiedControl" class="text-center hidden-xs-only" @click="$emit('removeLayerEvent')">Remove</v-btn>
+            </div>
+            <v-btn block depressed v-if="unifiedControl" class="text-center hidden-xs-only" @click="$emit('removeLayerEvent')">Remove</v-btn>
           </v-container>
         </v-col>
 
         <!-- BEATS -->
         <!-- Unmerged Controller -->
-        <v-col v-if="!unifiedControl" cols="10" sm="7">
+        <v-col v-if="!unifiedControl" cols="12" sm="7">
           <v-carousel hide-delimiters
           height="100%"
           :continuous="false">
@@ -49,7 +49,7 @@
           </v-carousel>
         </v-col>
         <!-- Merged Controller -->
-        <v-col v-else cols="10">
+        <v-col v-else cols="12" sm="10">
           <v-carousel hide-delimiters
           height="100%"
           :continuous="false"
@@ -82,22 +82,22 @@
         <v-col v-if="!unifiedControl" cols="3" class="hidden-xs-only">
           <v-container class="layer-controller">
             <v-card flat class="pa-1" :height="`${singleLayerHeight-37}`">
-            <v-card flat class="d-flex justify-space-around">
-              <v-btn class="text-center" @click="$emit('removeLayerEvent')">Remove</v-btn>
-              <v-card class="pa-1">
-                <v-btn icon :disabled="systemPlaying" small class="text-center mr-2" @click="$emit('addKeyEvent')">
-                  <v-icon >mdi-plus</v-icon>
-                </v-btn>
-                <v-btn icon :disabled="systemPlaying" small class="text-center ml-2" @click="$emit('removeKeyEvent')">
-                  <v-icon >mdi-minus</v-icon>
-                </v-btn>
+              <v-card flat class="d-flex justify-space-around">
+                <v-btn plain class="secondary--text text-center" @click="$emit('removeLayerEvent')">Remove</v-btn>
+                <v-card flat class="d-flex justify-space-around pa-1">
+                  <v-btn icon :disabled="systemPlaying" small @click="$emit('addKeyEvent')">
+                    <v-icon small color="primary">mdi-plus</v-icon>
+                  </v-btn>
+                  <v-btn icon :disabled="systemPlaying" small @click="$emit('removeKeyEvent')">
+                    <v-icon small color="primary">mdi-minus</v-icon>
+                  </v-btn>
+                </v-card>
               </v-card>
-            </v-card>
 
               <!-- OCTAVE -->
               <v-menu offset-y :close-on-content-click="false">
                 <template v-slot:activator="{ on }">
-                  <v-btn class="mt-2 caption" block v-on="on">
+                  <v-btn depressed class="mt-2 caption" block v-on="on">
                     <span>Octave: {{octaveLayer}}</span>
                   </v-btn>
                 </template>
@@ -116,7 +116,7 @@
               <!-- KEY -->
               <v-menu offset-y :close-on-content-click="true">
                 <template v-slot:activator="{ on }">
-                  <v-btn class="mt-2" block v-on="on">
+                  <v-btn depressed class="mt-2" block v-on="on">
                     <span class="caption">Selected key: {{keyLayer}}</span>
                   </v-btn>
                 </template>
@@ -128,7 +128,7 @@
               <!-- SCALE -->
               <v-menu offset-x :close-on-content-click="true">
                 <template v-slot:activator="{ on }">
-                  <v-btn class="mt-2" block v-on="on">
+                  <v-btn depressed class="mt-2" block v-on="on">
                     <span class="caption">{{scaleLayer}}</span>
                   </v-btn>
                 </template>
@@ -137,14 +137,15 @@
                 ></ScaleSelector>
               </v-menu>
 
+              <!-- BUTTONS -->
               <v-card flat class="mt-2 d-flex justify-space-around">
-                <v-btn small class="layer-btn prelisten-btn" :class="{ green : prelistenLayer }" @click="prelistenLayer=!prelistenLayer">
+                <v-btn icon outlined class="layer-btn prelisten-btn" :class="{ green : prelistenLayer }" @click="prelistenLayer=!prelistenLayer">
                   <v-icon>mdi-headphones-off</v-icon> 
                 </v-btn>
-                <v-btn small class="layer-btn mute-btn" :class="{red : muteLayer }" @click="$emit('toggleMuteLayerEvent')">
+                <v-btn icon outlined class="layer-btn mute-btn" :class="{red : muteLayer }" @click="$emit('toggleMuteLayerEvent')">
                   <v-icon>mdi-volume-mute</v-icon>
                 </v-btn>
-                <v-btn small class="layer-btn clear-btn" @click="clearLayer">
+                <v-btn icon outlined class="layer-btn clear-btn" @click="clearLayer">
                   <v-icon>mdi-delete</v-icon>
                 </v-btn>
               </v-card>
@@ -350,7 +351,7 @@ export default {
 .column {
     display: inline-block;
     //width: calc(var(--columnWidth) - 6px);
-    border: 3px solid #c0a630;
+    //border: 3px solid #c0a630;
     //border: 3px solid #0000004d;
     border-radius: 8px;
     //margin: 5px;

@@ -1,7 +1,10 @@
 <template>
   <v-card id="sequencer" min-width="370px">
     <v-card flat tile id="container-bar" class="primary pa-2" ref="container_ref" :min-height="heightHorizontal">
+
+      <!--**FIRST ROW** -->
       <v-row dense>
+
        <!-- SELECT BPM -->
         <v-col cols="4" class="caption">
           <v-menu offset-y :close-on-content-click="false">
@@ -28,7 +31,8 @@
             <template v-slot:activator="{ on }">
               <v-btn small block v-on="on">
                 <v-icon left class="hidden-xs-only">mdi-guitar-electric</v-icon>
-                <span>{{inst_names[inst_id]}}</span>
+                <span class="caption text-truncate hidden-sm-and-up" style="max-width: 50px;">{{inst_names[inst_id]}}</span>
+                <span class="caption hidden-xs-only" >{{inst_names[inst_id]}}</span>
               </v-btn>
             </template>
             <v-card class="pa-8">
@@ -45,6 +49,7 @@
             </v-card>
           </v-menu>
         </v-col>
+
         <!-- ADD BARS -->
         <v-col cols="4" class="caption">
           <v-menu offset-y :close-on-content-click="false">
@@ -65,9 +70,13 @@
             </v-list>
           </v-menu>
         </v-col>    
+      
       </v-row>
+      <!--**/FIRST ROW** -->
 
+      <!--**SECOND ROW** -->
       <v-row dense class="d-flex align-center">
+
         <!-- ADD LAYER -->
         <v-col cols="2" md="3" class="hidden-xs-only">
           <v-card>
@@ -87,8 +96,8 @@
         <!-- MAIN CONTROLLER -->
         <v-col cols="10" sm="8" md="6">
           <v-card flat>
-            <!-- FIRST ROW -->
             <v-row no-gutters>
+              <!-- BUTTONS -->
               <v-col cols="12" sm="8">
                 <v-card-actions class="d-flex justify-space-around">
                   <v-btn small class="" depressed @click="playAll">
@@ -97,9 +106,9 @@
                   <v-btn small class="" depressed @click="stopAll">
                     <v-icon>mdi-stop</v-icon>  
                   </v-btn>
-                  <!-- <v-btn small :disabled="!unifiedControl" depressed @click="toggleMuteSystem">
+                  <v-btn small :disabled="!unifiedControl" depressed @click="toggleMuteSystem">
                     <v-icon>mdi-volume-mute</v-icon>
-                  </v-btn> -->
+                  </v-btn>
                   <v-btn small class="" depressed @click="clearAll">
                     <v-icon>mdi-delete</v-icon>
                   </v-btn>
@@ -108,7 +117,7 @@
                   </v-btn>
                 </v-card-actions>
               </v-col>
-              <!-- UNMERGE BUTTON ON SM -->
+              <!-- MERGE/UNMERGE BUTTON -->
               <v-col sm="4" class="hidden-xs-only">
                 <v-card-actions>
                   <v-btn v-if="unifiedControl" small depressed block 
@@ -123,12 +132,12 @@
           </v-card>
         </v-col>
 
+        <!-- MENU -->
         <v-col cols="2" md="3">
-          <!-- dare classe disabled -->
           <v-menu offset-y :disabled="!unifiedControl" :close-on-content-click="false" max-width="100%">
             <template v-slot:activator="{ on }">
               <v-btn block :disabled="!unifiedControl" v-on="on">
-                <v-icon left>mdi-menu</v-icon>
+                <v-icon>mdi-menu</v-icon>
                 <span class="hidden-sm-and-down">Main controller</span>
               </v-btn>
             </template>
@@ -169,11 +178,13 @@
                 ></ScaleSelector>
                 </v-expansion-panel-content>
               </v-expansion-panel>
-          </v-expansion-panels>
-        </v-menu>
-      </v-col>
+            </v-expansion-panels>
+          </v-menu>
+        </v-col>
 
       </v-row>
+      <!--**/SECOND ROW** -->
+
     </v-card> 
     
     <v-card id="layers-container" flat tile class="d-flex flex-column">
@@ -230,25 +241,25 @@ export default {
 
   data(){
     return {
-        // window_height: Number,
-        // container_height: Number,
-        /** sequencer controller */
-        systemPlaying: false,
-        bpm: 120,
-        numBeatsNewLayer: '',
-        unifiedControl: true,
-        n_bars:1,
-        inst_id: 0,
-        duration:["16n","16n"],
-        automaticSlideControl: true,
-        
-        /** unified controller */
-        allLayersOctave: 4,
-        allLayersKey: 'C',
-        allLayersScale: 'Major',
-        prelistenSystem: true,
-        muteSystem: false,
-        inst_names: [this.$store.state.synth_names[this.$store.state.synth_selection[0]],this.$store.state.synth_names[this.$store.state.synth_selection[1]],this.$store.state.drum_names[this.$store.state.synth_selection[2]]],
+      // window_height: Number,
+      // container_height: Number,
+      /** sequencer controller */
+      systemPlaying: false,
+      bpm: 120,
+      numBeatsNewLayer: '',
+      unifiedControl: true,
+      n_bars:1,
+      inst_id: 0,
+      duration:["16n","16n"],
+      automaticSlideControl: true,
+      
+      /** unified controller */
+      allLayersOctave: 4,
+      allLayersKey: 'C',
+      allLayersScale: 'Major',
+      prelistenSystem: true,
+      muteSystem: false,
+      inst_names: [this.$store.state.synth_names[this.$store.state.synth_selection[0]],this.$store.state.synth_names[this.$store.state.synth_selection[1]],this.$store.state.drum_names[this.$store.state.synth_selection[2]]],
         
       /** state variables */
       nextId: 2,
