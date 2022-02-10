@@ -140,7 +140,7 @@
               <!-- BUTTONS -->
               <v-card flat class="mt-2 d-flex justify-space-around">
                 <v-btn icon outlined class="layer-btn prelisten-btn" :class="{ green : prelistenLayer }" @click="prelistenLayer=!prelistenLayer">
-                  <v-icon>mdi-headphones-off</v-icon> 
+                  <v-icon>mdi-headphones</v-icon> 
                 </v-btn>
                 <v-btn icon outlined class="layer-btn mute-btn" :class="{red : muteLayer }" @click="$emit('toggleMuteLayerEvent')">
                   <v-icon>mdi-volume-mute</v-icon>
@@ -359,7 +359,9 @@ export default {
 
 .playing {
     /* aspect */
-    border: 3px solid rgb(188, 180, 255);
+    border-top: 3px solid rgb(188, 180, 255);
+    background: rgb(188, 180, 255);
+    // border-bottom: 3px solid rgb(188, 180, 255);
 }
 // .layer-labels{
 //     margin-right: 10px;

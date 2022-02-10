@@ -2,6 +2,7 @@
   <v-card flat outlined class="text-center" @click="toggleActive">
     <v-icon small :class="{active : state1 || state2 || state3}"
       :style="cssVars"
+      disabled
       >mdi-circle
     </v-icon>
   </v-card>

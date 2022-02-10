@@ -1,5 +1,5 @@
 <template>
-  <v-card flat outlined dense class="pa-2 d-flex flex-column" min-width="150">
+  <v-card flat outlined dense class="pa-2 d-flex flex-column" min-width="100">
     <v-card-title class="caption d-none d-md-flex">Setting instrument {{id+1}}</v-card-title>
     <div>
       <SynthSelector :selectedSynth="selectedSynthNumber"

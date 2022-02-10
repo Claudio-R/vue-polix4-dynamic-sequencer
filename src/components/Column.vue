@@ -102,12 +102,12 @@ export default ({
             this.drum[keyId].start();
         },
         getKeyProps() {
-            for(let j=0; j<this.tonesInScale; j++){
-                this.key_state1[j]=this.$refs.keys_refs[j].state1;
-                this.key_state2[j]=this.$refs.keys_refs[j].state2;
-                this.key_state3[j]=this.$refs.keys_refs[j].state3;
-            }
-            return [this.key_state1, this.key_state2, this.key_state3]
+          for(let j=0; j<this.tonesInScale; j++){
+            this.key_state1[j]=this.$refs.keys_refs[j].state1;
+            this.key_state2[j]=this.$refs.keys_refs[j].state2;
+            this.key_state3[j]=this.$refs.keys_refs[j].state3;
+          }
+          return [this.key_state1, this.key_state2, this.key_state3]
 
         },
         setColumn(newvar){

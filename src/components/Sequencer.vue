@@ -93,7 +93,7 @@
           </v-card>
         </v-col>
 
-        <!-- MAIN CONTROLLER -->
+        <!-- BUTTONS -->
         <v-col cols="10" sm="8" md="6">
           <v-card flat>
             <v-row no-gutters>
@@ -134,7 +134,7 @@
 
         <!-- MENU -->
         <v-col cols="2" md="3">
-          <v-menu offset-y :disabled="!unifiedControl" :close-on-content-click="false" max-width="100%">
+          <v-menu offset-x offset-y :disabled="!unifiedControl" :close-on-content-click="false" max-width="100%">
             <template v-slot:activator="{ on }">
               <v-btn block :disabled="!unifiedControl" v-on="on">
                 <v-icon>mdi-menu</v-icon>
@@ -148,12 +148,14 @@
                   Octave: {{allLayersOctave}}
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
-                  <v-btn small @click="moreOctave">
-                    <v-icon small>mdi-plus</v-icon>
-                  </v-btn>
-                  <v-btn small @click="lessOctave">
-                      <v-icon small>mdi-minus</v-icon>
-                  </v-btn>
+                  <v-card outlined class="pa-4 d-flex justify-space-around">
+                    <v-btn icon @click="moreOctave">
+                      <v-icon color="primary">mdi-plus</v-icon>
+                    </v-btn>
+                    <v-btn icon @click="lessOctave">
+                        <v-icon color="primary">mdi-minus</v-icon>
+                    </v-btn>
+                  </v-card>
                 </v-expansion-panel-content>
               </v-expansion-panel>
               <!-- KEY -->
