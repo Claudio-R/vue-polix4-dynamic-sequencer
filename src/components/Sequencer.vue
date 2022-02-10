@@ -9,7 +9,7 @@
         <v-col cols="4" class="caption">
           <v-menu offset-y :close-on-content-click="false">
             <template v-slot:activator="{ on }">
-              <v-btn small block v-on="on">
+              <v-btn depressed small block v-on="on">
                 <v-icon left class="hidden-xs-only">mdi-metronome-tick</v-icon>
                 <span>BPM: {{bpm}}</span>
               </v-btn>
@@ -60,7 +60,7 @@
         <v-col cols="4" class="caption">
           <v-menu tile offset-y attach :close-on-content-click="false" max-width="100%">
             <template v-slot:activator="{ on }">
-              <v-btn small :class="`${inst_color[inst_id]}--text`" block v-on="on">
+              <v-btn small depressed :class="`${inst_color[inst_id]}--text`" block v-on="on">
                 <v-icon left class="hidden-xs-only">mdi-guitar-electric</v-icon>
                 <span class="caption text-truncate hidden-sm-and-up" style="max-width: 50px;">{{inst_names[inst_id]}}</span>
                 <span class="caption hidden-xs-only">{{inst_names[inst_id]}}</span>
@@ -85,20 +85,18 @@
         <v-col cols="4" class="caption">
           <v-menu offset-y :close-on-content-click="false">
             <template v-slot:activator="{ on }">
-              <v-btn small block v-on="on">
+              <v-btn small depressed block v-on="on">
                 <span >Bars: {{n_bars}}</span>
               </v-btn>
             </template>
-            <v-list>
-              <v-list-item @click="() => {if(n_bars<4){n_bars++; addBar()}}">
-                <v-icon left>mdi-plus</v-icon>
-                <v-list-item-title class="">Add a new bar</v-list-item-title> 
-              </v-list-item>
-              <v-list-item @click="() => {if(n_bars>1){n_bars--}}">
-                <v-icon left>mdi-minus</v-icon>
-                <v-list-item-title class="">Remove the last bar</v-list-item-title> 
-              </v-list-item>
-            </v-list>
+            <v-card flat dense class="d-flex justify-space-around pa-6">
+              <v-btn icon large @click="() => {if(n_bars<4){n_bars++; addBar()}}">
+                <v-icon color="primary" >mdi-plus</v-icon>
+              </v-btn>
+              <v-btn icon large @click="() => {if(n_bars>1){n_bars--}}">
+                <v-icon color="primary" >mdi-minus</v-icon>
+              </v-btn>
+            </v-card>
           </v-menu>
         </v-col>    
       
@@ -127,23 +125,23 @@
         <!-- BUTTONS -->
         <v-col cols="10" sm="8" md="6">
           <v-card flat>
-            <v-row no-gutters>
+            <v-row no-gutters class="d-flex align-center">
               <!-- BUTTONS -->
               <v-col cols="12" sm="8">
                 <v-card-actions class="d-flex justify-space-around">
-                  <v-btn small class="" depressed @click="playAll">
-                    <v-icon>mdi-play</v-icon>
+                  <v-btn icon outlined color="secondary" @click="playAll">
+                    <v-icon >mdi-play</v-icon>
                   </v-btn>
-                  <v-btn small class="" depressed @click="stopAll">
-                    <v-icon>mdi-stop</v-icon>  
+                  <v-btn icon outlined color="secondary" @click="stopAll">
+                    <v-icon >mdi-stop</v-icon>  
                   </v-btn>
-                  <v-btn small :disabled="!unifiedControl" depressed @click="toggleMuteSystem">
+                  <v-btn icon outlined color="secondary" :disabled="!unifiedControl" @click="toggleMuteSystem">
                     <v-icon>mdi-volume-mute</v-icon>
                   </v-btn>
-                  <v-btn small class="" depressed @click="clearAll">
-                    <v-icon>mdi-delete</v-icon>
+                  <v-btn small depressed color="secondary" @click="clearAll">
+                    <v-icon >mdi-delete</v-icon>
                   </v-btn>
-                  <v-btn small depressed @click="automaticSlideControl=!automaticSlideControl">
+                  <v-btn small depressed :class="{primary : automaticSlideControl}" @click="automaticSlideControl=!automaticSlideControl">
                     <v-icon>mdi-arrow-right-circle-outline</v-icon>
                   </v-btn>
                 </v-card-actions>
