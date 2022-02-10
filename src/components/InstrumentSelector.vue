@@ -15,9 +15,7 @@
         :thumb-label="true"
         prepend-icon="mdi-volume-high"
       ></v-slider>
-    <!-- </div>
 
-    <div > -->
       <v-slider v-if="id!=2"
         v-model="durationSlider.val"
         :color="durationSlider.color"
@@ -63,15 +61,6 @@ export default {
             this.myInstrument[i].volume.value = this.volumeSlider.val;
             }
         }
-      //  changeSynth(synth_number){
-      //       if(synth_number==this.$store.state.synth_selection[2-this.id] && this.id!=3)
-      //           return;
-      //       this.selectedSynthNumber = synth_number
-      //       this.$store.state.synth_selection[this.id-1] = synth_number
-      //       this.$emit('changeSynthEvent',this.id-1)
-      //       this.$store.commit('synthsChanged')
-      //       this.changeVolume()
-      //   }
       },
       instrumentSelection(){
         this.$emit('instSelectionEvent',this.id)
