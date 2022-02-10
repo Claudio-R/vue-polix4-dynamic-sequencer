@@ -321,7 +321,6 @@ const path = 'gs://actam21.appspot.com';
 const synth_names = ['Pulsequare','Pulsaw','FM','Halen','VerySimplePiano','Alien','AmericanBeauty','Delicatissimo']
 const drum_names = ['TR-808', 'TR-909','Vaporwave']
 const synth_selection = [1,3,0]
-
 /** store the instruments using VUEX */
 Vue.use(Vuex)
 

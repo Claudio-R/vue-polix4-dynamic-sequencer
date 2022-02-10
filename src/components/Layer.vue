@@ -1,66 +1,160 @@
 <template>
-    <div class="layer">
-            <div class="layer-labels">
-                <div v-if="inst_id==3">
-                    <p class="key-label" 
-                        v-for="k in tonesInScale"
-                        :key="k"
-                    >{{drum_keyboard[tonesInScale-k]}}
-                    </p>
-                </div>
-                <div v-else>
-                    <p class="key-label" 
-                        v-for="k in tonesInScale"
-                        :key="k"
-                    >{{scale_keyboard[tonesInScale-k].slice(0, -1)}}
-                    </p>
-                </div>
-                <button v-if="unifiedControl" class="remove-btn-unified" @click="$emit('removeLayerEvent')">Remove layer</button>
+  <v-card :min-height="heightHorizontal" flat tile class="my-0">
+      <v-row no-gutters>
+        <!-- LABELS -->
+        <v-col cols="2">
+          <v-container class="">
+            <div v-if="inst_id!=2" class="">
+              <v-card flat outlined class="text-center hidden-xs-only" 
+                v-for="k in tonesInScale" :key="k"
+                >{{scale_keyboard[tonesInScale-k].slice(0, -1)}}
+              </v-card>
             </div>
-            
-            <div v-for="j in n_bars" :key="j">
-                <div class="keyboard">
-                    <Column v-for="k in num_beats"
-                        class="column" :style="cssVars"
-                        ref = beats_refs
-                        :key="k"
-                        :class="{playing : k*j-(k-num_beats)*(j-1) === isPlaying + 1}"
-                        :beatId="k*j-1-(k-num_beats)*(j-1)"
-                        :inst_selected="inst_id"
-                        :duration="duration"
-                        :prelistenBeat="prelistenLayer"
-                        :muteLayer="muteLayer"
-                        :isPlaying="isPlaying"
-                        :tonesInScale="tonesInScale"
-                        :scale_keyboard="scale_keyboard"
+            <div v-else class="">
+              <v-card outlined flat class="text-center grey--text hidden-xs-only" 
+                v-for="k in tonesInScale" :key="k"
+                >{{drum_keyboard[tonesInScale-k]}}
+              </v-card>
+            </div>
+            <v-btn block depressed v-if="unifiedControl" class="text-center hidden-xs-only" @click="$emit('removeLayerEvent')">Remove</v-btn>
+          </v-container>
+        </v-col>
+
+        <!-- BEATS -->
+        <!-- Unmerged Controller -->
+        <v-col v-if="!unifiedControl" cols="12" sm="7">
+          <v-carousel hide-delimiters
+          height="100%"
+          :continuous="false">
+            <v-carousel-item v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`" class="spacing-playground pa-3">
+              <v-row no-gutters class="justify-space-between">
+                <v-col :cols="num_cols" v-for="k in num_beats" :key="`column-${layerId}-${j}-${k}`">
+                  <Column 
+                    class="column" :style="cssVars"
+                    ref = "beats_refs"
+                    :class="{playing : k*j-(k-num_beats)*(j-1) === isPlaying + 1}"
+                    :beatId="k*j-1-(k-num_beats)*(j-1)"
+                    :inst_selected="inst_id"
+                    :num_beats="num_beats"
+                    :duration="duration"
+                    :prelistenBeat="prelistenLayer"
+                    :muteLayer="muteLayer"
+                    :isPlaying="isPlaying"
+                    :tonesInScale="tonesInScale"
+                    :scale_keyboard="scale_keyboard"
+                  ></Column>
+                </v-col>
+              </v-row>
+            </v-carousel-item>
+          </v-carousel>
+        </v-col>
+        <!-- Merged Controller -->
+        <v-col v-else cols="12" sm="10">
+          <v-carousel hide-delimiters
+          height="100%"
+          :continuous="false"
+          v-model="model">
+              <v-carousel-item v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`" class="spacing-playground pa-3">
+                <v-row no-gutters class="justify-space-between">
+                  <v-col :cols="num_cols" v-for="k in num_beats" :key="`column-${layerId}-${j}-${k}`">
+                    <Column 
+                      class="column" :style="cssVars"
+                      ref = "beats_refs"
+                      :class="{playing : k*j-(k-num_beats)*(j-1) === isPlaying + 1}"
+                      :beatId="k*j-1-(k-num_beats)*(j-1)"
+                      :inst_selected="inst_id"
+                      :num_beats="num_beats"
+                      :duration="duration"
+                      :prelistenBeat="prelistenLayer"
+                      :muteLayer="muteLayer"
+                      :isPlaying="isPlaying"
+                      :tonesInScale="tonesInScale"
+                      :scale_keyboard="scale_keyboard"
                     ></Column>
-                </div>
-            </div>
-            
-            <div v-if="!unifiedControl" class="layer-controller">
-                <div id="buttons">
-                    <button id="remove-btn" @click="$emit('removeLayerEvent')">Remove layer</button>
-                    <button id="addKey-btn" @click="$emit('addKeyEvent')"> + </button>
-                    <button id="removeKey-btn" @click="$emit('removeKeyEvent')"> - </button>
-                </div>
-                <KeySelector :selectedKey="keyLayer"
-                    @keySelectedEvent="function(val){$emit('keySelectedEvent',val)}"
+                  </v-col>
+                </v-row>
+              </v-carousel-item>
+          </v-carousel>
+
+        </v-col>
+
+        <!-- LAYER CONTROLLER -->
+        <v-col v-if="!unifiedControl" cols="3" class="hidden-xs-only">
+          <v-container class="layer-controller">
+            <v-card flat class="pa-1" :height="`${singleLayerHeight-37}`">
+              <v-card flat class="d-flex justify-space-around">
+                <v-btn plain class="secondary--text text-center" @click="$emit('removeLayerEvent')">Remove</v-btn>
+                <v-card flat class="d-flex justify-space-around pa-1">
+                  <v-btn icon :disabled="systemPlaying" small @click="$emit('addKeyEvent')">
+                    <v-icon small color="primary">mdi-plus</v-icon>
+                  </v-btn>
+                  <v-btn icon :disabled="systemPlaying" small @click="$emit('removeKeyEvent')">
+                    <v-icon small color="primary">mdi-minus</v-icon>
+                  </v-btn>
+                </v-card>
+              </v-card>
+
+              <!-- OCTAVE -->
+              <v-menu offset-y :close-on-content-click="false">
+                <template v-slot:activator="{ on }">
+                  <v-btn depressed class="mt-2 caption" block v-on="on">
+                    <span>Octave: {{octaveLayer}}</span>
+                  </v-btn>
+                </template>
+                <v-list>
+                  <v-list-item @click="$emit('moreOctaveEvent')">
+                    <v-icon left>mdi-plus</v-icon>
+                    <v-list-item-title class="">Add an octave</v-list-item-title> 
+                  </v-list-item>
+                  <v-list-item @click="$emit('lessOctaveEvent')">
+                    <v-icon left>mdi-minus</v-icon>
+                    <v-list-item-title class="">Remove octave</v-list-item-title> 
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+                
+              <!-- KEY -->
+              <v-menu offset-y :close-on-content-click="true">
+                <template v-slot:activator="{ on }">
+                  <v-btn depressed class="mt-2" block v-on="on">
+                    <span class="caption">Selected key: {{keyLayer}}</span>
+                  </v-btn>
+                </template>
+                <KeySelector @keySelectedEvent="function(val){$emit('keySelectedEvent',val)}"
+                  :selectedKey="keyLayer"
                 ></KeySelector>
-                <ScaleSelector :selectedScale="scaleLayer"
-                    @scaleSelectedEvent="function(val){$emit('scaleSelectedEvent',val)}"
+              </v-menu>
+              
+              <!-- SCALE -->
+              <v-menu offset-x :close-on-content-click="true">
+                <template v-slot:activator="{ on }">
+                  <v-btn depressed class="mt-2" block v-on="on">
+                    <span class="caption">{{scaleLayer}}</span>
+                  </v-btn>
+                </template>
+                <ScaleSelector @scaleSelectedEvent="function(val){$emit('scaleSelectedEvent',val)}"
+                  :selectedScale="scaleLayer"
                 ></ScaleSelector>
-                <div id="octave-selector">
-                    <div class="octave-viewer">Octave: {{octaveLayer}} </div>
-                    <button class="layer-btn" @click="$emit('moreOctaveEvent')"> + </button>
-                    <button class="layer-btn" @click="$emit('lessOctaveEvent')"> - </button>
-                </div>
-                <div class="layer-sound-controller">
-                    <button class="layer-btn prelisten-btn" :class="{ prelistenActive : prelistenLayer }" @click="$emit('togglePrelistenLayerEvent')">L</button>
-                    <button class="layer-btn mute-btn" :class="{ muteActive : muteLayer }" @click="$emit('toggleMuteLayerEvent')">M</button>
-                    <button class="layer-btn clear-btn" @click="clearLayer">C</button>
-                </div>
-            </div>
-        </div>
+              </v-menu>
+
+              <!-- BUTTONS -->
+              <v-card flat class="mt-2 d-flex justify-space-around">
+                <v-btn icon outlined class="layer-btn prelisten-btn" :class="{ green : prelistenLayer }" @click="prelistenLayer=!prelistenLayer">
+                  <v-icon>mdi-headphones</v-icon> 
+                </v-btn>
+                <v-btn icon outlined class="layer-btn mute-btn" :class="{red : muteLayer }" @click="$emit('toggleMuteLayerEvent')">
+                  <v-icon>mdi-volume-mute</v-icon>
+                </v-btn>
+                <v-btn icon outlined class="layer-btn clear-btn" @click="clearLayer">
+                  <v-icon>mdi-delete</v-icon>
+                </v-btn>
+              </v-card>
+
+            </v-card>
+          </v-container>
+        </v-col>
+      </v-row>
+  </v-card>
 </template>
 
 <script>
@@ -77,6 +171,7 @@ export default {
     },
     
     props : {
+        layerId: String,
         /** sequencer controller */
         unifiedControl: Boolean,
         n_bars: Number,
@@ -88,8 +183,11 @@ export default {
         octaveLayer: Number,
         keyLayer: String,
         scaleLayer: String,
-        prelistenLayer: Boolean,
+        // prelistenLayer: Boolean,
         muteLayer: Boolean,
+        singleLayerHeight: Number,
+        automaticSlideControl: true,
+        systemPlaying: Boolean
     },
     
     data() {
@@ -98,14 +196,19 @@ export default {
             my_clock: '',
             tonesInScale: 8,
             keyboard: '',
+            prelistenLayer: true,
             scale_keyboard : ["C4","D4","E4","F4","G4","A4","B4","C5"],
             drum_keyboard : ["kick", "snare", "tom 1","tom 2","closed hh", "open hh", "ride","clap"],
+            model: 0,
         }
     },
     
     watch: {
         'isPlaying': function(val) {
             if(val==0){ this.$emit('restartEvent'); }
+            if(this.automaticSlideControl){
+              this.model=Math.floor(this.isPlaying/this.num_beats)
+            }
         },
         'keyLayer': function(val) {
             this.$emit('changedKeyEvent', val);
@@ -122,17 +225,27 @@ export default {
     },
     
     computed: {
+        num_cols() {return Math.floor(12/this.num_beats)},
         my_beat_duration() { return Number(this.total_duration/(this.num_beats)); },
         cssVars() {
-            let layerWidth = 1200;
+            //let layerWidth = 1200;
             let margin = 5;
             let borderKey = 3;
             let keyHeight = 18;
             return {
-                '--columnWidth': (layerWidth - this.num_beats*2*margin)/(this.num_beats) + 'px', //157
+                '--columnWidth': parseFloat(90/(this.num_beats)) + '%', //157
                 '--columnHeight' : this.tonesInScale*(keyHeight + 2*borderKey) + 'px',
             }
         },
+        heightHorizontal () {
+        switch (this.$vuetify.breakpoint.name) {
+          case 'xs': return '73%'
+          case 'sm': return '73%'
+          case 'md': return '80%'
+          case 'lg': return '82%'
+          case 'xl': return '82%'
+        }
+      },
     },
 
     methods: {
@@ -191,64 +304,71 @@ export default {
             }
         },
         addLBar(){
-            this.$nextTick(() =>{
-                //column_states = Array(this.num_beats)
-                    for(let i=0;i<this.num_beats;i++) {
-                        let newvar = this.$refs.beats_refs[i].getKeyProps()
-                        this.$refs.beats_refs[i+(this.n_bars-1)*this.num_beats].setColumn(newvar)
-                        //column_states[i]=(newvar)
-                    }
-            })
+          this.$nextTick(() =>{
+            //column_states = Array(this.num_beats)
+              for(let i=0;i<this.num_beats;i++) {
+                let newvar = this.$refs.beats_refs[i].getKeyProps()
+                this.$refs.beats_refs[i+(this.n_bars-1)*this.num_beats].setColumn(newvar)
+                //column_states[i]=(newvar)
+            }
+          })
         },
         clearLayer(){
-            for(let idx=0; idx<this.$refs.beats_refs.length; idx++) { 
-                this.$refs.beats_refs[idx].clearAllKeys() }
+          for(let idx=0; idx<this.num_beats; idx++) { 
+            this.$refs.beats_refs[idx].clearAllKeys() }
         },
     },
 }
 </script>
 
 <style lang="scss">
+
+.labels-container{
+  border: 3px solid rgb(199, 202, 0);
+  border-radius: 8px;
+}
+
+
 .remove-btn-unified {
     background-color: rgb(194, 194, 194);
-    margin-top: 2px;
+    // margin-top: 2px;
+    // margin: 4px;
     text-align: center;
 }
 .layer{
     display: inline-flex;
-    height: calc(var(--columnHeight) + 10px);
-    margin: 10px;
+    // height: calc(var(--columnHeight) + 10px);
+
 }
+
 .keyboard {
     display: inline-flex;
-    border-radius: 10px;
+    //border-radius: 10px;
     background-color: rgb(199, 202, 0);
-    border:3px solid rgb(19, 109, 116);
+    //border:3px solid rgb(19, 109, 116);
 }
+
 .column {
     display: inline-block;
-    width: calc(var(--columnWidth) - 6px);
-    height: auto;
-    background-color: #c0a630;
-    border: 3px solid #0000004d;
+    //width: calc(var(--columnWidth) - 6px);
+    //border: 3px solid #c0a630;
+    //border: 3px solid #0000004d;
     border-radius: 8px;
-    margin: 5px;
+    //margin: 5px;
 }
+
 .playing {
     /* aspect */
-    border: 3px solid rgb(188, 180, 255);
+    border-top: 3px solid rgb(188, 180, 255);
+    background: rgb(188, 180, 255);
+    // border-bottom: 3px solid rgb(188, 180, 255);
 }
-.layer-labels{
-    margin-right: 10px;
-    margin-top: 8px;
-    width: auto;
-}
-.key-label{
-    border: 2px solid rgb(216, 216, 178);
-    background-color: bisque;
-    width: 90px;
-    height: 20px;
-    margin: 0px;
-    text-align: center;
-}
+// .layer-labels{
+//     margin-right: 10px;
+//     margin-top: 8px;
+//     width: auto;
+// }
+// .key-label{
+//   // margin: 4px;
+// }
 </style>

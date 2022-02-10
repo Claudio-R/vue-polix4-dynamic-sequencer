@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <v-container class="pa-0">
+      <div>
         <Key 
             v-for="k in tonesInScale"
-            class="keyback"
             ref="keys_refs"
             :key=tonesInScale-k
             :keyId=tonesInScale-k
@@ -16,12 +16,40 @@
             @playSound2Event="playInst2"
             @playSound3Event="playInst3"
         ></Key>
-        <div id="beat-controller">
-            <button class="beat-btn monitor-btn" @click="monitorBeat">P</button>
-            <button class="beat-btn mute-btn" :class="{ muteActive : muteBeat }" @click="muteBeat=!muteBeat">M</button>
-            <button class="beat-btn clear-btn" @click="clearAllKeys">C</button>
-        </div>
-    </div>
+        <v-card v-if="num_beats<=4" outlined class="d-flex d-sm-flex justify-space-around py-1">
+          <v-btn small icon @click="monitorBeat">
+            <v-icon dense>mdi-music-note</v-icon>
+          </v-btn>
+          <v-btn icon small :class="{ red : muteBeat }"
+            @click="muteBeat=!muteBeat">
+            <v-icon dense>mdi-volume-mute</v-icon>
+          </v-btn>
+          <v-btn icon small @click="clearAllKeys">
+            <v-icon>mdi-delete</v-icon>
+          </v-btn>
+        </v-card>
+        <v-card v-else outlined class="">
+        <!-- <v-card v-else outlined class="hidden-xs-only"> -->
+          <v-menu offset-x :close-on-content-click="false">
+            <template v-slot:activator="{ on }">
+              <v-icon v-on="on">mdi-menu-right</v-icon>
+            </template>
+            <v-card outlined class="d-flex justify-space-around py-2">
+              <v-btn icon class="mx-2" @click="monitorBeat">
+                <v-icon dense>mdi-music-note</v-icon>
+              </v-btn>
+              <v-btn icon class="mx-2" :class="{ red : muteBeat }"
+                @click="muteBeat=!muteBeat">
+                <v-icon dense>mdi-volume-mute</v-icon>
+              </v-btn>
+              <v-btn icon class="mx-2" @click="clearAllKeys">
+                <v-icon dense>mdi-delete</v-icon>
+              </v-btn>
+            </v-card>
+          </v-menu>
+        </v-card>
+      </div>
+    </v-container>
 </template>
 
 <script>
@@ -34,7 +62,7 @@ export default ({
         Key
     },
 
-    props : ['beatId','inst_selected','duration','prelistenBeat','muteLayer','isPlaying','tonesInScale','scale_keyboard'],
+    props : ['beatId','num_beats','inst_selected','duration','prelistenBeat','muteLayer','isPlaying','tonesInScale','scale_keyboard'],
     
     data() {
         return {
@@ -74,12 +102,12 @@ export default ({
             this.drum[keyId].start();
         },
         getKeyProps() {
-            for(let j=0; j<this.tonesInScale; j++){
-                this.key_state1[j]=this.$refs.keys_refs[j].state1;
-                this.key_state2[j]=this.$refs.keys_refs[j].state2;
-                this.key_state3[j]=this.$refs.keys_refs[j].state3;
-            }
-            return [this.key_state1, this.key_state2, this.key_state3]
+          for(let j=0; j<this.tonesInScale; j++){
+            this.key_state1[j]=this.$refs.keys_refs[j].state1;
+            this.key_state2[j]=this.$refs.keys_refs[j].state2;
+            this.key_state3[j]=this.$refs.keys_refs[j].state3;
+          }
+          return [this.key_state1, this.key_state2, this.key_state3]
 
         },
         setColumn(newvar){
@@ -107,16 +135,16 @@ export default ({
 <style lang="scss">
 .keyback {
     width: auto;
-    height: 18px;
+    //height: 18px;
     background-color: rgb(107, 216, 183);
-    border: 3px solid #0000004d;
+    //border: 3px solid #0000004d;
     border-radius: 8px;
 }
 #beat-controller {
     width: auto;
     height: auto;
-    margin: 1px;
-    border: 2px solid #575757;
+    //margin: 1px;
+    //border: 2px solid #575757;
     background-color: rgb(216, 216, 190);
     border-radius: 4px;
     display: flex;

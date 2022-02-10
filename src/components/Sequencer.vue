@@ -1,114 +1,296 @@
 <template>
-  <div id="sequencer">
+  <v-card id="sequencer" min-width="370px">
+    <v-card flat tile id="container-bar" class="primary pa-2" ref="container_ref" :min-height="heightHorizontal">
 
-    <!--STATE VIEWER-->
-    <div id="view-box">
-      <div class="viewer">BPM: {{bpm}}</div>
-      <div class="viewer">Selected instrument: {{inst_name[inst_id-1]}}</div>
-      <div class="viewer">Bars: {{n_bars}}</div>
-      <button @click="() => {if(n_bars<4){n_bars++; addBar()}}"> + </button>
-      <button @click="() => {if(n_bars>1){n_bars--}}"> - </button>
-    </div>
-    
-    <!--SEQUENCER CONTROLLER-->
-    <MainController
-      @unifiedControllerEvent="unifiedControl=!unifiedControl"
-      @newLayerEvent="addLayer"
-      @bpmEvent="updateBPM"
-      @instSelectionEvent="instSelected"
-      @durationEvent="changeDuration"
-      @synthEvent="changeSynthName"
-      @playAllEvent="playAll"
-      @stopAllEvent="stopAll"
-    ></MainController>
-    
-    <!--UNIFIED CONTROLLER-->
-    <div v-if="unifiedControl" class="layer-controller unified">
-      <KeySelector @keySelectedEvent="changeKey"
-        :selectedKey="allLayersKey"
-      ></KeySelector>
-      <ScaleSelector @scaleSelectedEvent="changeScale"
-        :selectedScale="allLayersScale"
-      ></ScaleSelector>
-      <div class="octave-sound-controller">
-        <div id="octave-selector">
-          <div class="octave-viewer">Octave: {{allLayersOctave}} </div>
-          <button @click="moreOctave"> + </button>
-          <button @click="lessOctave"> - </button>
-        </div>
-        <div class="layer-sound-controller">
-          <button class="layer-btn prelisten-btn" :class="{ prelistenActive : prelistenSystem }" @click="togglePrelistenSystem">L</button>
-          <button class="layer-btn mute-btn" :class="{ muteActive : muteSystem }" @click="toggleMuteSystem">M</button>
-          <button class="layer-btn clear-btn" @click="clearSystem">C</button>
-        </div>
-      </div>
-    </div>
+      <!--**FIRST ROW** -->
+      <v-row dense>
 
-    <!--LAYERS CONTAINER-->        
-    <div id="layers-container">
-      <Layer v-for="(layer,index) in layers"
-        ref="layers_refs"
-        :unifiedControl="unifiedControl"
-        :n_bars="n_bars"
-        :inst_id="inst_id"
-        :duration="duration"
-        :total_duration="total_duration"
-        :key="layer.id"
-        :num_beats="layer.num_beats"
-        :octaveLayer="layer.octaveLayer"
-        :keyLayer="layer.keyLayer"
-        :scaleLayer="layer.scaleLayer"
-        :prelistenLayer="layer.prelistenLayer"
-        :muteLayer="layer.muteLayer"
-        @restartEvent="restart(index)"
-        @removeLayerEvent="layers.splice(index,1)"
-        @addKeyEvent="() => {if(!systemPlaying && layer.num_beats < 12 ) layer.num_beats++}"
-        @removeKeyEvent="() => {if(!systemPlaying && layer.num_beats > 1 ) layer.num_beats--}"
-        @keySelectedEvent="(val) => {layer.keyLayer = val}"
-        @scaleSelectedEvent="(val) => {layer.scaleLayer = val}"
-        @moreOctaveEvent="() => {if(layer.octaveLayer < 6) layer.octaveLayer++}"
-        @lessOctaveEvent="() => {if(layer.octaveLayer > 2) layer.octaveLayer--}"
-        @togglePrelistenLayerEvent="layer.prelistenLayer = !layer.prelistenLayer"
-        @toggleMuteLayerEvent="layer.muteLayer = !layer.muteLayer"
-      ></Layer>
-    </div>
-  </div>
+       <!-- SELECT BPM -->
+        <v-col cols="4" class="caption">
+          <v-menu offset-y :close-on-content-click="false">
+            <template v-slot:activator="{ on }">
+              <v-btn depressed small block v-on="on">
+                <v-icon left class="hidden-xs-only">mdi-metronome-tick</v-icon>
+                <span>BPM: {{bpm}}</span>
+              </v-btn>
+            </template>
+            <v-card class="mx-auto" min-width="250">
+     
+              <v-toolbar flat dense>
+                <v-toolbar-title>
+                  <span class="subheading">METRONOME</span>
+                </v-toolbar-title>
+              </v-toolbar>
+
+              <v-card-text>
+                <v-row
+                  class="mb-2"
+                  justify="space-between"
+                >
+                  <v-col class="text-left">
+                    <span
+                      class="text-h2 font-weight-light"
+                      v-text="bpm"
+                    ></span>
+                    <span class="subheading font-weight-light mr-1">BPM</span>
+                  </v-col>
+                </v-row>
+
+                <v-slider v-model="bpm" color="primary" track-color="grey"
+                  always-dirty min="40" max="218">
+                  <template v-slot:prepend>
+                    <v-icon color="secondary" @click="bpm--">
+                      mdi-minus
+                    </v-icon>
+                  </template>
+
+                  <template v-slot:append>
+                    <v-icon color="secondary" @click="bpm++">
+                      mdi-plus
+                    </v-icon>
+                  </template>
+                </v-slider>
+
+              </v-card-text>
+            </v-card>
+          </v-menu>
+        </v-col>
+        
+        <!-- INSTRUMENT SELECTOR -->
+        <v-col cols="4" class="caption">
+          <v-menu tile offset-y attach :close-on-content-click="false" max-width="100%">
+            <template v-slot:activator="{ on }">
+              <v-btn small depressed :class="`${inst_color[inst_id]}--text`" block v-on="on">
+                <v-icon left class="hidden-xs-only">mdi-guitar-electric</v-icon>
+                <span class="caption text-truncate hidden-sm-and-up" style="max-width: 50px;">{{inst_names[inst_id]}}</span>
+                <span class="caption hidden-xs-only">{{inst_names[inst_id]}}</span>
+              </v-btn>
+            </template>
+            <v-card flat class="pa-4">
+              <v-row>
+                <v-col cols="12" sm="4" v-for="(instrument_name, index) in inst_names" :key="`sequencer-${index}-${instrument_name}`">
+                  <InstrumentSelector
+                    :id="index"
+                    @instSelectionEvent="instSelected"
+                    @durationChangeEvent="changeDuration"
+                    @changeSynthEvent="changeSynthName"
+                  ></InstrumentSelector>
+                </v-col>
+              </v-row>
+            </v-card>
+          </v-menu>
+        </v-col>
+
+        <!-- ADD BARS -->
+        <v-col cols="4" class="caption">
+          <v-menu offset-y :close-on-content-click="false">
+            <template v-slot:activator="{ on }">
+              <v-btn small depressed block v-on="on">
+                <span >Bars: {{n_bars}}</span>
+              </v-btn>
+            </template>
+            <v-card flat dense class="d-flex justify-space-around pa-6">
+              <v-btn icon large @click="() => {if(n_bars<4){n_bars++; addBar()}}">
+                <v-icon color="primary" >mdi-plus</v-icon>
+              </v-btn>
+              <v-btn icon large @click="() => {if(n_bars>1){n_bars--}}">
+                <v-icon color="primary" >mdi-minus</v-icon>
+              </v-btn>
+            </v-card>
+          </v-menu>
+        </v-col>    
+      
+      </v-row>
+      <!--**/FIRST ROW** -->
+
+      <!--**SECOND ROW** -->
+      <v-row dense class="d-flex align-center">
+
+        <!-- ADD LAYER -->
+        <v-col cols="2" md="3" class="hidden-xs-only">
+          <v-card>
+            <v-card-actions>
+              <v-text-field type="number" v-model.number="numBeatsNewLayer"
+                label="Add a layer"
+                outlined dense
+                hint="Value from 1 to 12"
+                hide-details="true"
+                append-outer-icon="mdi-plus-circle"
+                @click:append-outer="addLayer"
+              ></v-text-field>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+
+        <!-- BUTTONS -->
+        <v-col cols="10" sm="8" md="6">
+          <v-card flat>
+            <v-row no-gutters class="d-flex align-center">
+              <!-- BUTTONS -->
+              <v-col cols="12" sm="8">
+                <v-card-actions class="d-flex justify-space-around">
+                  <v-btn icon outlined color="secondary" @click="playAll">
+                    <v-icon >mdi-play</v-icon>
+                  </v-btn>
+                  <v-btn icon outlined color="secondary" @click="stopAll">
+                    <v-icon >mdi-stop</v-icon>  
+                  </v-btn>
+                  <v-btn icon outlined color="secondary" :disabled="!unifiedControl" @click="toggleMuteSystem">
+                    <v-icon>mdi-volume-mute</v-icon>
+                  </v-btn>
+                  <v-btn small depressed color="secondary" @click="clearAll">
+                    <v-icon >mdi-delete</v-icon>
+                  </v-btn>
+                  <v-btn small depressed :class="{primary : automaticSlideControl}" @click="automaticSlideControl=!automaticSlideControl">
+                    <v-icon>mdi-arrow-right-circle-outline</v-icon>
+                  </v-btn>
+                </v-card-actions>
+              </v-col>
+              <!-- MERGE/UNMERGE BUTTON -->
+              <v-col sm="4" class="hidden-xs-only">
+                <v-card-actions>
+                  <v-btn v-if="unifiedControl" small depressed block 
+                  @click="unifiedControl=!unifiedControl"
+                  >Unmerge</v-btn>
+                  <v-btn v-else small depressed block 
+                  @click="unifiedControl=!unifiedControl"
+                  >Merge</v-btn>
+                </v-card-actions>
+              </v-col>
+            </v-row>
+          </v-card>
+        </v-col>
+
+        <!-- MENU -->
+        <v-col cols="2" md="3">
+          <v-menu offset-x offset-y :disabled="!unifiedControl" :close-on-content-click="false" max-width="100%">
+            <template v-slot:activator="{ on }">
+              <v-btn block :disabled="!unifiedControl" v-on="on">
+                <v-icon>mdi-menu</v-icon>
+                <span class="hidden-sm-and-down">Main controller</span>
+              </v-btn>
+            </template>
+            <v-expansion-panels accordion>
+              <!-- OCTAVE -->
+              <v-expansion-panel>
+                <v-expansion-panel-header>
+                  Octave: {{allLayersOctave}}
+                </v-expansion-panel-header>
+                <v-expansion-panel-content>
+                  <v-card outlined class="pa-4 d-flex justify-space-around">
+                    <v-btn icon @click="moreOctave">
+                      <v-icon color="primary">mdi-plus</v-icon>
+                    </v-btn>
+                    <v-btn icon @click="lessOctave">
+                        <v-icon color="primary">mdi-minus</v-icon>
+                    </v-btn>
+                  </v-card>
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+              <!-- KEY -->
+              <v-expansion-panel>
+                <v-expansion-panel-header>
+                  Selected key: {{allLayersKey}}
+                </v-expansion-panel-header>
+                <v-expansion-panel-content>
+                  <KeySelector @keySelectedEvent="changeKey"
+                    :selectedKey="allLayersKey"
+                  ></KeySelector>
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+              <!-- SCALE -->
+              <v-expansion-panel>
+                <v-expansion-panel-header>
+                  Selected scale: {{allLayersScale}}
+                </v-expansion-panel-header>
+                <v-expansion-panel-content>
+                  <ScaleSelector @scaleSelectedEvent="changeScale"
+                  :selectedScale="allLayersScale"
+                ></ScaleSelector>
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+            </v-expansion-panels>
+          </v-menu>
+        </v-col>
+
+      </v-row>
+      <!--**/SECOND ROW** -->
+
+    </v-card> 
+    
+    <v-card id="layers-container" flat tile class="d-flex flex-column">
+        <Layer v-for="(layer,index) in layers"
+          ref="layers_refs"
+          :key="`layer-${layer.id}`"
+          :layerId="`layer-${layer.id}`"
+          :unifiedControl="unifiedControl"
+          :systemPlaying="systemPlaying"
+          :n_bars="n_bars"
+          :inst_id="inst_id"
+          :duration="duration"
+          :total_duration="total_duration"
+          :num_beats="layer.num_beats"
+          :octaveLayer="layer.octaveLayer"
+          :keyLayer="layer.keyLayer"
+          :scaleLayer="layer.scaleLayer"
+          :muteLayer="layer.muteLayer"
+          :automaticSlideControl="automaticSlideControl"
+          @restartEvent="restart(index)"
+          @removeLayerEvent="layers.splice(index,1)"
+          @addKeyEvent="() => {if(!systemPlaying && layer.num_beats < 12 ) layer.num_beats++}"
+          @removeKeyEvent="() => {if(!systemPlaying && layer.num_beats > 1 ) layer.num_beats--}"
+          @keySelectedEvent="(val) => {layer.keyLayer = val}"
+          @scaleSelectedEvent="(val) => {layer.scaleLayer = val}"
+          @moreOctaveEvent="() => {if(layer.octaveLayer < 6) layer.octaveLayer++}"
+          @lessOctaveEvent="() => {if(layer.octaveLayer > 2) layer.octaveLayer--}"
+          @togglePrelistenLayerEvent="layer.prelistenLayer = !layer.prelistenLayer"
+          @toggleMuteLayerEvent="layer.muteLayer = !layer.muteLayer"
+        ></Layer>
+    </v-card>
+
+  </v-card>
 </template>
 
 <script>
 
 import Layer from '@/components/Layer.vue'
-import MainController from '@/components/MainController.vue'
 import ScaleSelector from '@/components/ScaleSelector.vue'
 import KeySelector from '@/components/KeySelector.vue'
+import InstrumentSelector from '@/components/InstrumentSelector'
+import SynthSelector from '@/components/SynthSelector'
 
 export default {
   name: 'Sequencer',
 
   components: {
-      Layer, 
-      MainController, 
+      Layer,
       ScaleSelector, 
-      KeySelector
+      KeySelector,
+      InstrumentSelector,
+      SynthSelector
   },
 
   data(){
     return {
-        /** sequencer controller */
-        systemPlaying: false,
-        bpm: 120,
-        unifiedControl: true,
-        n_bars:1,
-        inst_id: 1,
-        duration:["16n","16n"],
-        
-        /** unified controller */
-        allLayersOctave: 4,
-        allLayersKey: 'C',
-        allLayersScale: 'Major',
-        prelistenSystem: true,
-        muteSystem: false,
-        inst_name: [this.$store.state.synth_names[this.$store.state.synth_selection[0]],this.$store.state.synth_names[this.$store.state.synth_selection[1]],this.$store.state.drum_names[this.$store.state.synth_selection[2]]],
+      inst_color: ['red','blue','green'],
+      // displayInstrumentMenu: false,
+      /** sequencer controller */
+      systemPlaying: false,
+      bpm: 120,
+      numBeatsNewLayer: '',
+      unifiedControl: true,
+      n_bars:1,
+      inst_id: 0,
+      duration:["16n","16n"],
+      automaticSlideControl: true,
+      
+      /** unified controller */
+      allLayersOctave: 4,
+      allLayersKey: 'C',
+      allLayersScale: 'Major',
+      prelistenSystem: true,
+      muteSystem: false,
+      inst_names: [this.$store.state.synth_names[this.$store.state.synth_selection[0]],this.$store.state.synth_names[this.$store.state.synth_selection[1]],this.$store.state.drum_names[this.$store.state.synth_selection[2]]],
         
       /** state variables */
       nextId: 2,
@@ -124,33 +306,47 @@ export default {
         },
         {
           id: 1,
-          num_beats: 2,
+          num_beats: 5,
           octaveLayer: 4,
           keyLayer: 'C',
           scaleLayer: 'Major',
           prelistenLayer: true,
           muteLayer: false,
         },
-      ],   
+      ], 
     }
   },
 
   computed: {
-      total_duration() {
-          if(this.layers[0]){
-              return this.layers[0].num_beats*60000/this.bpm;
-          }
+    total_duration() {
+      if(this.layers[0]){
+        return this.layers[0].num_beats*60000/this.bpm;
+      }
+    },
+    heightHorizontal () {
+        switch (this.$vuetify.breakpoint.name) {
+          case 'xs': return '27%'
+          case 'sm': return '27%'
+          case 'md': return '20%'
+          case 'lg': return '18%'
+          case 'xl': return '18%'
+        }
       },
   },
 
+  // mounted() {
+  //   this.container_height = this.$refs.container_ref.offsetHeight;
+  //   this.window_height = window.screen.height;
+  // },
+
   methods: {
-      /** sequencer controller */
-      addLayer(num_beats_input) {
-          if(num_beats_input > 12) num_beats_input = 12;
+      addLayer() {
+          console.log(this.numBeatsNewLayer)
+          if(this.numBeatsNewLayer > 12) this.numBeatsNewLayer = 12;
           this.layers.push(
               {   
                   id: this.nextId,
-                  num_beats: num_beats_input,
+                  num_beats: this.numBeatsNewLayer,
                   octaveLayer: this.allLayersOctave,
                   keyLayer: this.allLayersKey,
                   scaleLayer: this.allLayersScale,
@@ -159,9 +355,6 @@ export default {
               }
           )
           this.nextId += 1;
-      },
-      updateBPM(bpm_input) {
-          this.bpm = bpm_input
       },
       addBar(){
           for(let idx in this.layers) {
@@ -172,9 +365,10 @@ export default {
       },
       instSelected(inst_id) {
           this.inst_id=inst_id
+          console.log(inst_id)
       },
       changeDuration(inst_id,duration){
-          this.duration[inst_id-1]=20-duration*4+"n"
+          this.duration[inst_id]=20-duration*4+"n"
       },
       playAll() {
           this.systemPlaying = true;
@@ -213,10 +407,10 @@ export default {
       },
       changeSynthName(id){
         if(id!=2)
-            this.inst_name[id] = this.$store.state.synth_names[this.$store.state.synth_selection[id]]
+            this.inst_names[id] = this.$store.state.synth_names[this.$store.state.synth_selection[id]]
         else
-            this.inst_name[id] = this.$store.state.drum_names[this.$store.state.synth_selection[id]]
-        if(id+1==this.inst_id)
+            this.inst_names[id] = this.$store.state.drum_names[this.$store.state.synth_selection[id]]
+        if(id==this.inst_id)
         this.$forceUpdate();
       },
       moreOctave(){
@@ -248,7 +442,7 @@ export default {
               this.layers[idx].muteLayer = this.muteSystem; 
           }
       },
-      clearSystem() {
+      clearAll() {
           for(let idx in this.layers) {
               this.$refs.layers_refs[idx].clearLayer();
           }
@@ -259,37 +453,40 @@ export default {
 </script>
 
 <style lang="scss">
-#sequencer {
-    background-color: rgb(19, 109, 116);
+
+#container-bar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
-#view-box {
-    display: inline-flex;
-    border-radius: 10px;
-    margin-top: 10px;
-    margin-left: 10px;
-    padding: 10px;
-    background-color: beige;
-}
+// #view-box {
+//     display: inline-flex;
+//     border-radius: 10px;
+//     margin-top: 10px;
+//     margin-left: 10px;
+//     padding: 10px;
+//     background-color: beige;
+// }
 
-.viewer{
-    width: auto;
-    height: 80%;
-    margin-right: 10px;
-    border: 2px solid rgb(216, 216, 178);
-    background-color: bisque;
-}
+// .viewer{
+//     width: auto;
+//     height: 80%;
+//     margin-right: 10px;
+//     border: 2px solid rgb(216, 216, 178);
+//     background-color: bisque;
+// }
 
-.unified {
-    margin: 10px;
-    padding: 5px;
-    background-color: #e2c957;
-    border: rgb(177, 161, 15) solid 3px;
-    border-radius: 10px;
-}
+// .unified {
+//     margin: 10px;
+//     padding: 5px;
+//     background-color: #e2c957;
+//     border: rgb(177, 161, 15) solid 3px;
+//     border-radius: 10px;
+// }
 
 #layers-container {
-    margin: 10px;
+    // margin: 10px;
     background-color: rgb(28, 140, 148);
 }
 

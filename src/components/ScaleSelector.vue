@@ -1,24 +1,25 @@
 <template>
-    <div class="selector"> {{ selectedScale }}
-        <MenuElement 
-            v-for="(mode,index) in scales"
-            class="menu-element"
-            :key="index"
-            :element="mode"
-            @selectionEvent="selectScale">
-        </MenuElement>
-    </div>  
+  <v-card flat outlined class="pa-1">
+    <v-row no-gutters>
+      <v-col cols="6" md="4" v-for="scale in scales" :key="scale">
+      <v-btn  
+        text block color="primary"
+        @click="() => {$emit('scaleSelectedEvent', scale)}"
+      >{{scale}}</v-btn>
+      </v-col>
+    </v-row>
+  </v-card> 
 </template>
 
 <script>
-import MenuElement from '@/components/MenuElement.vue'
+// import MenuElement from '@/components/MenuElement.vue'
 
 export default {
     name: 'ScaleSelector',
 
-    components: {
-        MenuElement
-    },
+    // components: {
+    //     MenuElement
+    // },
 
     props: ['selectedScale'],
 

@@ -8,7 +8,7 @@
 
 
 /******************************************* LAYER CONTROLLER *******************************************/
-.layer-controller{
+/* .layer-controller{
     margin-left: 10px;
     background-color: beige;
 }
@@ -62,34 +62,34 @@
 
 .octave-sound-controller .layer-sound-controller{
     margin: 10px 10px 0px 0px;
-}
+} */
 
-.monitor-btn {
+/* .monitor-btn {
     background-color: rgba(147, 238, 110, 0.849);
-}
+} */
 
-.prelisten-btn {
+/* .prelisten-btn {
     background-color: rgb(0, 161, 86);
-}
+} */
 
-.prelistenActive {
-    background-color: rgb(0, 255, 21);
-}
-.mute-btn {
+/* .prelistenActive {
+    background: rgb(0, 255, 21);
+} */
+/* .mute-btn {
     background-color: rgb(255, 166, 0);
-}
-.muteActive {
+} */
+/* .muteActive {
     background-color: red;
-}
-.clear-btn {
+} */
+/* .clear-btn {
     background-color: rgb(42, 206, 206);
-}
+} */
 
 /******************************************* LAYER LABELS *******************************************/
 
 
 /******************************************* SCALE and KEY SELECTOR *******************************************/
-.selector {
+/* .selector {
     margin: 10px;
     height: 20px;
     padding: 2px;
@@ -124,4 +124,4 @@
 .selector:hover .menu-element:hover {
     background-color: #c0a630;
     color: #FFFFFF;
-}
+} */
