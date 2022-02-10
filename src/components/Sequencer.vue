@@ -14,13 +14,44 @@
                 <span>BPM: {{bpm}}</span>
               </v-btn>
             </template>
-            <v-card>
-              <div class="my-1">
-                <v-card-text class="caption">Selected bpm: {{bpm}}</v-card-text>
-                <v-slider v-model="bpm"
-                  min="1" max="280"
-                ></v-slider>
-              </div>
+            <v-card class="mx-auto">
+     
+              <v-toolbar flat dense>
+                <v-toolbar-title>
+                  <span class="subheading">METRONOME</span>
+                </v-toolbar-title>
+              </v-toolbar>
+
+              <v-card-text>
+                <v-row
+                  class="mb-2"
+                  justify="space-between"
+                >
+                  <v-col class="text-left">
+                    <span
+                      class="text-h2 font-weight-light"
+                      v-text="bpm"
+                    ></span>
+                    <span class="subheading font-weight-light mr-1">BPM</span>
+                  </v-col>
+                </v-row>
+
+                <v-slider v-model="bpm" color="primary" track-color="grey"
+                  always-dirty min="40" max="218">
+                  <template v-slot:prepend>
+                    <v-icon color="secondary" @click="bpm--">
+                      mdi-minus
+                    </v-icon>
+                  </template>
+
+                  <template v-slot:append>
+                    <v-icon color="secondary" @click="bpm++">
+                      mdi-plus
+                    </v-icon>
+                  </template>
+                </v-slider>
+
+              </v-card-text>
             </v-card>
           </v-menu>
         </v-col>

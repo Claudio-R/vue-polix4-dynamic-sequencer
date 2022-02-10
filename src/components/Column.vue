@@ -36,7 +36,7 @@
             </template>
             <v-card outlined class="d-flex justify-space-around py-2">
               <v-btn icon class="mx-2" @click="monitorBeat">
-                <v-icon dense>mdi-headphones</v-icon>
+                <v-icon dense>mdi-music-note</v-icon>
               </v-btn>
               <v-btn icon class="mx-2" :class="{ red : muteBeat }"
                 @click="muteBeat=!muteBeat">
