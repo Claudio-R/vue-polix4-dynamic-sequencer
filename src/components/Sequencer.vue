@@ -1,7 +1,6 @@
 <template>
-  <div id="sequencer">
-
-    <v-card flat tile id="container-bar" class="primary pa-2" ref="container_ref" height="27vh">
+  <v-card id="sequencer" min-width="370px">
+    <v-card flat tile id="container-bar" class="primary pa-2" ref="container_ref" :min-height="heightHorizontal">
       <v-row dense>
        <!-- SELECT BPM -->
         <v-col cols="4" class="caption">
@@ -25,7 +24,7 @@
         
         <!-- INSTRUMENT SELECTOR -->
         <v-col cols="4" class="caption">
-          <v-menu offset-y :close-on-content-click="false">
+          <v-menu offset-y :close-on-content-click="false" max-width="100%">
             <template v-slot:activator="{ on }">
               <v-btn small block v-on="on">
                 <v-icon left class="hidden-xs-only">mdi-guitar-electric</v-icon>
@@ -61,7 +60,7 @@
               </v-list-item>
               <v-list-item @click="() => {if(n_bars>1){n_bars--}}">
                 <v-icon left>mdi-minus</v-icon>
-                <v-list-item-title class="">Add a new bar</v-list-item-title> 
+                <v-list-item-title class="">Remove the last bar</v-list-item-title> 
               </v-list-item>
             </v-list>
           </v-menu>
@@ -70,7 +69,7 @@
 
       <v-row dense class="d-flex align-center">
         <!-- ADD LAYER -->
-        <v-col cols="6" sm="3">
+        <v-col cols="2" md="3" class="hidden-xs-only">
           <v-card>
             <v-card-actions>
               <v-text-field type="number" v-model.number="numBeatsNewLayer"
@@ -86,7 +85,7 @@
         </v-col>
 
         <!-- MAIN CONTROLLER -->
-        <v-col cols="6">
+        <v-col cols="10" sm="8" md="6">
           <v-card flat>
             <!-- FIRST ROW -->
             <v-row no-gutters>
@@ -98,9 +97,9 @@
                   <v-btn small class="" depressed @click="stopAll">
                     <v-icon>mdi-stop</v-icon>  
                   </v-btn>
-                  <v-btn small :disabled="!unifiedControl" depressed @click="toggleMuteSystem">
+                  <!-- <v-btn small :disabled="!unifiedControl" depressed @click="toggleMuteSystem">
                     <v-icon>mdi-volume-mute</v-icon>
-                  </v-btn>
+                  </v-btn> -->
                   <v-btn small class="" depressed @click="clearAll">
                     <v-icon>mdi-delete</v-icon>
                   </v-btn>
@@ -121,29 +120,16 @@
                 </v-card-actions>
               </v-col>
             </v-row>
-            <!-- SECOND ROW ON XS ONLY -->
-            <v-row class="hidden-sm-and-up" no-gutters>
-              <v-col cols="12" sm="6">
-                <v-card-actions>
-                  <v-btn v-if="unifiedControl" small depressed block 
-                  @click="unifiedControl=!unifiedControl"
-                  >Unmerge</v-btn>
-                  <v-btn v-else small depressed block 
-                  @click="unifiedControl=!unifiedControl"
-                  >Merge</v-btn>
-                </v-card-actions>
-              </v-col>
-            </v-row>
           </v-card>
         </v-col>
 
-        <v-col sm="3" class="hidden-xs-only">
+        <v-col cols="2" md="3">
           <!-- dare classe disabled -->
-          <v-menu offset-y :disabled="!unifiedControl" :close-on-content-click="false">
+          <v-menu offset-y :disabled="!unifiedControl" :close-on-content-click="false" max-width="100%">
             <template v-slot:activator="{ on }">
               <v-btn block :disabled="!unifiedControl" v-on="on">
-                <v-icon left class="hidden-xs-only">mdi-menu</v-icon>
-                <span>Main controller</span>
+                <v-icon left>mdi-menu</v-icon>
+                <span class="hidden-sm-and-down">Main controller</span>
               </v-btn>
             </template>
             <v-expansion-panels accordion>
@@ -191,11 +177,6 @@
     </v-card> 
     
     <v-card id="layers-container" flat tile class="d-flex flex-column">
-      <v-carousel :vertical="true"
-      height="73vh"
-      :show-arrows="false"
-      :vertical-delimiters="'left'">
-        <!-- :prelistenLayer="layer.prelistenLayer" -->
         <Layer v-for="(layer,index) in layers"
           ref="layers_refs"
           :key="`layer-${layer.id}`"
@@ -223,10 +204,9 @@
           @togglePrelistenLayerEvent="layer.prelistenLayer = !layer.prelistenLayer"
           @toggleMuteLayerEvent="layer.muteLayer = !layer.muteLayer"
         ></Layer>
-      </v-carousel>
     </v-card>
 
-  </div>
+  </v-card>
 </template>
 
 <script>
@@ -284,7 +264,7 @@ export default {
         },
         {
           id: 1,
-          num_beats: 6,
+          num_beats: 5,
           octaveLayer: 4,
           keyLayer: 'C',
           scaleLayer: 'Major',
@@ -301,6 +281,15 @@ export default {
         return this.layers[0].num_beats*60000/this.bpm;
       }
     },
+    heightHorizontal () {
+        switch (this.$vuetify.breakpoint.name) {
+          case 'xs': return '27%'
+          case 'sm': return '27%'
+          case 'md': return '20%'
+          case 'lg': return '18%'
+          case 'xl': return '18%'
+        }
+      },
   },
 
   // mounted() {

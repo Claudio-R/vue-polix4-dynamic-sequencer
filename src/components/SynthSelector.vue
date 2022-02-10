@@ -9,7 +9,7 @@
       </template>
       <v-card dense outlined class="pa-1">
         <v-row no-gutters>
-          <v-col cols="3"  v-for="synth in synths" :key="`${synth}-selector-${id}`">
+          <v-col cols="12" sm="4"  v-for="synth in synths" :key="`${synth}-selector-${id}`">
             <v-btn
               text block color="primary"
               @click="() => {selectSynth(synth)}"

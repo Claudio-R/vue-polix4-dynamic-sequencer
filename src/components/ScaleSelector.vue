@@ -1,7 +1,7 @@
 <template>
   <v-card flat outlined class="pa-1">
     <v-row no-gutters>
-      <v-col cols="4" v-for="scale in scales" :key="scale">
+      <v-col cols="6" md="4" v-for="scale in scales" :key="scale">
       <v-btn  
         text block color="primary"
         @click="() => {$emit('scaleSelectedEvent', scale)}"

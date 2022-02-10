@@ -1,12 +1,11 @@
 <template>
-<v-carousel-item>
-  <v-card height="100%" flat tile class="my-0">
+  <v-card :min-height="heightHorizontal" flat tile class="my-0">
       <v-row no-gutters>
         <!-- LABELS -->
         <v-col cols="2">
           <v-container class="labels-container my-3 mx-1 pa-0">
             <v-container v-if="inst_id!=2" class="pa-0">
-              <v-card outlined class="text-center grey--text" 
+              <v-card flat outlined class="text-center hidden-xs-only" 
                 v-for="k in tonesInScale" :key="k"
                 >{{scale_keyboard[tonesInScale-k].slice(0, -1)}}
               </v-card>
@@ -17,13 +16,13 @@
                 >{{drum_keyboard[tonesInScale-k]}}
               </v-card>
             </v-container>
-            <v-btn block v-if="unifiedControl" class="text-center" @click="$emit('removeLayerEvent')">Remove</v-btn>
+            <v-btn block v-if="unifiedControl" class="text-center hidden-xs-only" @click="$emit('removeLayerEvent')">Remove</v-btn>
           </v-container>
         </v-col>
 
         <!-- BEATS -->
         <!-- Unmerged Controller -->
-        <v-col v-if="!unifiedControl" cols="7">
+        <v-col v-if="!unifiedControl" cols="10" sm="7">
           <v-carousel hide-delimiters
           height="100%"
           :continuous="false">
@@ -80,7 +79,7 @@
         </v-col>
 
         <!-- LAYER CONTROLLER -->
-        <v-col v-if="!unifiedControl" cols="3">
+        <v-col v-if="!unifiedControl" cols="3" class="hidden-xs-only">
           <v-container class="layer-controller">
             <v-card flat class="pa-1" :height="`${singleLayerHeight-37}`">
             <v-card flat class="d-flex justify-space-around">
@@ -155,7 +154,6 @@
         </v-col>
       </v-row>
   </v-card>
-  </v-carousel-item>
 </template>
 
 <script>
@@ -238,6 +236,15 @@ export default {
                 '--columnHeight' : this.tonesInScale*(keyHeight + 2*borderKey) + 'px',
             }
         },
+        heightHorizontal () {
+        switch (this.$vuetify.breakpoint.name) {
+          case 'xs': return '73%'
+          case 'sm': return '73%'
+          case 'md': return '80%'
+          case 'lg': return '82%'
+          case 'xl': return '82%'
+        }
+      },
     },
 
     methods: {
