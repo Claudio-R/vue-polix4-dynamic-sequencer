@@ -5,9 +5,11 @@ import { initializeApp } from "firebase/app";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 /** Use Tone to create Synth */
+const comp = new Tone.Limiter(-30).toDestination();
 const synth = [];
-synth[0] = new Tone.PolySynth(Tone.AMSynth).toDestination();
+synth[0] = new Tone.PolySynth(Tone.AMSynth).connect(comp);
 synth[0].set({
+     volume : -10 ,
      harmonicity : 1 ,
      detune : 0 ,
      oscillator : {
@@ -29,7 +31,7 @@ synth[0].set({
             release : 0.07
         }
 });
-synth[1] = new Tone.PolySynth(Tone.DuoSynth).toDestination();
+synth[1] = new Tone.PolySynth(Tone.DuoSynth).connect(comp);
 synth[1].set({
     vibratoAmount  : 0.5 ,
     vibratoRate  : 5 ,
@@ -73,9 +75,9 @@ synth[1].set({
         }
     }
 });
-synth[2] = new Tone.PolySynth(Tone.FMSynth).toDestination();
+synth[2] = new Tone.PolySynth(Tone.FMSynth).connect(comp);
 synth[2].set({
-	"volume": 0,
+	"volume": -10,
 	"detune": 0,
 	"portamento": 0,
 	"harmonicity": 3,
@@ -111,9 +113,9 @@ synth[2].set({
 	},
 	"modulationIndex": 12.22
 })
-synth[3] = new Tone.PolySynth().toDestination();
+synth[3] = new Tone.PolySynth().connect(comp);
 synth[3].set({
-	"volume": 0,
+	"volume": -10,
 	"detune": 0,
 	"portamento": 0,
 	"envelope": {
@@ -133,6 +135,20 @@ synth[3].set({
 		"count": 3,
 		"spread": 30
 }})
+
+const reverb = new Tone.JCReverb({
+  roomSize: 0.85,
+  wet: 0.1
+}).toDestination();
+
+const phaser = new Tone.Phaser({
+  frequency: 0.06,
+  octaves: 3,
+  stages: 12,
+  Q: 3,
+  wet: 0.2,
+  baseFrequency: 350
+}).toDestination();
 synth[4] = new Tone.Sampler({
   urls: {
     A0: "A0.mp3",
@@ -168,12 +184,13 @@ synth[4] = new Tone.Sampler({
   },
   release: 1,
   baseUrl: "https://tonejs.github.io/audio/salamander/"
-}).toDestination();
-synth[5] = new Tone.PolySynth().toDestination();
+}).chain(phaser, reverb, comp);
+synth[5] = new Tone.PolySynth().connect(comp);
 synth[5].set({
+  "volume" : -10,
   "oscillator": {
-      "type": "fatsine4",
-      "spread" : 60,
+      "type": "square8",
+      "spread" : 40,
       "count" : 10
   },
   "envelope": {
@@ -185,8 +202,9 @@ synth[5].set({
       "release": 0.4
   }
 })
-synth[6] = new Tone.PolySynth(Tone.FMSynth).toDestination();
+synth[6] = new Tone.PolySynth(Tone.FMSynth).connect(comp);
 synth[6].set({
+  "volume" : -10,
   "harmonicity":8,
   "modulationIndex": 2,
   "oscillator" : {
@@ -208,8 +226,9 @@ synth[6].set({
       "release": 0.2
   }
 })
-synth[7] = new Tone.PolySynth().toDestination();
+synth[7] = new Tone.PolySynth().connect(comp);
 synth[7].set({
+  "volume" : -10,
   "portamento" : 0.0,
   "oscillator": {
       "type": "square4"
@@ -241,84 +260,84 @@ const path = 'gs://actam21.appspot.com';
 {
   /*drumkit #1*/
   getDownloadURL(ref(storage, path + '/TR808/808_KICK_01_CLEAN_CFC.wav')).then(function(url) {
-      drum[0] = new Tone.Player(url).toDestination(); /*kick*/
+      drum[0] = new Tone.Player(url).connect(comp); /*kick*/
     })
   getDownloadURL(ref(storage, path + '/TR808/808_SNARE_01_CLEAN_CFC.wav')).then(function(url) {
-      drum[1] = new Tone.Player(url).toDestination(); /*snare*/
+      drum[1] = new Tone.Player(url).connect(comp); /*snare*/
     })
   getDownloadURL(ref(storage, path + '/TR808/808_TOM_HIGH_CLEAN_CFC.wav')).then(function(url) {
-      drum[2] = new Tone.Player(url).toDestination(); /*tom1*/
+      drum[2] = new Tone.Player(url).connect(comp); /*tom1*/
     })
   getDownloadURL(ref(storage, path + '/TR808/808_TOM_MID_CLEAN_CFC.wav')).then(function(url) {
-      drum[3] = new Tone.Player(url).toDestination(); /*tom2*/
+      drum[3] = new Tone.Player(url).connect(comp); /*tom2*/
     })
   getDownloadURL(ref(storage, path + '/TR808/808_H-CL_CLEAN_CFC.wav')).then(function(url) {
-      drum[4] = new Tone.Player(url).toDestination(); /*hh close*/
+      drum[4] = new Tone.Player(url).connect(comp); /*hh close*/
     })
   getDownloadURL(ref(storage, path + '/TR808/808_H-OH_CLEAN_CFC.wav')).then(function(url) {
-      drum[5] = new Tone.Player(url).toDestination(); /*hh open*/
+      drum[5] = new Tone.Player(url).connect(comp); /*hh open*/
     })
   getDownloadURL(ref(storage, path + '/TR808/808_CYM_01_CLEAN_CFC.wav')).then(function(url) {
-      drum[6] = new Tone.Player(url).toDestination(); /*ride*/
+      drum[6] = new Tone.Player(url).connect(comp); /*ride*/
     })
   getDownloadURL(ref(storage, path + '/TR808/808_CLAP_01_CLEAN_CFC.wav')).then(function(url) {
-      drum[7] = new Tone.Player(url).toDestination(); /*clap*/
+      drum[7] = new Tone.Player(url).connect(comp); /*clap*/
     })
 
   /*drumkit #2*/
   getDownloadURL(ref(storage, path + '/TR909/SampleMagic_tr909_kick_01.wav')).then(function(url) {
-    drum[8] = new Tone.Player(url).toDestination(); /*kick*/
+    drum[8] = new Tone.Player(url).connect(comp); /*kick*/
   })
   getDownloadURL(ref(storage, path + '/TR909/SampleMagic_tr909_snare_01.wav')).then(function(url) {
-    drum[9] = new Tone.Player(url).toDestination(); /*snare*/
+    drum[9] = new Tone.Player(url).connect(comp); /*snare*/
   })
   getDownloadURL(ref(storage, path + '/TR909/SampleMagic_tr909_tom_01.wav')).then(function(url) {
-    drum[10] = new Tone.Player(url).toDestination(); /*tom1*/
+    drum[10] = new Tone.Player(url).connect(comp); /*tom1*/
   })
   getDownloadURL(ref(storage, path + '/TR909/SampleMagic_tr909_tom_02.wav')).then(function(url) {
-    drum[11] = new Tone.Player(url).toDestination(); /*tom2*/
+    drum[11] = new Tone.Player(url).connect(comp); /*tom2*/
   })
   getDownloadURL(ref(storage, path + '/TR909/SampleMagic_tr909_closedhat_01.wav')).then(function(url) {
-    drum[12] = new Tone.Player(url).toDestination(); /*hh close*/
+    drum[12] = new Tone.Player(url).connect(comp); /*hh close*/
   })
   getDownloadURL(ref(storage, path + '/TR909/SampleMagic_tr909_openhat_01.wav')).then(function(url) {
-    drum[13] = new Tone.Player(url).toDestination(); /*hh open*/
+    drum[13] = new Tone.Player(url).connect(comp); /*hh open*/
   })
   getDownloadURL(ref(storage, path + '/TR909/SampleMagic_tr909_ride_01.wav')).then(function(url) {
-    drum[14] = new Tone.Player(url).toDestination(); /*ride*/
+    drum[14] = new Tone.Player(url).connect(comp); /*ride*/
   })
   getDownloadURL(ref(storage, path + '/TR909/SampleMagic_tr909_clap.wav')).then(function(url) {
-    drum[15] = new Tone.Player(url).toDestination(); /*clap*/
+    drum[15] = new Tone.Player(url).connect(comp); /*clap*/
   })
   /*drumkit #3*/
 
   getDownloadURL(ref(storage, path + '/VAPORWAVE/BVKER - Voyage - Kick 01.wav')).then(function(url) {
-    drum[16] = new Tone.Player(url).toDestination(); /*kick*/
+    drum[16] = new Tone.Player(url).connect(comp); /*kick*/
   })
   getDownloadURL(ref(storage, path + '/VAPORWAVE/BVKER - Synthwave - Snare - 01.wav')).then(function(url) {
-    drum[17] = new Tone.Player(url).toDestination(); /*snare*/
+    drum[17] = new Tone.Player(url).connect(comp); /*snare*/
   })
   getDownloadURL(ref(storage, path + '/VAPORWAVE/BVKER - Voyage - Tom 01.wav')).then(function(url) {
-    drum[18] = new Tone.Player(url).toDestination(); /*tom1*/
+    drum[18] = new Tone.Player(url).connect(comp); /*tom1*/
   })
   getDownloadURL(ref(storage, path + '/VAPORWAVE/BVKER - Synthwave - Tom - 10.wav')).then(function(url) {
-    drum[19] = new Tone.Player(url).toDestination(); /*tom2*/
+    drum[19] = new Tone.Player(url).connect(comp); /*tom2*/
   })
   getDownloadURL(ref(storage, path + '/VAPORWAVE/BVKER - Synthwave - Closed Hat - 01.wav')).then(function(url) {
-    drum[20] = new Tone.Player(url).toDestination(); /*hh close*/
+    drum[20] = new Tone.Player(url).connect(comp); /*hh close*/
   })
   getDownloadURL(ref(storage, path + '/VAPORWAVE/BVKER - Synthwave - Open Hat - 03.wav')).then(function(url) {
-    drum[21] = new Tone.Player(url).toDestination(); /*hh open*/
+    drum[21] = new Tone.Player(url).connect(comp); /*hh open*/
   })
   getDownloadURL(ref(storage, path + '/VAPORWAVE/BVKER - Synthwave - Ride - 17.wav')).then(function(url) {
-    drum[22] = new Tone.Player(url).toDestination(); /*ride*/
+    drum[22] = new Tone.Player(url).connect(comp); /*ride*/
   })
   getDownloadURL(ref(storage, path + '/VAPORWAVE/BVKER - Synthwave - Clap - 12.wav')).then(function(url) {
-    drum[23] = new Tone.Player(url).toDestination(); /*clap*/
+    drum[23] = new Tone.Player(url).connect(comp); /*clap*/
   })
 }
 /*synth names and initial selections*/
-const synth_names = ['Pulsequare','Pulsaw','FM','Halen','VerySimplePiano','Alien','AmericanBeauty','Delicatissimo']
+const synth_names = ['Pulsequare','Pulsaw','FM','Halen','GrandPiano','Alien','AmericanBeauty','Delicatissimo']
 const drum_names = ['TR-808', 'TR-909','Vaporwave']
 const synth_selection = [1,3,0]
 /** store the instruments using VUEX */
