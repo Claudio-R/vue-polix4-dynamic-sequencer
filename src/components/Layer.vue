@@ -154,6 +154,7 @@
           </v-container>
         </v-col>
       </v-row>
+      <v-divider></v-divider>
   </v-card>
 </template>
 
