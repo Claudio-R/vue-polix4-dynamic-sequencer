@@ -1,5 +1,5 @@
 <template>
-  <v-card outlined class="pa-2 d-flex flex-column">
+  <v-card flat outlined dense class="pa-2 d-flex flex-column" min-width="150">
     <v-card-title class="caption d-none d-md-flex">Setting instrument {{id+1}}</v-card-title>
     <div>
       <SynthSelector :selectedSynth="selectedSynthNumber"
@@ -15,9 +15,9 @@
         :thumb-label="true"
         prepend-icon="mdi-volume-high"
       ></v-slider>
-    </div>
+    <!-- </div>
 
-    <div class="mt-3">
+    <div > -->
       <v-slider v-if="id!=2"
         v-model="durationSlider.val"
         :color="durationSlider.color"

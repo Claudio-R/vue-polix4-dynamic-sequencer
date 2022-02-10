@@ -4,7 +4,8 @@
     <v-menu offset-y :close-on-content-click="true">
       <template v-slot:activator="{ on }">
         <v-btn outlined class="mt-2" block v-on="on">
-          <span class="caption">{{synths[selectedSynth]}}</span>
+          <span class="caption hidden-xs-only text-truncate" style="max-width: 90px;">{{synths[selectedSynth]}}</span>
+          <span class="caption hidden-sm-and-up">{{synths[selectedSynth]}}</span>
         </v-btn>
       </template>
       <v-card dense outlined class="pa-1">

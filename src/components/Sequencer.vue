@@ -27,7 +27,7 @@
         
         <!-- INSTRUMENT SELECTOR -->
         <v-col cols="4" class="caption">
-          <v-menu offset-y :close-on-content-click="false" max-width="100%">
+          <v-menu tile offset-y attach :close-on-content-click="false" max-width="100%" :value="displayInstrumentMenu">
             <template v-slot:activator="{ on }">
               <v-btn small block v-on="on">
                 <v-icon left class="hidden-xs-only">mdi-guitar-electric</v-icon>
@@ -35,17 +35,17 @@
                 <span class="caption hidden-xs-only" >{{inst_names[inst_id]}}</span>
               </v-btn>
             </template>
-            <v-card class="pa-8">
-            <v-row>
-              <v-col cols="4" v-for="(instrument_name, index) in inst_names" :key="`sequencer-${index}-${instrument_name}`">
-                <InstrumentSelector
-                  :id="index"
-                  @instSelectionEvent="instSelected"
-                  @durationChangeEvent="changeDuration"
-                  @changeSynthEvent="changeSynthName"
-                ></InstrumentSelector>
-              </v-col>
-            </v-row>
+            <v-card flat class="pa-4">
+              <v-row>
+                <v-col cols="12" sm="4" v-for="(instrument_name, index) in inst_names" :key="`sequencer-${index}-${instrument_name}`">
+                  <InstrumentSelector
+                    :id="index"
+                    @instSelectionEvent="instSelected"
+                    @durationChangeEvent="changeDuration"
+                    @changeSynthEvent="changeSynthName"
+                  ></InstrumentSelector>
+                </v-col>
+              </v-row>
             </v-card>
           </v-menu>
         </v-col>
@@ -243,6 +243,7 @@ export default {
     return {
       // window_height: Number,
       // container_height: Number,
+      displayInstrumentMenu: false,
       /** sequencer controller */
       systemPlaying: false,
       bpm: 120,
