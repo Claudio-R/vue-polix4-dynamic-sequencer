@@ -14,7 +14,7 @@
                 <span>BPM: {{bpm}}</span>
               </v-btn>
             </template>
-            <v-card class="mx-auto">
+            <v-card class="mx-auto" min-width="250">
      
               <v-toolbar flat dense>
                 <v-toolbar-title>
@@ -58,12 +58,12 @@
         
         <!-- INSTRUMENT SELECTOR -->
         <v-col cols="4" class="caption">
-          <v-menu tile offset-y attach :close-on-content-click="false" max-width="100%" :value="displayInstrumentMenu">
+          <v-menu tile offset-y attach :close-on-content-click="false" max-width="100%">
             <template v-slot:activator="{ on }">
-              <v-btn small block v-on="on">
+              <v-btn small :class="`${inst_color[inst_id]}--text`" block v-on="on">
                 <v-icon left class="hidden-xs-only">mdi-guitar-electric</v-icon>
                 <span class="caption text-truncate hidden-sm-and-up" style="max-width: 50px;">{{inst_names[inst_id]}}</span>
-                <span class="caption hidden-xs-only" >{{inst_names[inst_id]}}</span>
+                <span class="caption hidden-xs-only">{{inst_names[inst_id]}}</span>
               </v-btn>
             </template>
             <v-card flat class="pa-4">
@@ -274,9 +274,8 @@ export default {
 
   data(){
     return {
-      // window_height: Number,
-      // container_height: Number,
-      displayInstrumentMenu: false,
+      inst_color: ['red','blue','green'],
+      // displayInstrumentMenu: false,
       /** sequencer controller */
       systemPlaying: false,
       bpm: 120,
