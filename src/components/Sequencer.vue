@@ -1,7 +1,8 @@
 <template>
   <v-card id="sequencer" min-width="370px">
     <v-app-bar prominent elevate-on-scroll fixed class="primary">
-    <v-container id="container-bar" class="py-4 px-0" :min-height="heightHorizontal">
+    <v-container fluid id="container-bar" class="py-4 px-0" :min-height="heightHorizontal">
+    <!-- <v-container fluid id="container-bar" class="py-4 px-0" :min-height="heightHorizontal"> -->
 
       <!--**FIRST ROW** -->
       <v-row dense>
@@ -335,15 +336,15 @@ export default {
         return this.layers[0].num_beats*60000/this.bpm;
       }
     },
-    heightHorizontal () {
-        switch (this.$vuetify.breakpoint.name) {
-          case 'xs': return '27%'
-          case 'sm': return '27%'
-          case 'md': return '20%'
-          case 'lg': return '18%'
-          case 'xl': return '18%'
-        }
-      },
+    // heightHorizontal () {
+    //     switch (this.$vuetify.breakpoint.name) {
+    //       case 'xs': return '27%'
+    //       case 'sm': return '27%'
+    //       case 'md': return '20%'
+    //       case 'lg': return '18%'
+    //       case 'xl': return '18%'
+    //     }
+    //   },
   },
 
   methods: {
