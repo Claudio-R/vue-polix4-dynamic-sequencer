@@ -1,8 +1,7 @@
 <template>
-  <v-card id="sequencer" class="pa-0" min-width="370px">
-    <v-app-bar prominent fixed class="primary">
-    <v-container id="container-bar" class="pa-2">
-    <!-- <v-container flat tile id="container-bar" class="primary pa-2" :min-height="heightHorizontal"> -->
+  <v-card id="sequencer" min-width="370px">
+    <v-app-bar prominent elevate-on-scroll fixed class="primary">
+    <v-container id="container-bar" class="py-4 px-0" :min-height="heightHorizontal">
 
       <!--**FIRST ROW** -->
       <v-row dense>
