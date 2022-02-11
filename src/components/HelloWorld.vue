@@ -40,6 +40,9 @@
       'darkswitch': function(val) {
           this.$vuetify.theme.dark = this.darkswitch
       }
+    },
+    mounted(){
+      this.$vuetify.theme.dark = true
     }
   }
 </script>
