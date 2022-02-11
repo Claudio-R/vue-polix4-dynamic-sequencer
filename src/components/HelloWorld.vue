@@ -45,10 +45,12 @@
     watch: {
       'darkswitch': function(val) {
           this.$vuetify.theme.dark = this.darkswitch
+          this.$store.darkswitch = this.darkswitch
       }
     },
     mounted(){
-      this.$vuetify.theme.dark = false
+      this.$vuetify.theme.dark = this.$store.darkswitch
+      this.darkswitch = this.$store.darkswitch
     }
   }
 </script>

@@ -324,6 +324,9 @@ const synth_selection = [1,3,0]
 /** store the instruments using VUEX */
 Vue.use(Vuex)
 
+/* store the dark/light switch mode */
+var darkswitch = false
+
 export default new Vuex.Store({
   state: {
     'synth_selection' : synth_selection,
@@ -332,6 +335,7 @@ export default new Vuex.Store({
     'synth_names' : synth_names,
     'drum' : drum,
     'drum_names' : drum_names,
+    'darkswitch' : darkswitch
   },
   mutations: {
     synthsChanged(state){
