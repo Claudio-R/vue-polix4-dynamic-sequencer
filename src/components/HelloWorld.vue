@@ -23,6 +23,15 @@
             <span style="font-size: 5vh;">play</span>
           </v-btn>
       </v-col>
+      <v-col cols="12">
+        <v-switch v-model="darkswitch" 
+        style="position: absolute; bottom:0;">
+        <template v-slot:label>
+          <span v-if="!darkswitch">Theme: light</span>
+          <span v-else>Theme: dark</span>
+        </template>
+        </v-switch>
+      </v-col>
     </v-row>
   </v-container>
 </template>
@@ -31,7 +40,15 @@
   export default {
     name: 'HelloWorld',
     data: () => ({
-      
+        darkswitch: false,
     }),
+    watch: {
+      'darkswitch': function(val) {
+          this.$vuetify.theme.dark = this.darkswitch
+      }
+    },
+    mounted(){
+      this.$vuetify.theme.dark = false
+    }
   }
 </script>
