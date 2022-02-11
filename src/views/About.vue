@@ -82,7 +82,7 @@
 
     <v-card-subtitle><h4>Live Performance Controls</h4></v-card-subtitle>
      <v-row :justify="'center'">
-        <v-col cols="9">
+        <v-col cols="12" sm="11">
           <v-card>
             <v-row no-gutters class="d-flex align-center">
               <v-col cols="12" sm="8">
@@ -122,7 +122,11 @@
         The <b>merge</b> button lets you control the scale, key scale and octave of all the existing layers at the same time. 
         When selected, a drop-down menu button will appear on the right.  <br>
     </v-card-text>
-
+    <v-card-subtitle><h4>Authors Notes</h4></v-card-subtitle>
+    <v-card-text class="text-justify">
+        On extra small devices (or vertical positon on small devices), some controls will not be visualized.
+        We made this decision in order to offer a quality service without compromising the GUI appearance.
+    </v-card-text>
   </v-card>
 </v-container>
 </template>
