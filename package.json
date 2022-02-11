@@ -3,8 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "postinstall": "npm run build",
-    "start": "node server.js",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "cordova-build-android": "cross-env CORDOVA_PLATFORM=android vue-cli-service cordova-build-android",
@@ -39,7 +37,6 @@
     "@vue/cli-plugin-router": "~4.5.0",
     "@vue/cli-plugin-vuex": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
-    "express": "^4.17.2",
     "sass": "~1.32.0",
     "sass-loader": "^10.0.0",
     "serve-static": "^1.14.2",
