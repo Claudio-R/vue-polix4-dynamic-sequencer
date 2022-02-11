@@ -1,6 +1,7 @@
 <template>
   <v-card id="sequencer" min-width="370px">
-    <v-card flat tile id="container-bar" class="primary pa-2" ref="container_ref" :min-height="heightHorizontal">
+    <v-app-bar prominent elevate-on-scroll fixed class="primary">
+    <v-container id="container-bar" class="py-4 px-0" :min-height="heightHorizontal">
 
       <!--**FIRST ROW** -->
       <v-row dense>
@@ -114,7 +115,7 @@
 
         <!-- ADD LAYER -->
         <v-col cols="2" md="3" class="hidden-xs-only">
-          <v-card>
+          <v-card flat>
             <v-card-actions>
               <v-text-field type="number" v-model.number="numBeatsNewLayer"
                 label="Add a layer"
@@ -130,20 +131,21 @@
 
         <!-- BUTTONS -->
         <v-col cols="10" sm="8" md="6">
-          <v-card flat>
+          <v-card flat class="d-flex justify-center" min-height="56px">
             <v-row no-gutters class="d-flex align-center">
               <!-- BUTTONS -->
               <v-col cols="12" sm="8">
                 <v-card-actions class="d-flex justify-space-around">
-                  <v-btn icon outlined color="secondary" @click="playAll">
-                    <v-icon >mdi-play</v-icon>
+                  <v-btn icon small color="secondary" @click="playAll">
+                    <v-icon large>mdi-play</v-icon>
                   </v-btn>
-                  <v-btn icon outlined color="secondary" @click="stopAll">
-                    <v-icon >mdi-stop</v-icon>  
+                  <v-btn icon small color="secondary" @click="stopAll">
+                    <v-icon large>mdi-stop</v-icon>  
                   </v-btn>
-                  <v-btn icon outlined color="secondary" :disabled="!unifiedControl" @click="toggleMuteSystem">
-                    <v-icon>mdi-volume-mute</v-icon>
+                  <v-btn icon small color="secondary" :disabled="!unifiedControl" @click="toggleMuteSystem">
+                    <v-icon large>mdi-volume-mute</v-icon>
                   </v-btn>
+
                   <v-btn small depressed color="secondary" @click="clearAll">
                     <v-icon >mdi-delete</v-icon>
                   </v-btn>
@@ -175,7 +177,7 @@
             transition="scale-transition"
           >
             <template v-slot:activator="{ on }">
-              <v-btn block :disabled="!unifiedControl" v-on="on">
+              <v-btn block small depressed :disabled="!unifiedControl" v-on="on" min-height="56px">
                 <v-icon>mdi-menu</v-icon>
                 <span class="hidden-sm-and-down">Main controller</span>
               </v-btn>
@@ -226,8 +228,9 @@
       </v-row>
       <!--**/SECOND ROW** -->
 
-    </v-card> 
-    
+    </v-container> 
+    </v-app-bar>
+
     <v-card id="layers-container" flat tile class="d-flex flex-column">
         <Layer v-for="(layer,index) in layers"
           ref="layers_refs"
@@ -342,11 +345,6 @@ export default {
         }
       },
   },
-
-  // mounted() {
-  //   this.container_height = this.$refs.container_ref.offsetHeight;
-  //   this.window_height = window.screen.height;
-  // },
 
   methods: {
       addLayer() {
@@ -495,7 +493,7 @@ export default {
 // }
 
 #layers-container {
-    // margin: 10px;
+    margin-top: 128px;
     background-color: rgb(28, 140, 148);
 }
 
