@@ -1,9 +1,9 @@
 <template>
-  <v-card flat outlined class="pa-1">
+  <v-card flat outlined class="secondary pa-1" style="opacity: 1; box-shadow: none;">
     <v-row no-gutters>
       <v-col cols="6" md="4" v-for="scale in scales" :key="scale">
       <v-btn  
-        text block color="primary"
+        text block color="black"
         @click="() => {$emit('scaleSelectedEvent', scale)}"
       >{{scale}}</v-btn>
       </v-col>

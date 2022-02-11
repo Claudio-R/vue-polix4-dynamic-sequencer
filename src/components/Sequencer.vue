@@ -1,7 +1,7 @@
 <template>
   <v-card id="sequencer" min-width="370px">
     <v-app-bar prominent elevate-on-scroll fixed class="primary">
-    <v-container fluid id="container-bar" class="py-4 px-0" :min-height="heightHorizontal">
+    <v-container fluid id="container-bar" class="primary py-4 px-0" :min-height="heightHorizontal">
     <!-- <v-container fluid id="container-bar" class="py-4 px-0" :min-height="heightHorizontal"> -->
 
       <!--**FIRST ROW** -->
@@ -464,6 +464,8 @@ export default {
 
 #container-bar {
   position: sticky;
+  opacity: 0.88;
+  backdrop-filter: blur(1px);
   top: 0;
   z-index: 1;
 }
@@ -495,7 +497,7 @@ export default {
 
 #layers-container {
     margin-top: 128px;
-    background-color: rgb(28, 140, 148);
+    background: transparent;
 }
 
 </style>
