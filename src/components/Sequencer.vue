@@ -116,7 +116,7 @@
 
         <!-- ADD LAYER -->
         <v-col cols="2" md="3" class="hidden-xs-only">
-          <v-card>
+          <v-card flat>
             <v-card-actions>
               <v-text-field type="number" v-model.number="numBeatsNewLayer"
                 label="Add a layer"
@@ -132,7 +132,7 @@
 
         <!-- BUTTONS -->
         <v-col cols="10" sm="8" md="6">
-          <v-card flat>
+          <v-card flat class="d-flex justify-center" min-height="56px">
             <v-row no-gutters class="d-flex align-center">
               <!-- BUTTONS -->
               <v-col cols="12" sm="8">
@@ -178,7 +178,7 @@
             transition="scale-transition"
           >
             <template v-slot:activator="{ on }">
-              <v-btn block :disabled="!unifiedControl" v-on="on">
+              <v-btn block small depressed :disabled="!unifiedControl" v-on="on" min-height="56px">
                 <v-icon>mdi-menu</v-icon>
                 <span class="hidden-sm-and-down">Main controller</span>
               </v-btn>
