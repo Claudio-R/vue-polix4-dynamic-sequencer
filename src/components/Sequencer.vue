@@ -137,13 +137,13 @@
               <v-col cols="12" sm="8">
                 <v-card-actions class="d-flex justify-space-around">
                   <v-btn icon small color="secondary" @click="playAll">
-                    <v-icon >mdi-play</v-icon>
+                    <v-icon large>mdi-play</v-icon>
                   </v-btn>
                   <v-btn icon small color="secondary" @click="stopAll">
-                    <v-icon >mdi-stop</v-icon>  
+                    <v-icon large>mdi-stop</v-icon>  
                   </v-btn>
                   <v-btn icon small color="secondary" :disabled="!unifiedControl" @click="toggleMuteSystem">
-                    <v-icon>mdi-volume-mute</v-icon>
+                    <v-icon large>mdi-volume-mute</v-icon>
                   </v-btn>
 
                   <v-btn small depressed color="secondary" @click="clearAll">
