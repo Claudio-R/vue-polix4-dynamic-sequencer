@@ -1,6 +1,8 @@
 <template>
-  <v-card id="sequencer" min-width="370px">
-    <v-card flat tile id="container-bar" class="primary pa-2" ref="container_ref" :min-height="heightHorizontal">
+  <v-card id="sequencer" class="pa-0" min-width="370px">
+    <v-app-bar prominent fixed class="primary">
+    <v-container id="container-bar" class="pa-2">
+    <!-- <v-container flat tile id="container-bar" class="primary pa-2" :min-height="heightHorizontal"> -->
 
       <!--**FIRST ROW** -->
       <v-row dense>
@@ -135,15 +137,16 @@
               <!-- BUTTONS -->
               <v-col cols="12" sm="8">
                 <v-card-actions class="d-flex justify-space-around">
-                  <v-btn icon outlined color="secondary" @click="playAll">
+                  <v-btn icon small color="secondary" @click="playAll">
                     <v-icon >mdi-play</v-icon>
                   </v-btn>
-                  <v-btn icon outlined color="secondary" @click="stopAll">
+                  <v-btn icon small color="secondary" @click="stopAll">
                     <v-icon >mdi-stop</v-icon>  
                   </v-btn>
-                  <v-btn icon outlined color="secondary" :disabled="!unifiedControl" @click="toggleMuteSystem">
+                  <v-btn icon small color="secondary" :disabled="!unifiedControl" @click="toggleMuteSystem">
                     <v-icon>mdi-volume-mute</v-icon>
                   </v-btn>
+
                   <v-btn small depressed color="secondary" @click="clearAll">
                     <v-icon >mdi-delete</v-icon>
                   </v-btn>
@@ -226,8 +229,9 @@
       </v-row>
       <!--**/SECOND ROW** -->
 
-    </v-card> 
-    
+    </v-container> 
+    </v-app-bar>
+
     <v-card id="layers-container" flat tile class="d-flex flex-column">
         <Layer v-for="(layer,index) in layers"
           ref="layers_refs"
@@ -342,11 +346,6 @@ export default {
         }
       },
   },
-
-  // mounted() {
-  //   this.container_height = this.$refs.container_ref.offsetHeight;
-  //   this.window_height = window.screen.height;
-  // },
 
   methods: {
       addLayer() {
@@ -495,7 +494,7 @@ export default {
 // }
 
 #layers-container {
-    // margin: 10px;
+    margin-top: 128px;
     background-color: rgb(28, 140, 148);
 }
 
