@@ -12,14 +12,10 @@
 </template>
 
 <script>
-// import MenuElement from '@/components/MenuElement.vue'
+
 
 export default {
     name: 'ScaleSelector',
-
-    // components: {
-    //     MenuElement
-    // },
 
     props: ['selectedScale'],
 

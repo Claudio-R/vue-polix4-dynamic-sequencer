@@ -30,7 +30,11 @@
         </v-card>
         <v-card v-else outlined class="">
         <!-- <v-card v-else outlined class="hidden-xs-only"> -->
-          <v-menu offset-x :close-on-content-click="false">
+          <v-menu :close-on-content-click="false"
+            offset-y
+            origin="center center"
+            transition="scale-transition"
+          >
             <template v-slot:activator="{ on }">
               <v-icon v-on="on">mdi-menu-right</v-icon>
             </template>

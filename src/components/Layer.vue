@@ -95,7 +95,11 @@
               </v-card>
 
               <!-- OCTAVE -->
-              <v-menu offset-y :close-on-content-click="false">
+              <v-menu :close-on-content-click="false"
+                offset-y
+                origin="center center"
+                transition="scale-transition"
+              >
                 <template v-slot:activator="{ on }">
                   <v-btn depressed class="mt-2 caption" block v-on="on">
                     <span>Octave: {{octaveLayer}}</span>
@@ -114,7 +118,11 @@
               </v-menu>
                 
               <!-- KEY -->
-              <v-menu offset-y :close-on-content-click="true">
+              <v-menu :close-on-content-click="true"
+                offset-y
+                origin="center center"
+                transition="scale-transition"
+              >
                 <template v-slot:activator="{ on }">
                   <v-btn depressed class="mt-2" block v-on="on">
                     <span class="caption">Selected key: {{keyLayer}}</span>
@@ -126,7 +134,11 @@
               </v-menu>
               
               <!-- SCALE -->
-              <v-menu offset-x :close-on-content-click="true">
+              <v-menu :close-on-content-click="true"
+                offset-y
+                origin="center center"
+                transition="scale-transition"
+              >
                 <template v-slot:activator="{ on }">
                   <v-btn depressed class="mt-2" block v-on="on">
                     <span class="caption">{{scaleLayer}}</span>

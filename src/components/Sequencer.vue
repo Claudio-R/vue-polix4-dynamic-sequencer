@@ -7,7 +7,11 @@
 
        <!-- SELECT BPM -->
         <v-col cols="4" class="caption">
-          <v-menu offset-y :close-on-content-click="false">
+          <v-menu :close-on-content-click="false"
+            offset-y
+            origin="center center"
+            transition="scale-transition"
+          >
             <template v-slot:activator="{ on }">
               <v-btn depressed small block v-on="on">
                 <v-icon left class="hidden-xs-only">mdi-metronome-tick</v-icon>
@@ -15,13 +19,7 @@
               </v-btn>
             </template>
             <v-card class="mx-auto" min-width="250">
-     
-              <v-toolbar flat dense>
-                <v-toolbar-title>
-                  <span class="subheading">METRONOME</span>
-                </v-toolbar-title>
-              </v-toolbar>
-
+  
               <v-card-text>
                 <v-row
                   class="mb-2"
@@ -58,7 +56,11 @@
         
         <!-- INSTRUMENT SELECTOR -->
         <v-col cols="4" class="caption">
-          <v-menu tile offset-y attach :close-on-content-click="false" max-width="100%">
+          <v-menu :close-on-content-click="false" max-width="90%" max-height="90%"
+            offset-y
+            origin="center center"
+            transition="scale-transition"
+          >
             <template v-slot:activator="{ on }">
               <v-btn small depressed :class="`${inst_color[inst_id]}--text`" block v-on="on">
                 <v-icon left class="hidden-xs-only">mdi-guitar-electric</v-icon>
@@ -66,7 +68,7 @@
                 <span class="caption hidden-xs-only">{{inst_names[inst_id]}}</span>
               </v-btn>
             </template>
-            <v-card flat class="pa-4">
+            <v-card flat class="pa-4" style="position: relative;">
               <v-row>
                 <v-col cols="12" sm="4" v-for="(instrument_name, index) in inst_names" :key="`sequencer-${index}-${instrument_name}`">
                   <InstrumentSelector
@@ -83,7 +85,11 @@
 
         <!-- ADD BARS -->
         <v-col cols="4" class="caption">
-          <v-menu offset-y :close-on-content-click="false">
+          <v-menu :close-on-content-click="false"
+            offset-y
+            origin="center center"
+            transition="scale-transition"
+          >
             <template v-slot:activator="{ on }">
               <v-btn small depressed block v-on="on">
                 <span >Bars: {{n_bars}}</span>
@@ -163,7 +169,11 @@
 
         <!-- MENU -->
         <v-col cols="2" md="3">
-          <v-menu offset-x offset-y :disabled="!unifiedControl" :close-on-content-click="false" max-width="100%">
+          <v-menu :disabled="!unifiedControl" :close-on-content-click="false" max-width="100%"
+            offset-y offset-x
+            origin="center center"
+            transition="scale-transition"
+          >
             <template v-slot:activator="{ on }">
               <v-btn block :disabled="!unifiedControl" v-on="on">
                 <v-icon>mdi-menu</v-icon>
@@ -273,7 +283,6 @@ export default {
   data(){
     return {
       inst_color: ['red','blue','green'],
-      // displayInstrumentMenu: false,
       /** sequencer controller */
       systemPlaying: false,
       bpm: 120,

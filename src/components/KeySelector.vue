@@ -12,14 +12,9 @@
 </template>
 
 <script>
-// import MenuElement from '@/components/MenuElement.vue'
 
 export default {
     name: 'KeySelector',
-
-    // components: {
-    //     MenuElement
-    // },
 
     props: ['selectedKey'],
 
