@@ -1,5 +1,5 @@
 <template>
-  <v-card flat outlined class="tertiary text-center" @click="toggleActive" style="min-height: 26px; max-height: 26px; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border: 1px #9b9b9c;"
+  <v-card flat outlined class="tertiary text-center" @click="toggleActive" style="min-height: 26px; max-height: 26px; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border: 1px #9b9b9c; min-width: 35px"
     :class="{'green accent-2' : state3}">
     <v-icon v-if="!(state1 || state2)" small>mdi-circle</v-icon>
     <v-icon v-if="state1" small color="red">mdi-circle</v-icon>

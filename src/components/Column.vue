@@ -16,7 +16,7 @@
             @playSound2Event="playInst2"
             @playSound3Event="playInst3"
         ></Key>
-        <v-card v-if="num_beats<=4" outlined class="d-flex d-sm-flex justify-space-around py-1">
+        <v-card v-if="num_beats<=4 || $vuetify.breakpoint.mdAndDown && num_beats<=6" outlined class="d-flex d-sm-flex justify-space-around py-1">
           <v-btn small icon @click="monitorBeat">
             <v-icon dense>mdi-music-note</v-icon>
           </v-btn>
