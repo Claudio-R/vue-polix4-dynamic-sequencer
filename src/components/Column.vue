@@ -16,7 +16,7 @@
             @playSound2Event="playInst2"
             @playSound3Event="playInst3"
         ></Key>
-        <v-card v-if="num_beats<=4 || ($vuetify.breakpoint.mdAndUp && num_beats<=6)" outlined class="d-flex d-sm-flex justify-space-around py-1">
+        <v-card v-if="num_beats<=4 || ($vuetify.breakpoint.mdAndUp && num_beats<=6 && n_bars<2)" outlined class="d-flex d-sm-flex justify-space-around py-1">
           <v-btn small icon @click="monitorBeat">
             <v-icon dense>mdi-music-note</v-icon>
           </v-btn>
@@ -66,7 +66,7 @@ export default ({
         Key
     },
 
-    props : ['beatId','num_beats','inst_selected','duration','prelistenBeat','muteLayer','isPlaying','tonesInScale','scale_keyboard'],
+    props : ['beatId','num_beats','inst_selected','duration','prelistenBeat','muteLayer','isPlaying','tonesInScale','scale_keyboard','n_bars'],
     
     data() {
         return {
