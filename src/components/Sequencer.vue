@@ -1,13 +1,19 @@
 <template>
   <v-card id="sequencer" min-width="370px">
-    <v-card flat tile id="container-bar" class="primary pa-2" ref="container_ref" :min-height="heightHorizontal">
+    <v-app-bar prominent elevate-on-scroll fixed class="primary">
+    <v-container fluid id="container-bar" class="primary py-4 px-0">
+    <!-- <v-container fluid id="container-bar" class="py-4 px-0" :min-height="heightHorizontal"> -->
 
       <!--**FIRST ROW** -->
       <v-row dense>
 
        <!-- SELECT BPM -->
         <v-col cols="4" class="caption">
-          <v-menu offset-y :close-on-content-click="false">
+          <v-menu :close-on-content-click="false"
+            offset-y
+            origin="center center"
+            transition="scale-transition"
+          >
             <template v-slot:activator="{ on }">
               <v-btn depressed small block v-on="on">
                 <v-icon left class="hidden-xs-only">mdi-metronome-tick</v-icon>
@@ -15,13 +21,7 @@
               </v-btn>
             </template>
             <v-card class="mx-auto" min-width="250">
-     
-              <v-toolbar flat dense>
-                <v-toolbar-title>
-                  <span class="subheading">METRONOME</span>
-                </v-toolbar-title>
-              </v-toolbar>
-
+  
               <v-card-text>
                 <v-row
                   class="mb-2"
@@ -58,7 +58,11 @@
         
         <!-- INSTRUMENT SELECTOR -->
         <v-col cols="4" class="caption">
-          <v-menu tile offset-y attach :close-on-content-click="false" max-width="100%">
+          <v-menu :close-on-content-click="false" max-width="90%" max-height="90%"
+            offset-y
+            origin="center center"
+            transition="scale-transition"
+          >
             <template v-slot:activator="{ on }">
               <v-btn small depressed :class="`${inst_color[inst_id]}--text`" block v-on="on">
                 <v-icon left class="hidden-xs-only">mdi-guitar-electric</v-icon>
@@ -66,7 +70,7 @@
                 <span class="caption hidden-xs-only">{{inst_names[inst_id]}}</span>
               </v-btn>
             </template>
-            <v-card flat class="pa-4">
+            <v-card flat class="pa-4" style="position: relative;">
               <v-row>
                 <v-col cols="12" sm="4" v-for="(instrument_name, index) in inst_names" :key="`sequencer-${index}-${instrument_name}`">
                   <InstrumentSelector
@@ -83,7 +87,11 @@
 
         <!-- ADD BARS -->
         <v-col cols="4" class="caption">
-          <v-menu offset-y :close-on-content-click="false">
+          <v-menu :close-on-content-click="false"
+            offset-y
+            origin="center center"
+            transition="scale-transition"
+          >
             <template v-slot:activator="{ on }">
               <v-btn small depressed block v-on="on">
                 <span >Bars: {{n_bars}}</span>
@@ -108,7 +116,7 @@
 
         <!-- ADD LAYER -->
         <v-col cols="2" md="3" class="hidden-xs-only">
-          <v-card>
+          <v-card flat>
             <v-card-actions>
               <v-text-field type="number" v-model.number="numBeatsNewLayer"
                 label="Add a layer"
@@ -124,20 +132,21 @@
 
         <!-- BUTTONS -->
         <v-col cols="10" sm="8" md="6">
-          <v-card flat>
+          <v-card flat class="d-flex justify-center" min-height="56px">
             <v-row no-gutters class="d-flex align-center">
               <!-- BUTTONS -->
               <v-col cols="12" sm="8">
                 <v-card-actions class="d-flex justify-space-around">
-                  <v-btn icon outlined color="secondary" @click="playAll">
-                    <v-icon >mdi-play</v-icon>
+                  <v-btn icon small color="secondary" @click="playAll">
+                    <v-icon large>mdi-play</v-icon>
                   </v-btn>
-                  <v-btn icon outlined color="secondary" @click="stopAll">
-                    <v-icon >mdi-stop</v-icon>  
+                  <v-btn icon small color="secondary" @click="stopAll">
+                    <v-icon large>mdi-stop</v-icon>  
                   </v-btn>
-                  <v-btn icon outlined color="secondary" :disabled="!unifiedControl" @click="toggleMuteSystem">
-                    <v-icon>mdi-volume-mute</v-icon>
+                  <v-btn icon small color="secondary" :disabled="!unifiedControl" @click="toggleMuteSystem">
+                    <v-icon large>mdi-volume-mute</v-icon>
                   </v-btn>
+
                   <v-btn small depressed color="secondary" @click="clearAll">
                     <v-icon >mdi-delete</v-icon>
                   </v-btn>
@@ -163,9 +172,13 @@
 
         <!-- MENU -->
         <v-col cols="2" md="3">
-          <v-menu offset-x offset-y :disabled="!unifiedControl" :close-on-content-click="false" max-width="100%">
+          <v-menu :disabled="!unifiedControl" :close-on-content-click="false" max-width="100%"
+            offset-y offset-x
+            origin="center center"
+            transition="scale-transition"
+          >
             <template v-slot:activator="{ on }">
-              <v-btn block :disabled="!unifiedControl" v-on="on">
+              <v-btn block small depressed :disabled="!unifiedControl" v-on="on" min-height="56px">
                 <v-icon>mdi-menu</v-icon>
                 <span class="hidden-sm-and-down">Main controller</span>
               </v-btn>
@@ -216,8 +229,9 @@
       </v-row>
       <!--**/SECOND ROW** -->
 
-    </v-card> 
-    
+    </v-container> 
+    </v-app-bar>
+
     <v-card id="layers-container" flat tile class="d-flex flex-column">
         <Layer v-for="(layer,index) in layers"
           ref="layers_refs"
@@ -273,7 +287,6 @@ export default {
   data(){
     return {
       inst_color: ['red','blue','green'],
-      // displayInstrumentMenu: false,
       /** sequencer controller */
       systemPlaying: false,
       bpm: 120,
@@ -323,25 +336,20 @@ export default {
         return this.layers[0].num_beats*60000/this.bpm;
       }
     },
-    heightHorizontal () {
-        switch (this.$vuetify.breakpoint.name) {
-          case 'xs': return '27%'
-          case 'sm': return '27%'
-          case 'md': return '20%'
-          case 'lg': return '18%'
-          case 'xl': return '18%'
-        }
-      },
+    // heightHorizontal () {
+    //     switch (this.$vuetify.breakpoint.name) {
+    //       case 'xs': return '27%'
+    //       case 'sm': return '27%'
+    //       case 'md': return '20%'
+    //       case 'lg': return '18%'
+    //       case 'xl': return '18%'
+    //     }
+    //   },
   },
-
-  // mounted() {
-  //   this.container_height = this.$refs.container_ref.offsetHeight;
-  //   this.window_height = window.screen.height;
-  // },
 
   methods: {
       addLayer() {
-          console.log(this.numBeatsNewLayer)
+          // console.log(this.numBeatsNewLayer)
           if(this.numBeatsNewLayer > 12) this.numBeatsNewLayer = 12;
           this.layers.push(
               {   
@@ -358,8 +366,8 @@ export default {
       },
       addBar(){
           for(let idx in this.layers) {
-              console.log(this.$refs.layers_refs.length, idx);
-              console.log(this.$refs.layers_refs[idx]);
+              // console.log(this.$refs.layers_refs.length, idx);
+              // console.log(this.$refs.layers_refs[idx]);
               this.$refs.layers_refs[idx].addLBar()
           }
       },
@@ -456,6 +464,8 @@ export default {
 
 #container-bar {
   position: sticky;
+  opacity: 0.88;
+  backdrop-filter: blur(1px);
   top: 0;
   z-index: 1;
 }
@@ -486,8 +496,8 @@ export default {
 // }
 
 #layers-container {
-    // margin: 10px;
-    background-color: rgb(28, 140, 148);
+    margin-top: 128px;
+    background: transparent;
 }
 
 </style>

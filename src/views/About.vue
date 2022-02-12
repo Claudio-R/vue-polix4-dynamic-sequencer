@@ -106,7 +106,7 @@
               </v-col>
               <v-col sm="4" class="hidden-xs-only">
                 <v-card-actions>
-                  <v-btn small depressed block class="disable-events">Unmerge</v-btn>
+                  <v-btn small depressed block class="disable-events">Merge</v-btn>
                 </v-card-actions>
               </v-col>
             </v-row>

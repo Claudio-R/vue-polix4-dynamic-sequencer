@@ -1,7 +1,11 @@
 <template>
   <!-- SYNTHS -->
   <div v-if="id!=2">
-    <v-menu offset-y :close-on-content-click="true">
+    <v-menu :close-on-content-click="true"
+      offset-y
+      origin="center center"
+      transition="scale-transition"
+    >
       <template v-slot:activator="{ on }">
         <v-btn outlined class="mt-2" block v-on="on">
           <span class="caption hidden-xs-only text-truncate" style="max-width: 50px;">{{synths[selectedSynth]}}</span>
@@ -22,7 +26,11 @@
   </div>  
   <!-- DRUMS -->
   <div v-else>
-    <v-menu offset-y :close-on-content-click="true">
+    <v-menu :close-on-content-click="true"
+      offset-y
+      origin="center center"
+      transition="scale-transition"
+    >
       <template v-slot:activator="{ on }">
         <v-btn outlined class="mt-2" block v-on="on">
           <span class="caption">{{drums[selectedSynth]}}</span>
@@ -44,14 +52,9 @@
 </template>
 
 <script>
-// import MenuElement from '@/components/MenuElement.vue'
 
 export default {
     name: 'SynthSelector',
-
-    // components: {
-    //     MenuElement
-    // },
 
     props: ['selectedSynth','id'],
 

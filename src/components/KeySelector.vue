@@ -1,9 +1,9 @@
 <template>
-  <v-card dense outlined class="pa-1">
+  <v-card dense outlined class="secondary pa-1" style="opacity: 1; box-shadow: none;">
     <v-row no-gutters>
       <v-col cols="2"  v-for="note in keys" :key="note">
       <v-btn
-        text block color="primary"
+        text block color="black"
         @click="() => {$emit('keySelectedEvent', note)}"
       >{{note}}</v-btn>
       </v-col>
@@ -12,14 +12,9 @@
 </template>
 
 <script>
-// import MenuElement from '@/components/MenuElement.vue'
 
 export default {
     name: 'KeySelector',
-
-    // components: {
-    //     MenuElement
-    // },
 
     props: ['selectedKey'],
 

@@ -1,34 +1,34 @@
 <template>
-  <v-card :min-height="heightHorizontal" flat tile class="my-0">
+  <v-card :min-height="heightHorizontal" flat tile class="backgroundmain my-0">
       <v-row no-gutters>
         <!-- LABELS -->
         <v-col cols="2">
-          <v-container class="">
+          <v-container>
             <div v-if="inst_id!=2" class="">
-              <v-card flat outlined class="text-center hidden-xs-only" 
+              <v-card flat outlined class="secondary text-center hidden-xs-only" 
                 v-for="k in tonesInScale" :key="k"
                 >{{scale_keyboard[tonesInScale-k].slice(0, -1)}}
               </v-card>
             </div>
             <div v-else class="">
-              <v-card outlined flat class="text-center grey--text hidden-xs-only" 
+              <v-card outlined flat class="text-center black--text hidden-xs-only" 
                 v-for="k in tonesInScale" :key="k"
                 >{{drum_keyboard[tonesInScale-k]}}
               </v-card>
             </div>
-            <v-btn block depressed v-if="unifiedControl" class="text-center hidden-xs-only" @click="$emit('removeLayerEvent')">Remove</v-btn>
+            <v-btn block depressed v-if="unifiedControl" class="secondary text-center black--text hidden-xs-only" @click="$emit('removeLayerEvent')">Remove</v-btn>
           </v-container>
         </v-col>
 
         <!-- BEATS -->
         <!-- Unmerged Controller -->
         <v-col v-if="!unifiedControl" cols="12" sm="7">
-          <v-carousel hide-delimiters
+          <v-slide-group
           height="100%"
-          :continuous="false">
-            <v-carousel-item v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`" class="spacing-playground pa-3">
+          v-model="model">
+              <v-slide-item v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`" class="spacing-playground py-3 pr-2 pl-2">
               <v-row no-gutters class="justify-space-between">
-                <v-col :cols="num_cols" v-for="k in num_beats" :key="`column-${layerId}-${j}-${k}`">
+                <v-col v-for="k in num_beats" :key="`column-${layerId}-${j}-${k}`">
                   <Column 
                     class="column" :style="cssVars"
                     ref = "beats_refs"
@@ -45,18 +45,17 @@
                   ></Column>
                 </v-col>
               </v-row>
-            </v-carousel-item>
-          </v-carousel>
+            </v-slide-item>
+          </v-slide-group>
         </v-col>
         <!-- Merged Controller -->
         <v-col v-else cols="12" sm="10">
-          <v-carousel hide-delimiters
+          <v-slide-group 
           height="100%"
-          :continuous="false"
           v-model="model">
-              <v-carousel-item v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`" class="spacing-playground pa-3">
+              <v-slide-item v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`" class="spacing-playground py-3 pr-2 pl-2">
                 <v-row no-gutters class="justify-space-between">
-                  <v-col :cols="num_cols" v-for="k in num_beats" :key="`column-${layerId}-${j}-${k}`">
+                  <v-col  v-for="k in num_beats" :key="`column-${layerId}-${j}-${k}`">
                     <Column 
                       class="column" :style="cssVars"
                       ref = "beats_refs"
@@ -73,18 +72,18 @@
                     ></Column>
                   </v-col>
                 </v-row>
-              </v-carousel-item>
-          </v-carousel>
+              </v-slide-item>
+          </v-slide-group>
 
         </v-col>
 
         <!-- LAYER CONTROLLER -->
         <v-col v-if="!unifiedControl" cols="3" class="hidden-xs-only">
-          <v-container class="layer-controller">
-            <v-card flat class="pa-1" :height="`${singleLayerHeight-37}`">
-              <v-card flat class="d-flex justify-space-around">
-                <v-btn plain class="secondary--text text-center" @click="$emit('removeLayerEvent')">Remove</v-btn>
-                <v-card flat class="d-flex justify-space-around pa-1">
+          <v-container fluid class="layer-controller">
+            <v-card flat style="background-color:transparent" class="" :height="`${singleLayerHeight-37}`">
+              <v-card flat class="d-flex justify-space-around" style="background-color:transparent">
+                <v-btn plain class="secondary black--text text-center" @click="$emit('removeLayerEvent')">Remove</v-btn>
+                <v-card flat class="d-flex justify-space-around pa-1" style="background-color:transparent">
                   <v-btn icon :disabled="systemPlaying" small @click="$emit('addKeyEvent')">
                     <v-icon small color="primary">mdi-plus</v-icon>
                   </v-btn>
@@ -95,9 +94,13 @@
               </v-card>
 
               <!-- OCTAVE -->
-              <v-menu offset-y :close-on-content-click="false">
+              <v-menu :close-on-content-click="false"
+                offset-y
+                origin="center center"
+                transition="scale-transition"
+              >
                 <template v-slot:activator="{ on }">
-                  <v-btn depressed class="mt-2 caption" block v-on="on">
+                  <v-btn depressed class="secondary black--text mt-2 caption" block v-on="on">
                     <span>Octave: {{octaveLayer}}</span>
                   </v-btn>
                 </template>
@@ -114,9 +117,13 @@
               </v-menu>
                 
               <!-- KEY -->
-              <v-menu offset-y :close-on-content-click="true">
+              <v-menu :close-on-content-click="true"
+                offset-y
+                origin="center center"
+                transition="scale-transition"
+              >
                 <template v-slot:activator="{ on }">
-                  <v-btn depressed class="mt-2" block v-on="on">
+                  <v-btn depressed class="secondary black--text mt-2" block v-on="on">
                     <span class="caption">Selected key: {{keyLayer}}</span>
                   </v-btn>
                 </template>
@@ -126,9 +133,13 @@
               </v-menu>
               
               <!-- SCALE -->
-              <v-menu offset-x :close-on-content-click="true">
+              <v-menu :close-on-content-click="true"
+                offset-y
+                origin="center center"
+                transition="scale-transition"
+              >
                 <template v-slot:activator="{ on }">
-                  <v-btn depressed class="mt-2" block v-on="on">
+                  <v-btn depressed class="secondary black--text mt-2" block v-on="on">
                     <span class="caption">{{scaleLayer}}</span>
                   </v-btn>
                 </template>
@@ -138,14 +149,14 @@
               </v-menu>
 
               <!-- BUTTONS -->
-              <v-card flat class="mt-2 d-flex justify-space-around">
-                <v-btn icon outlined class="layer-btn prelisten-btn" :class="{ green : prelistenLayer }" @click="prelistenLayer=!prelistenLayer">
+              <v-card flat class="mt-2 d-flex justify-space-around" style="background-color:transparent">
+                <v-btn icon color="tertiary" class="layer-btn prelisten-btn" :class="{ green : prelistenLayer }" @click="prelistenLayer=!prelistenLayer">
                   <v-icon>mdi-headphones</v-icon> 
                 </v-btn>
-                <v-btn icon outlined class="layer-btn mute-btn" :class="{red : muteLayer }" @click="$emit('toggleMuteLayerEvent')">
+                <v-btn icon color="tertiary" class="layer-btn mute-btn" :class="{red : muteLayer }" @click="$emit('toggleMuteLayerEvent')">
                   <v-icon>mdi-volume-mute</v-icon>
                 </v-btn>
-                <v-btn icon outlined class="layer-btn clear-btn" @click="clearLayer">
+                <v-btn icon color="tertiary" class="layer-btn clear-btn" @click="clearLayer">
                   <v-icon>mdi-delete</v-icon>
                 </v-btn>
               </v-card>
@@ -328,7 +339,11 @@ export default {
   border: 3px solid rgb(199, 202, 0);
   border-radius: 8px;
 }
-
+.secondary{
+  opacity: 0.32;
+  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 2px; 
+}
 
 .remove-btn-unified {
     background-color: rgb(194, 194, 194);
