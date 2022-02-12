@@ -2,7 +2,8 @@
 
 ## Project setup
 ```
-npm install
+Install all dependecies 
+$ npm install
 ```
 
 ### Compiles and hot-reloads for development
