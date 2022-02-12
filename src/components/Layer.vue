@@ -26,7 +26,7 @@
           <v-slide-group
           height="100%"
           v-model="model">
-              <v-slide-item v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`" class="spacing-playground py-3 pr-1 pl-1">
+              <v-slide-item v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`" class="spacing-playground py-3 pr-2">
               <v-row no-gutters class="justify-space-between">
                 <v-col v-for="k in num_beats" :key="`column-${layerId}-${j}-${k}`">
                   <Column 
@@ -53,7 +53,7 @@
           <v-slide-group
           height="100%"
           v-model="model">
-              <v-slide-item v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`" class="spacing-playground py-3 pr-1 pl-1">
+              <v-slide-item v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`" class="spacing-playground py-3 pr-3">
                 <v-row no-gutters class="justify-space-between">
                   <v-col  v-for="k in num_beats" :key="`column-${layerId}-${j}-${k}`">
                     <Column 
