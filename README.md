@@ -13,7 +13,7 @@ https://polix4.herokuapp.com/#/
 
 # What is the PoliX4 project?
 This is the result of the joint work of four students aiming to create a dynamic instruments which ensures the user maximum freedom in the creation of rhytmic and melodic patterns. Each rhythmic structure is represented by a keyboard whose scale and tonality can be indipendently (and also jointly) programmed. Up to 3 instruments (2 synths and 1 drum set) can be selected and played within each keyboard and the number of keys can be choosen by the user. 
-Last but not least, tempo, octave and number of bars can be increased up to 4 for all layers.
+Last but not least, tempo, octave and number of layers and number of bars can be dynamically modified by the user to ensure great live performaces.
 
 # How was it developed?
 Such a complex system put us in front of several difficulties which would not have been easily overcome without the help of such a powerful tool as Vue.js.
@@ -22,7 +22,7 @@ Its core feature is the declarative rendering of HTML custom and reactive compon
 
 # Innovative GUI
 The most captivating part of PoliX4 is its fully responsive design which makes it playable on any device and screen size.
-This responsive interface was made thanks to the Vuetify framework, a Vue UI Library providing developers with a huge collection of Material Components and tools for designing their application.
+This responsive interface was made thanks to the Vuetify framework, a Vue Library providing developers with a huge collection of Material Components and tools for designing their fully responsive application.
 
 ## Project setup
 ```
