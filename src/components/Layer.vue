@@ -23,12 +23,12 @@
         <!-- BEATS -->
         <!-- Unmerged Controller -->
         <v-col v-if="!unifiedControl" cols="12" sm="7">
-          <v-carousel hide-delimiters
+          <v-slide-group
           height="100%"
-          :continuous="false">
-            <v-carousel-item v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`" class="spacing-playground pa-3">
+          v-model="model">
+              <v-slide-item v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`" class="spacing-playground py-3 pr-1 pl-1">
               <v-row no-gutters class="justify-space-between">
-                <v-col :cols="num_cols" v-for="k in num_beats" :key="`column-${layerId}-${j}-${k}`">
+                <v-col v-for="k in num_beats" :key="`column-${layerId}-${j}-${k}`">
                   <Column 
                     class="column" :style="cssVars"
                     ref = "beats_refs"
@@ -45,18 +45,17 @@
                   ></Column>
                 </v-col>
               </v-row>
-            </v-carousel-item>
-          </v-carousel>
+            </v-slide-item>
+          </v-slide-group>
         </v-col>
         <!-- Merged Controller -->
         <v-col v-else cols="12" sm="10">
-          <v-carousel hide-delimiters
+          <v-slide-group
           height="100%"
-          :continuous="false"
           v-model="model">
-              <v-carousel-item v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`" class="spacing-playground pa-3">
+              <v-slide-item v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`" class="spacing-playground py-3 pr-1 pl-1">
                 <v-row no-gutters class="justify-space-between">
-                  <v-col :cols="num_cols" v-for="k in num_beats" :key="`column-${layerId}-${j}-${k}`">
+                  <v-col  v-for="k in num_beats" :key="`column-${layerId}-${j}-${k}`">
                     <Column 
                       class="column" :style="cssVars"
                       ref = "beats_refs"
@@ -73,8 +72,8 @@
                     ></Column>
                   </v-col>
                 </v-row>
-              </v-carousel-item>
-          </v-carousel>
+              </v-slide-item>
+          </v-slide-group>
 
         </v-col>
 
