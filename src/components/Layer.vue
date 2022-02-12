@@ -3,7 +3,7 @@
       <v-row no-gutters>
         <!-- LABELS -->
         <v-col cols="2">
-          <v-container class="">
+          <v-container>
             <div v-if="inst_id!=2" class="">
               <v-card flat outlined class="secondary text-center hidden-xs-only" 
                 v-for="k in tonesInScale" :key="k"
@@ -80,8 +80,8 @@
 
         <!-- LAYER CONTROLLER -->
         <v-col v-if="!unifiedControl" cols="3" class="hidden-xs-only">
-          <v-container class="layer-controller">
-            <v-card flat style="background-color:transparent" class="pa-1" :height="`${singleLayerHeight-37}`">
+          <v-container fluid class="layer-controller">
+            <v-card flat style="background-color:transparent" class="" :height="`${singleLayerHeight-37}`">
               <v-card flat class="d-flex justify-space-around" style="background-color:transparent">
                 <v-btn plain class="secondary black--text text-center" @click="$emit('removeLayerEvent')">Remove</v-btn>
                 <v-card flat class="d-flex justify-space-around pa-1" style="background-color:transparent">
@@ -151,13 +151,13 @@
 
               <!-- BUTTONS -->
               <v-card flat class="mt-2 d-flex justify-space-around" style="background-color:transparent">
-                <v-btn icon outlined class="tertiary layer-btn prelisten-btn" :class="{ green : prelistenLayer }" @click="prelistenLayer=!prelistenLayer">
+                <v-btn icon color="tertiary" class="layer-btn prelisten-btn" :class="{ green : prelistenLayer }" @click="prelistenLayer=!prelistenLayer">
                   <v-icon>mdi-headphones</v-icon> 
                 </v-btn>
-                <v-btn icon outlined class="tertiary layer-btn mute-btn" :class="{red : muteLayer }" @click="$emit('toggleMuteLayerEvent')">
+                <v-btn icon color="tertiary" class="layer-btn mute-btn" :class="{red : muteLayer }" @click="$emit('toggleMuteLayerEvent')">
                   <v-icon>mdi-volume-mute</v-icon>
                 </v-btn>
-                <v-btn icon outlined class="tertiary layer-btn clear-btn" @click="clearLayer">
+                <v-btn icon color="tertiary" class="layer-btn clear-btn" @click="clearLayer">
                   <v-icon>mdi-delete</v-icon>
                 </v-btn>
               </v-card>
