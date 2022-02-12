@@ -7,20 +7,22 @@ const vuetify = new Vuetify({
     theme: {
       themes: {
         light: {
-          primary: '#70adc0',
-          secondary: '#cae2ea',
-          tertiary: '#fcfdfd',
+          primary: '#969FC7', //toolbar
+          secondary: '#cae2ea', // labels
+          tertiary: '#fcfdfd', //tiles
+          fourth: '#AFBDF8', //remove layer
+          five:'#9FF1F1', //octave
           anchor: '#8c9eff',
-          backgroundmain: '#4e5387',
-          backgroundhome: '#c81aea',
+          background: '#7E80B7',
         },
         dark: {
-          primary: '#B0D6E1',
-          secondary: '#CAE2EA',
-          tertiary: '#4A4646',
+          primary: '#829DA2',
+          secondary: '#9AB0B4',
+          tertiary: '#4C4949',
+          fourth: '#729095',
+          five: '73A19F',
           anchor: '#8c9eff',
-          backgroundmain: '506D4E',
-          backgroundhome: '#c81aea',
+          background: '#627676',
         },
       },
     },

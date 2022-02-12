@@ -1,22 +1,22 @@
 <template>
-  <v-card :min-height="heightHorizontal" flat tile class="backgroundmain my-0">
+  <v-card :min-height="heightHorizontal" flat tile class="background my-0">
       <v-row no-gutters>
         <!-- LABELS -->
         <v-col cols="2">
           <v-container class="">
             <div v-if="inst_id!=2" class="">
-              <v-card flat outlined class="secondary text-center hidden-xs-only" 
+              <v-card flat outlined class="secondary text-center hidden-xs-only" elevation="3" style="opacity:0.7;" 
                 v-for="k in tonesInScale" :key="k"
                 >{{scale_keyboard[tonesInScale-k].slice(0, -1)}}
               </v-card>
             </div>
             <div v-else class="">
-              <v-card outlined flat class="text-center black--text hidden-xs-only" 
+              <v-card outlined flat class="secondary text-center black--text hidden-xs-only" elevation="3" style="opacity:0.7;"
                 v-for="k in tonesInScale" :key="k"
                 >{{drum_keyboard[tonesInScale-k]}}
               </v-card>
             </div>
-            <v-btn block depressed v-if="unifiedControl" class="secondary text-center black--text hidden-xs-only" @click="$emit('removeLayerEvent')">Remove</v-btn>
+            <v-btn block depressed v-if="unifiedControl" class="fourth text-center black--text hidden-xs-only" @click="$emit('removeLayerEvent')">Remove</v-btn>
           </v-container>
         </v-col>
 
@@ -83,7 +83,7 @@
           <v-container class="layer-controller">
             <v-card flat style="background-color:transparent" class="pa-1" :height="`${singleLayerHeight-37}`">
               <v-card flat class="d-flex justify-space-around" style="background-color:transparent">
-                <v-btn plain class="secondary black--text text-center" @click="$emit('removeLayerEvent')">Remove</v-btn>
+                <v-btn plain class="fourth black--text text-center" @click="$emit('removeLayerEvent')">Remove</v-btn>
                 <v-card flat class="d-flex justify-space-around pa-1" style="background-color:transparent">
                   <v-btn icon :disabled="systemPlaying" small @click="$emit('addKeyEvent')">
                     <v-icon small color="primary">mdi-plus</v-icon>
@@ -101,11 +101,11 @@
                 transition="scale-transition"
               >
                 <template v-slot:activator="{ on }">
-                  <v-btn depressed class="secondary black--text mt-2 caption" block v-on="on">
+                  <v-btn depressed class="five black--text mt-2 caption" block v-on="on">
                     <span>Octave: {{octaveLayer}}</span>
                   </v-btn>
                 </template>
-                <v-list>
+                <v-list class="secondary">
                   <v-list-item @click="$emit('moreOctaveEvent')">
                     <v-icon left>mdi-plus</v-icon>
                     <v-list-item-title class="">Add an octave</v-list-item-title> 
@@ -124,7 +124,7 @@
                 transition="scale-transition"
               >
                 <template v-slot:activator="{ on }">
-                  <v-btn depressed class="secondary black--text mt-2" block v-on="on">
+                  <v-btn depressed class="five black--text mt-2" block v-on="on">
                     <span class="caption">Selected key: {{keyLayer}}</span>
                   </v-btn>
                 </template>
@@ -140,7 +140,7 @@
                 transition="scale-transition"
               >
                 <template v-slot:activator="{ on }">
-                  <v-btn depressed class="secondary black--text mt-2" block v-on="on">
+                  <v-btn depressed class="five black--text mt-2" block v-on="on">
                     <span class="caption">{{scaleLayer}}</span>
                   </v-btn>
                 </template>
@@ -151,13 +151,13 @@
 
               <!-- BUTTONS -->
               <v-card flat class="mt-2 d-flex justify-space-around" style="background-color:transparent">
-                <v-btn icon outlined class="tertiary layer-btn prelisten-btn" :class="{ green : prelistenLayer }" @click="prelistenLayer=!prelistenLayer">
+                <v-btn icon outlined class="layer-btn prelisten-btn" :class="{ green : prelistenLayer }" @click="prelistenLayer=!prelistenLayer">
                   <v-icon>mdi-headphones</v-icon> 
                 </v-btn>
-                <v-btn icon outlined class="tertiary layer-btn mute-btn" :class="{red : muteLayer }" @click="$emit('toggleMuteLayerEvent')">
+                <v-btn icon outlined class="layer-btn mute-btn" :class="{red : muteLayer }" @click="$emit('toggleMuteLayerEvent')">
                   <v-icon>mdi-volume-mute</v-icon>
                 </v-btn>
-                <v-btn icon outlined class="tertiary layer-btn clear-btn" @click="clearLayer">
+                <v-btn icon outlined class="layer-btn clear-btn" @click="clearLayer">
                   <v-icon>mdi-delete</v-icon>
                 </v-btn>
               </v-card>
@@ -335,7 +335,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 .labels-container{
   border: 3px solid rgb(199, 202, 0);
   border-radius: 8px;

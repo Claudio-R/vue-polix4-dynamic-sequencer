@@ -137,18 +137,18 @@
               <!-- BUTTONS -->
               <v-col cols="12" sm="8">
                 <v-card-actions class="d-flex justify-space-around">
-                  <v-btn icon small color="secondary" @click="playAll">
+                  <v-btn icon small color="black" @click="playAll">
                     <v-icon large>mdi-play</v-icon>
                   </v-btn>
-                  <v-btn icon small color="secondary" @click="stopAll">
+                  <v-btn icon small color="black" @click="stopAll">
                     <v-icon large>mdi-stop</v-icon>  
                   </v-btn>
-                  <v-btn icon small color="secondary" :disabled="!unifiedControl" @click="toggleMuteSystem">
-                    <v-icon large>mdi-volume-mute</v-icon>
+                  <v-btn icon small color="black" :disabled="!unifiedControl" @click="toggleMuteSystem">
+                    <v-icon large color="black">mdi-volume-mute</v-icon>
                   </v-btn>
 
-                  <v-btn small depressed color="secondary" @click="clearAll">
-                    <v-icon >mdi-delete</v-icon>
+                  <v-btn small depressed color="primary" @click="clearAll">
+                    <v-icon color="tertiary">mdi-delete</v-icon>
                   </v-btn>
                   <v-btn small depressed :class="{primary : automaticSlideControl}" @click="automaticSlideControl=!automaticSlideControl">
                     <v-icon>mdi-arrow-right-circle-outline</v-icon>
