@@ -23,7 +23,7 @@
         <!-- BEATS -->
         <!-- Unmerged Controller -->
         <v-col v-if="!unifiedControl" cols="12" sm="7">
-          <v-slide-group
+          <v-slide-group class="disable-arrows"
           height="100%"
           v-model="model">
               <v-slide-item v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`" class="spacing-playground py-3 pr-2 pl-2">
@@ -42,6 +42,7 @@
                     :isPlaying="isPlaying"
                     :tonesInScale="tonesInScale"
                     :scale_keyboard="scale_keyboard"
+                    :n_bars="n_bars"
                   ></Column>
                 </v-col>
               </v-row>
@@ -50,7 +51,7 @@
         </v-col>
         <!-- Merged Controller -->
         <v-col v-else cols="12" sm="10">
-          <v-slide-group 
+          <v-slide-group class="disable-arrows"
           height="100%"
           v-model="model">
               <v-slide-item v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`" class="spacing-playground py-3 pr-2 pl-2">
@@ -69,6 +70,7 @@
                       :isPlaying="isPlaying"
                       :tonesInScale="tonesInScale"
                       :scale_keyboard="scale_keyboard"
+                      :n_bars="n_bars"
                     ></Column>
                   </v-col>
                 </v-row>
@@ -393,4 +395,8 @@ export default {
   padding-top: 3px;
   padding-bottom: 3px;
 }
+.v-slide-group__next--disabled .disable-arrows, .v-slide-group__prev--disabled .disable-arrows { 
+  pointer-events: none; 
+  color: rgba(0, 0, 0, 0.38) !important; 
+  }
 </style>
