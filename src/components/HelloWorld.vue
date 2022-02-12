@@ -54,3 +54,17 @@
     }
   }
 </script>
+
+<style lang="scss">
+.playbutton{
+  background: radial-gradient(50% 50% at 50% 50%, #d3dcf3 0%, rgba(11, 53, 162, 0.3) 100%);
+}
+.about{
+  width: 156px;
+  height: 46px;
+  background: rgba(196, 196, 196, 0.28);
+  font-size: 20px;
+  border-radius: 30px;
+  color: white;
+}
+</style>
