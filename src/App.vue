@@ -1,9 +1,9 @@
 <template>
-  <v-app>
-    <v-main class= "backgroundmain">
-      <router-view></router-view>
-    </v-main>
-  </v-app>
+<v-app>
+  <v-main class="background">
+    <router-view></router-view>
+  </v-main>
+</v-app>
 </template>
 
 <script>
