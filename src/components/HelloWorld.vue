@@ -7,7 +7,7 @@
           width="12vh"
           min-width="0 !important"
           to="/about"
-          text block color="black"
+          text block color="white"
           :src="require('../assets/ellipse.png')"
           style="top:5vh; margin-left: auto; margin-right: auto;">
             <span style="display: block; font-size: 2vh;">About</span>

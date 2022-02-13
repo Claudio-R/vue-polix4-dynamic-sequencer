@@ -2,7 +2,6 @@
   <v-card id="sequencer" min-width="370px">
     <v-app-bar prominent hide-on-scroll fixed class="primary" scroll-threshold="60">
     <v-container fluid id="container-bar" class="primary py-4 px-0">
-    <!-- <v-container fluid id="container-bar" class="py-4 px-0" :min-height="heightHorizontal"> -->
       <!--**FIRST ROW** -->
       <v-row dense>
 
@@ -336,20 +335,10 @@ export default {
         return this.layers[0].num_beats*60000/this.bpm;
       }
     },
-    // heightHorizontal () {
-    //     switch (this.$vuetify.breakpoint.name) {
-    //       case 'xs': return '27%'
-    //       case 'sm': return '27%'
-    //       case 'md': return '20%'
-    //       case 'lg': return '18%'
-    //       case 'xl': return '18%'
-    //     }
-    //   },
   },
 
   methods: {
       addLayer() {
-          // console.log(this.numBeatsNewLayer)
           if(this.numBeatsNewLayer > 12) this.numBeatsNewLayer = 12;
           if(this.numBeatsNewLayer < 1)  this.numBeatsNewLayer = 1;
           this.layers.push(
@@ -367,8 +356,6 @@ export default {
       },
       addBar(){
           for(let idx in this.layers) {
-              // console.log(this.$refs.layers_refs.length, idx);
-              // console.log(this.$refs.layers_refs[idx]);
               this.$refs.layers_refs[idx].addLBar()
           }
       },
@@ -470,31 +457,6 @@ export default {
   top: 0;
   z-index: 1;
 }
-
-// #view-box {
-//     display: inline-flex;
-//     border-radius: 10px;
-//     margin-top: 10px;
-//     margin-left: 10px;
-//     padding: 10px;
-//     background-color: beige;
-// }
-
-// .viewer{
-//     width: auto;
-//     height: 80%;
-//     margin-right: 10px;
-//     border: 2px solid rgb(216, 216, 178);
-//     background-color: bisque;
-// }
-
-// .unified {
-//     margin: 10px;
-//     padding: 5px;
-//     background-color: #e2c957;
-//     border: rgb(177, 161, 15) solid 3px;
-//     border-radius: 10px;
-// }
 
 #layers-container {
     margin-top: 128px;

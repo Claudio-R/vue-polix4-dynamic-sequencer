@@ -13,7 +13,6 @@
 
 <script>
 
-
 export default {
     name: 'ScaleSelector',
 
@@ -21,14 +20,12 @@ export default {
 
     data() {
         return {
-            //selectedScale: 'Major',
             scales: ['Major','Minor','Melodic Minor','Harmonic Minor','Diminished','Augmented','Hexatonic'],
         }
     },
 
     methods: {
         selectScale(scale) {
-            //this.selectedScale = scale;
             this.$emit('scaleSelectedEvent', scale)
         }
     }

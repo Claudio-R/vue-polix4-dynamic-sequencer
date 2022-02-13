@@ -29,7 +29,6 @@
           </v-btn>
         </v-card>
         <v-card v-else outlined class="">
-        <!-- <v-card v-else outlined class="hidden-xs-only"> -->
           <v-menu :close-on-content-click="false"
             offset-y
             origin="center center"
@@ -136,29 +135,3 @@ export default ({
 
 </script>
 
-<style lang="scss">
-.keyback {
-    width: auto;
-    //height: 18px;
-    background-color: rgb(107, 216, 183);
-    //border: 3px solid #0000004d;
-    border-radius: 8px;
-}
-#beat-controller {
-    width: auto;
-    height: auto;
-    //margin: 1px;
-    //border: 2px solid #575757;
-    background-color: rgb(216, 216, 190);
-    border-radius: 4px;
-    display: flex;
-    justify-content: space-between;
-}
-.beat-btn {
-    width: 30%;
-    height: auto;
-    margin: 2px auto 2px;
-    text-align: center;
-}
-
-</style>

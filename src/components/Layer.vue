@@ -317,11 +317,9 @@ export default {
         },
         addLBar(){
           this.$nextTick(() =>{
-            //column_states = Array(this.num_beats)
               for(let i=0;i<this.num_beats;i++) {
                 let newvar = this.$refs.beats_refs[i].getKeyProps()
                 this.$refs.beats_refs[i+(this.n_bars-1)*this.num_beats].setColumn(newvar)
-                //column_states[i]=(newvar)
             }
           })
         },
@@ -334,66 +332,29 @@ export default {
 </script>
 
 <style lang="scss">
-.labels-container{
-  border: 3px solid rgb(199, 202, 0);
-  border-radius: 8px;
-}
+
 .secondary{
   opacity: 0.32;
   box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 2px; 
 }
 
-.remove-btn-unified {
-    background-color: rgb(194, 194, 194);
-    // margin-top: 2px;
-    // margin: 4px;
-    text-align: center;
-}
-.layer{
-    display: inline-flex;
-    // height: calc(var(--columnHeight) + 10px);
-
-}
-
-.keyboard {
-    display: inline-flex;
-    //border-radius: 10px;
-    background-color: rgb(199, 202, 0);
-    //border:3px solid rgb(19, 109, 116);
-}
-
-.column {
-    display: inline-block;
-    //width: calc(var(--columnWidth) - 6px);
-    //border: 3px solid #c0a630;
-    //border: 3px solid #0000004d;
-    border-radius: 8px;
-    //margin: 5px;
-}
-
 .playing {
     /* aspect */
     border-top: 3px solid var(--v-player-base);
     background: var(--v-player-base);
-    // border-bottom: 3px solid rgb(188, 180, 255);
     margin-top:-3px;
 }
-// .layer-labels{
-//     margin-right: 10px;
-//     margin-top: 8px;
-//     width: auto;
-// }
-// .key-label{
-//   // margin: 4px;
-// }
+
 .v-responsive{
   margin-top: -3px; 
   padding-top: 3px;
   padding-bottom: 3px;
 }
+
 .v-slide-group__next--disabled .disable-arrows, .v-slide-group__prev--disabled .disable-arrows { 
   pointer-events: none; 
   color: rgba(0, 0, 0, 0.38) !important; 
   }
+
 </style>
