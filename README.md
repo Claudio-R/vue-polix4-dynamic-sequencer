@@ -2,7 +2,7 @@
 PoliX4 is a polyrhythmic polyphonic polystrumental (and Politecnico) loop sequencer made with Vue.js.
 It allows the user to set completely independent rhythmic structures for 8 selectable instruments and 3 drum sets.
 
-![GUI](https://user-images.githubusercontent.com/54354625/153767988-92745ee7-f755-4407-8296-ec87276959b5.png)
+![GUI](https://user-images.githubusercontent.com/54354625/153774280-19fe2276-5715-4264-a4dc-dbc671979e9d.png)
 
 ## Authors
 - Andrea De Fabritiis
