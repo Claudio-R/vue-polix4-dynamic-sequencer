@@ -14,24 +14,48 @@ The application has been deployed on the [Heroku](https://www.heroku.com/platfor
 This is the result of the joint work of four students aiming to create a dynamic instruments which ensures the user maximum freedom in the creation of rhytmic and melodic patterns. Each rhythmic structure is represented by a keyboard whose scale and tonality can be indipendently (and also jointly) programmed. Up to 3 instruments (2 synths and 1 drum set) can be selected and played within each keyboard and the number of keys can be choosen by the user. 
 Last but not least, tempo, octave and number of layers and number of bars can be dynamically modified by the user to ensure great live performaces.
 
-
 # How was it developed?
 Such a complex system put us in front of several difficulties which would not have been easily overcome without the help of such a powerful tool as [Vue.js](https://vuejs.org/).
 Vue is a JavaScript framework enabling frontend developers to create amazing users interfaces through a declarative and component-based programming model. 
 Its core feature is the declarative rendering of HTML custom and reactive components, whose output is based on JavaScript state. State changes for each component are tracked and used to efficiently update the elements in the DOM.
 
-## Dependencies
-
-### Vuetify
+## Vuetify
 The most captivating part of PoliX4 is its fully responsive design which makes it playable on any device and screen size.
-This responsive interface was made thanks to the [Vuetify](https://vuetifyjs.com/en/) framework, a Vue library providing developers with a huge collection of Material Components and tools for designing their fully responsive application.
+This responsive interface was made thanks to the [Vuetify](https://vuetifyjs.com/en/) framework, a Vue library providing developers with a huge collection of __Material Components__ and tools for designing their fully responsive application.
 
-### Vuex
+## Vuex
+Vue allows communication between parent and child components through props and events. No direct communication is possible between sibling components. This may be too complex in those cases there are many components that have access to some common data. This was clearly our case, since the collection of instruments had to be accessible at any moment by all the keys and the Instrument Menu.
+We found extremely useful to use the Vue library [Vuex](https://vuex.vuejs.org/), which allows the creation of a __centralized store__ for every component in the app and ensures full control on the mutation of the common data. 
 
-### Tone
+## Tone & Firebase
+To create our instruments we exploited the Web Audio framework [Tone.js](https://tonejs.github.io/).
+With the use of Tone we created the 8 instruments and the 3 drumset available in the application and listed below.
 
-### Router
+Instruments:
+- Pulsequare
+- Pulsaw
+- FM
+- Halen
+- GrandPiano
+- Alien
+- AmericanBeauty
+- Delicatissimo
 
+Drums:
+- TR-808
+- TR-909
+- Vaporwave
+
+Among the 8 instruments, 7 of them are synths synthetized directly using the __PoliSynth__ class in Tone, the Grand Piano instrument, instead, has been created combining together samples of notes and using the __Sampler__ object, which applies pitch shifting to fill gapes between notes. All the 8 instruments made in these ways are polyphonic.
+
+For what concern the 3 drums, the samples are stored into a [Firebase](https://firebase.google.com/) database and put together into 3 different arrays, whose elements are associated to the samples using the __Player__ object of Tone. 
+
+## Router
+To be able to create a Single Page App such as PoliX4 we used [Router](https://router.vuejs.org/), official router for Vue.js which easily integrates Vue mechanisms to easily develop SPA.
+
+## Cordova
+To futher extend the potential of our application we decideded to convert our Web app into an hybrid app for mobile phone. To do so we have relied on [Apache Cordova](https://cordova.apache.org/), an open source mobile development framework. This conversion has not been completed, yet, but we've been able to install the hybrid app on Android and iOS devices and host it in local host.
+We suggest you to check for the complete documentation [here](https://cordova.apache.org/docs/en/latest/guide/cli/index.html) for installing and running the app on your mobile device. 
 
 # Project setup
 

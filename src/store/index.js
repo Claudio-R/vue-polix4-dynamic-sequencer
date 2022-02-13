@@ -7,6 +7,7 @@ import { getStorage, ref, getDownloadURL } from "firebase/storage";
 /** Use Tone to create Synth */
 const comp = new Tone.Limiter(-30).toDestination();
 const synth = [];
+
 synth[0] = new Tone.PolySynth(Tone.AMSynth).connect(comp);
 synth[0].set({
      volume : -10 ,
@@ -31,6 +32,7 @@ synth[0].set({
             release : 0.07
         }
 });
+
 synth[1] = new Tone.PolySynth(Tone.DuoSynth).connect(comp);
 synth[1].set({
     vibratoAmount  : 0.5 ,
@@ -75,6 +77,7 @@ synth[1].set({
         }
     }
 });
+
 synth[2] = new Tone.PolySynth(Tone.FMSynth).connect(comp);
 synth[2].set({
 	"volume": -10,
@@ -149,6 +152,7 @@ const phaser = new Tone.Phaser({
   wet: 0.2,
   baseFrequency: 350
 }).toDestination();
+
 synth[4] = new Tone.Sampler({
   urls: {
     A0: "A0.mp3",
@@ -185,6 +189,7 @@ synth[4] = new Tone.Sampler({
   release: 1,
   baseUrl: "https://tonejs.github.io/audio/salamander/"
 }).chain(phaser, reverb, comp);
+
 synth[5] = new Tone.PolySynth().connect(comp);
 synth[5].set({
   "volume" : -10,
@@ -202,6 +207,7 @@ synth[5].set({
       "release": 0.4
   }
 })
+
 synth[6] = new Tone.PolySynth(Tone.FMSynth).connect(comp);
 synth[6].set({
   "volume" : -10,
@@ -226,6 +232,7 @@ synth[6].set({
       "release": 0.2
   }
 })
+
 synth[7] = new Tone.PolySynth().connect(comp);
 synth[7].set({
   "volume" : -10,
@@ -244,7 +251,6 @@ synth[7].set({
 /** Use Firebase + Tone to retrieve the drum kit */
 const firebaseApp = initializeApp(firebaseConfig);
 const storage = getStorage(firebaseApp);
-
 const firebaseConfig = {
     apiKey: "AIzaSyB23PkWGtyU3LFIYBy8uiKT0RM9gUYrkXk",
     authDomain: "actam21.firebaseapp.com",
@@ -336,10 +342,12 @@ const path = 'gs://actam21.appspot.com';
     drum[23] = new Tone.Player(url).connect(comp); /*clap*/
   })
 }
+
 /*synth names and initial selections*/
 const synth_names = ['Pulsequare','Pulsaw','FM','Halen','GrandPiano','Alien','AmericanBeauty','Delicatissimo']
 const drum_names = ['TR-808', 'TR-909','Vaporwave']
 const synth_selection = [1,3,0]
+
 /** store the instruments using VUEX */
 Vue.use(Vuex)
 
