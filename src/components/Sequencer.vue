@@ -1,6 +1,6 @@
 <template>
   <v-card id="sequencer" min-width="370px">
-    <v-app-bar prominent hide-on-scroll fixed class="primary">
+    <v-app-bar prominent hide-on-scroll fixed class="primary" scroll-threshold="60">
     <v-container fluid id="container-bar" class="primary py-4 px-0">
     <!-- <v-container fluid id="container-bar" class="py-4 px-0" :min-height="heightHorizontal"> -->
       <!--**FIRST ROW** -->
