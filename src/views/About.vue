@@ -14,14 +14,14 @@
     >
     <v-card-title><h1>PoliX4</h1></v-card-title>
     <v-card-text class="text-justify">
-        <b>PoliX4</b> is a polyrhythmic polyphonic polystrumental (and Politecnico) loop sequencer made with Vue, with the aid of Vuetify and Cordova frameworks. <br>
-        The innovative GUI allow the user to set different rythmic structures for 8 selectable instruments and 3 drum sets. 
-        Each rythimc structure is represented by a keyboard whose scale and scale key can be individually (and also jointly) programmed.<br>
+        <b>PoliX4</b> is a polyrhythmic polyphonic polystrumental (and Politecnico) loop sequencer made with Vue, with the aid of Vuetify. <br>
+        The innovative GUI allows the user to set different rhythmic structures for 8 selectable instruments and 3 drum sets. 
+        Each rhythimc structure is represented by a keyboard whose scale and tonality can be individually (and also jointly) programmed.<br>
     </v-card-text>
 
-     <v-card-subtitle><h3>Manual</h3></v-card-subtitle>
+     <v-card-title>User Manual</v-card-title>
 
-     <v-card-subtitle><h4>Tempo</h4></v-card-subtitle>
+     <v-card-subtitle><h3>Tempo</h3></v-card-subtitle>
      <v-row :justify="'center'">
         <v-col cols="6" class="caption">
             <v-btn depressed class="disable-events" small block>
@@ -31,9 +31,9 @@
         </v-col>
      </v-row>
      <v-card-text class="text-justify">
-        Select tempo for the loop sequencer player. It corresponds to the number of beats of <b>the first layer</b> per minute.
+        Select tempo for the loop sequencer player. It corresponds to the number of beats per minute of the <b>first layer</b>.
     </v-card-text>
-    <v-card-subtitle><h4>Instruments</h4></v-card-subtitle>
+    <v-card-subtitle><h3>Instruments</h3></v-card-subtitle>
      <v-row :justify="'center'">
         <v-col cols="6" class="caption">
             <v-btn depressed class="disable-events red--text" small block>
@@ -47,7 +47,7 @@
         Other controls such as volume and note duration are settable.
     </v-card-text>
 
-    <v-card-subtitle><h4>Bars</h4></v-card-subtitle>
+    <v-card-subtitle><h3>Bars</h3></v-card-subtitle>
      <v-row :justify="'center'">
         <v-col cols="6" class="caption">
             <v-btn depressed class="disable-events" small block>
@@ -59,7 +59,7 @@
         Choose how many measures are present in a single loop. It can be setted anytime. 
     </v-card-text>
 
-    <v-card-subtitle><h4>Layer keyboards</h4></v-card-subtitle>
+    <v-card-subtitle><h3>Rhytmic Layers</h3></v-card-subtitle>
      <v-row :justify="'center'">
         <v-col cols="6" class="caption">
             <v-card>
@@ -77,10 +77,10 @@
         </v-col>
      </v-row>
      <v-card-text class="text-justify">
-        Add a rythmic layer keyboard. Keyboards can be 1 to 12 beats long.
+        Add a new rhythmic layer. Keyboards can be 1 to 12 beats long.
     </v-card-text>
 
-    <v-card-subtitle><h4>Live Performance Controls</h4></v-card-subtitle>
+    <v-card-subtitle><h3>Live Performance Controls</h3></v-card-subtitle>
      <v-row :justify="'center'">
         <v-col cols="12" sm="11">
           <v-card>
@@ -116,13 +116,13 @@
      <v-card-text class="text-justify">
         In this controls section you can play with PoliX4 in your own way. <br>
         The <b>play</b> button lets you start/restart the sequencing loop. In the other hand the <b>stop</b> button will stop the loop.<br>
-        The <b>mute</b> button will mute every beat on the keyboards. Not available when <b>merge</b> is active. <br>
+        The <b>mute</b> button will mute every beat on the keyboards. Not available when <b>merge</b> is not active. <br>
         The <b>clear</b> button reset all the instrument selections on the keyboards. <br>
         The <b>follow</b> button lets you follow the loop flow across the keyboards while playing. <br>
-        The <b>merge</b> button lets you control the scale, key scale and octave of all the existing layers at the same time. 
-        When selected, a drop-down menu button will appear on the right.  <br>
+        The <b>merge</b> button lets you control the scale, tonality and octave of all the existing layers at the same time. 
+        When selected, a drop-down menu button will appear on the right, which will allow you to select the octave, the scale and tonality.  <br>
     </v-card-text>
-    <v-card-subtitle><h4>Sequencer</h4></v-card-subtitle>
+    <v-card-subtitle><h3>Sequencer</h3></v-card-subtitle>
     <v-row justify="center">
       <v-col cols="10">
         <v-img v-if="!this.$vuetify.theme.dark"
@@ -151,7 +151,7 @@
         - mute the layer<br>
         - clear all the instrument selections for the current layer<br>
     </v-card-text>
-    <v-card-subtitle><h4>Authors Notes</h4></v-card-subtitle>
+    <v-card-subtitle><h3>Authors Notes</h3></v-card-subtitle>
     <v-card-text class="text-justify">
         On extra small devices (or vertical positon on small devices), some controls will not be visualized.
         We made this decision in order to offer a quality service without compromising the GUI appearance.
