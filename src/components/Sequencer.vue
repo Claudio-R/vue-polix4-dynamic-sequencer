@@ -1,7 +1,7 @@
 <template>
   <v-card id="sequencer" min-width="370px">
     <v-app-bar prominent elevate-on-scroll fixed class="primary">
-    <v-container fluid id="container-bar" class="primary py-4 px-0" :min-height="heightHorizontal">
+    <v-container fluid id="container-bar" class="primary py-4 px-0">
     <!-- <v-container fluid id="container-bar" class="py-4 px-0" :min-height="heightHorizontal"> -->
 
       <!--**FIRST ROW** -->
@@ -349,7 +349,7 @@ export default {
 
   methods: {
       addLayer() {
-          console.log(this.numBeatsNewLayer)
+          // console.log(this.numBeatsNewLayer)
           if(this.numBeatsNewLayer > 12) this.numBeatsNewLayer = 12;
           this.layers.push(
               {   
@@ -366,8 +366,8 @@ export default {
       },
       addBar(){
           for(let idx in this.layers) {
-              console.log(this.$refs.layers_refs.length, idx);
-              console.log(this.$refs.layers_refs[idx]);
+              // console.log(this.$refs.layers_refs.length, idx);
+              // console.log(this.$refs.layers_refs[idx]);
               this.$refs.layers_refs[idx].addLBar()
           }
       },

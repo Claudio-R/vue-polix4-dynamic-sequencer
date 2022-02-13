@@ -3,7 +3,7 @@
       <v-row no-gutters>
         <!-- LABELS -->
         <v-col cols="2">
-          <v-container class="">
+          <v-container>
             <div v-if="inst_id!=2" class="">
               <v-card flat outlined class="secondary text-center hidden-xs-only" elevation="3" style="opacity:0.7;" 
                 v-for="k in tonesInScale" :key="k"
@@ -23,12 +23,12 @@
         <!-- BEATS -->
         <!-- Unmerged Controller -->
         <v-col v-if="!unifiedControl" cols="12" sm="7">
-          <v-carousel hide-delimiters
+          <v-slide-group class="disable-arrows"
           height="100%"
-          :continuous="false">
-            <v-carousel-item v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`" class="spacing-playground pa-3">
+          v-model="model">
+              <v-slide-item v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`" class="spacing-playground py-3 pr-2 pl-2">
               <v-row no-gutters class="justify-space-between">
-                <v-col :cols="num_cols" v-for="k in num_beats" :key="`column-${layerId}-${j}-${k}`">
+                <v-col v-for="k in num_beats" :key="`column-${layerId}-${j}-${k}`">
                   <Column 
                     class="column" :style="cssVars"
                     ref = "beats_refs"
@@ -42,21 +42,21 @@
                     :isPlaying="isPlaying"
                     :tonesInScale="tonesInScale"
                     :scale_keyboard="scale_keyboard"
+                    :n_bars="n_bars"
                   ></Column>
                 </v-col>
               </v-row>
-            </v-carousel-item>
-          </v-carousel>
+            </v-slide-item>
+          </v-slide-group>
         </v-col>
         <!-- Merged Controller -->
         <v-col v-else cols="12" sm="10">
-          <v-carousel hide-delimiters
+          <v-slide-group class="disable-arrows"
           height="100%"
-          :continuous="false"
           v-model="model">
-              <v-carousel-item v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`" class="spacing-playground pa-3">
+              <v-slide-item v-for="j in n_bars" :key="`keyboard-${layerId}-${j}`" class="spacing-playground py-3 pr-2 pl-2">
                 <v-row no-gutters class="justify-space-between">
-                  <v-col :cols="num_cols" v-for="k in num_beats" :key="`column-${layerId}-${j}-${k}`">
+                  <v-col  v-for="k in num_beats" :key="`column-${layerId}-${j}-${k}`">
                     <Column 
                       class="column" :style="cssVars"
                       ref = "beats_refs"
@@ -70,18 +70,19 @@
                       :isPlaying="isPlaying"
                       :tonesInScale="tonesInScale"
                       :scale_keyboard="scale_keyboard"
+                      :n_bars="n_bars"
                     ></Column>
                   </v-col>
                 </v-row>
-              </v-carousel-item>
-          </v-carousel>
+              </v-slide-item>
+          </v-slide-group>
 
         </v-col>
 
         <!-- LAYER CONTROLLER -->
         <v-col v-if="!unifiedControl" cols="3" class="hidden-xs-only">
-          <v-container class="layer-controller">
-            <v-card flat style="background-color:transparent" class="pa-1" :height="`${singleLayerHeight-37}`">
+          <v-container fluid class="layer-controller">
+            <v-card flat style="background-color:transparent" class="" :height="`${singleLayerHeight-37}`">
               <v-card flat class="d-flex justify-space-around" style="background-color:transparent">
                 <v-btn plain class="fourth black--text text-center" @click="$emit('removeLayerEvent')">Remove</v-btn>
                 <v-card flat class="d-flex justify-space-around pa-1" style="background-color:transparent">
@@ -393,4 +394,8 @@ export default {
   padding-top: 3px;
   padding-bottom: 3px;
 }
+.v-slide-group__next--disabled .disable-arrows, .v-slide-group__prev--disabled .disable-arrows { 
+  pointer-events: none; 
+  color: rgba(0, 0, 0, 0.38) !important; 
+  }
 </style>
