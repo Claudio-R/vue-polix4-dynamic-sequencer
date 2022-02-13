@@ -1,9 +1,8 @@
 <template>
   <v-card id="sequencer" min-width="370px">
-    <v-app-bar prominent elevate-on-scroll fixed class="primary">
+    <v-app-bar prominent hide-on-scroll fixed class="primary">
     <v-container fluid id="container-bar" class="primary py-4 px-0">
     <!-- <v-container fluid id="container-bar" class="py-4 px-0" :min-height="heightHorizontal"> -->
-
       <!--**FIRST ROW** -->
       <v-row dense>
 
@@ -351,6 +350,7 @@ export default {
       addLayer() {
           // console.log(this.numBeatsNewLayer)
           if(this.numBeatsNewLayer > 12) this.numBeatsNewLayer = 12;
+          if(this.numBeatsNewLayer < 1)  this.numBeatsNewLayer = 1;
           this.layers.push(
               {   
                   id: this.nextId,
