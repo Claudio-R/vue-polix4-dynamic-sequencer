@@ -172,13 +172,13 @@
 
         <!-- MENU -->
         <v-col cols="2" md="3">
-          <v-menu :disabled="!unifiedControl" :close-on-content-click="false" max-width="100%"
+          <v-menu :disabled="!unifiedControl && !$vuetify.breakpoint.xs" :close-on-content-click="false" max-width="100%"
             offset-y offset-x
             origin="center center"
             transition="scale-transition"
           >
             <template v-slot:activator="{ on }">
-              <v-btn block small depressed :disabled="!unifiedControl" v-on="on" min-height="56px">
+              <v-btn block small depressed :disabled="!unifiedControl && !$vuetify.breakpoint.xs" v-on="on" min-height="56px">
                 <v-icon>mdi-menu</v-icon>
                 <span class="hidden-sm-and-down">Main controller</span>
               </v-btn>
