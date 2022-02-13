@@ -14,8 +14,17 @@
     </v-btn>
     <v-row class="text-center" no-gutters :justify="'center'">
       <v-col cols="12">
-        <v-img
-          :src="require('../assets/logo2.png')"
+        <v-img v-if="!darkswitch"
+          :src="require('../assets/X4-light.png')"
+          class="my-0"
+          contain
+          height="50vh"
+          width="50vh"
+          style="display: block;top:15%;margin-left: auto; margin-right: auto; background: rgba(196, 196, 196, 0.28);"
+          large
+        />
+        <v-img v-else
+          :src="require('../assets/X4-dark.png')"
           class="my-0"
           contain
           height="50vh"
@@ -29,7 +38,7 @@
           class="tertiary rounded-circle"
           height="20vh"
           width="20vh"
-          style="opacity:0.2;display:block; margin-left: auto; margin-right:auto;">
+          style="opacity:0.6;display:block; margin-left: auto; margin-right:auto;">
             <v-btn
               elevation="2"
               fab
