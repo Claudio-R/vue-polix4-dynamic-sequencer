@@ -235,7 +235,7 @@ synth[6].set({
 
 synth[7] = new Tone.PolySynth().connect(comp);
 synth[7].set({
-  "volume" : -10,
+  "volume" : 0,
   "portamento" : 0.0,
   "oscillator": {
       "type": "square4"
