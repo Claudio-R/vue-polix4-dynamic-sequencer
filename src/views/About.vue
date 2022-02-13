@@ -87,19 +87,19 @@
             <v-row no-gutters class="d-flex align-center">
               <v-col cols="12" sm="8">
                 <v-card-actions class="d-flex justify-space-around">
-                  <v-btn icon outlined color="secondary" class="disable-events">
-                    <v-icon >mdi-play</v-icon>
+                  <v-btn icon small color="black" class="disable-events">
+                    <v-icon large>mdi-play</v-icon>
                   </v-btn>
-                  <v-btn icon outlined color="secondary" class="disable-events">
-                    <v-icon >mdi-stop</v-icon>  
+                  <v-btn icon small color="black" class="disable-events">
+                    <v-icon large>mdi-stop</v-icon>  
                   </v-btn>
-                  <v-btn icon outlined color="secondary" class="disable-events">
-                    <v-icon>mdi-volume-mute</v-icon>
+                  <v-btn icon small color="black" class="disable-events">
+                    <v-icon large color="black">mdi-volume-mute</v-icon>
                   </v-btn>
-                  <v-btn small depressed color="secondary" class="disable-events">
-                    <v-icon >mdi-delete</v-icon>
+                  <v-btn small depressed color="primary" class="disable-events">
+                    <v-icon color="tertiary">mdi-delete</v-icon>
                   </v-btn>
-                  <v-btn small depressed class="disable-events">
+                  <v-btn small depressed class="primary disable-events">
                     <v-icon>mdi-arrow-right-circle-outline</v-icon>
                   </v-btn>
                 </v-card-actions>
