@@ -17,17 +17,19 @@ const vuetify = new Vuetify({
           five:'#9FF1F1', //octave
           anchor: '#8c9eff',
           background: '#7E80B7',
-          player: '#bcb4ff'
+          player: '#bcb4ff',
+          drum: '#80CBC4'
         },
         dark: {
-          primary: '#829DA2',
-          secondary: '#9AB0B4',
-          tertiary: '#4C4949',
-          fourth: '#729095',
-          five: '73A19F',
+          primary: '#4a6064',
+          secondary: '#749298',
+          tertiary: '#3e3b3b',
+          fourth: '#59757a',
+          five: '#598482',
           anchor: '#8c9eff',
-          background: '#627676',
-          player: '#7ebab5'
+          background: '#647575',
+          player: '#7ebab5',
+          drum: '#004D40'
         },
       },
     },

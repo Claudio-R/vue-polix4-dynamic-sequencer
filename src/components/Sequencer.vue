@@ -137,18 +137,18 @@
               <!-- BUTTONS -->
               <v-col cols="12" sm="8">
                 <v-card-actions class="d-flex justify-space-around">
-                  <v-btn icon small color="black" @click="playAll">
+                  <v-btn icon small @click="playAll">
                     <v-icon large>mdi-play</v-icon>
                   </v-btn>
-                  <v-btn icon small color="black" @click="stopAll">
+                  <v-btn icon small @click="stopAll">
                     <v-icon large>mdi-stop</v-icon>  
                   </v-btn>
-                  <v-btn icon small color="black" :disabled="!unifiedControl" @click="toggleMuteSystem">
-                    <v-icon large color="black">mdi-volume-mute</v-icon>
+                  <v-btn icon small :disabled="!unifiedControl" @click="toggleMuteSystem">
+                    <v-icon large >mdi-volume-mute</v-icon>
                   </v-btn>
 
                   <v-btn small depressed color="primary" @click="clearAll">
-                    <v-icon color="tertiary">mdi-delete</v-icon>
+                    <v-icon>mdi-delete</v-icon>
                   </v-btn>
                   <v-btn small depressed :class="{primary : automaticSlideControl}" @click="automaticSlideControl=!automaticSlideControl">
                     <v-icon>mdi-arrow-right-circle-outline</v-icon>
@@ -286,7 +286,7 @@ export default {
 
   data(){
     return {
-      inst_color: ['red','blue','green'],
+      inst_color: ['red','blue','teal'],
       /** sequencer controller */
       systemPlaying: false,
       bpm: 120,

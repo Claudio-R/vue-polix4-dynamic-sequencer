@@ -11,7 +11,7 @@
               </v-card>
             </div>
             <div v-else class="">
-              <v-card outlined flat class="secondary text-center black--text hidden-xs-only" elevation="3" style="opacity:0.7;"
+              <v-card outlined flat class="secondary text-center hidden-xs-only" elevation="3" style="opacity:0.7;"
                 v-for="k in tonesInScale" :key="k"
                 >{{drum_keyboard[tonesInScale-k]}}
               </v-card>
@@ -87,10 +87,10 @@
                 <v-btn plain class="fourth black--text text-center" @click="$emit('removeLayerEvent')">Remove</v-btn>
                 <v-card flat class="d-flex justify-space-around pa-1" style="background-color:transparent">
                   <v-btn icon :disabled="systemPlaying" small @click="$emit('addKeyEvent')">
-                    <v-icon small color="primary">mdi-plus</v-icon>
+                    <v-icon small color="">mdi-plus</v-icon>
                   </v-btn>
                   <v-btn icon :disabled="systemPlaying" small @click="$emit('removeKeyEvent')">
-                    <v-icon small color="primary">mdi-minus</v-icon>
+                    <v-icon small color="">mdi-minus</v-icon>
                   </v-btn>
                 </v-card>
               </v-card>
@@ -102,7 +102,7 @@
                 transition="scale-transition"
               >
                 <template v-slot:activator="{ on }">
-                  <v-btn depressed class="five black--text mt-2 caption" block v-on="on">
+                  <v-btn depressed class="five mt-2 caption" block v-on="on">
                     <span>Octave: {{octaveLayer}}</span>
                   </v-btn>
                 </template>
@@ -123,7 +123,7 @@
                 transition="scale-transition"
               >
                 <template v-slot:activator="{ on }">
-                  <v-btn depressed class="five black--text mt-2" block v-on="on">
+                  <v-btn depressed class="five mt-2" block v-on="on">
                     <span class="caption">Selected key: {{keyLayer}}</span>
                   </v-btn>
                 </template>
@@ -139,7 +139,7 @@
                 transition="scale-transition"
               >
                 <template v-slot:activator="{ on }">
-                  <v-btn depressed class="five black--text mt-2" block v-on="on">
+                  <v-btn depressed class="five mt-2" block v-on="on">
                     <span class="caption">{{scaleLayer}}</span>
                   </v-btn>
                 </template>
@@ -149,7 +149,7 @@
               </v-menu>
 
               <!-- BUTTONS -->
-              <v-card flat class="mt-2 d-flex justify-space-around" style="background-color:transparent">
+              <v-card flat class="mt-3 d-flex justify-space-around" style="background-color:transparent">
                 <v-btn icon outlined class="layer-btn prelisten-btn" :class="{ green : prelistenLayer }" @click="prelistenLayer=!prelistenLayer">
                   <v-icon>mdi-headphones</v-icon> 
                 </v-btn>
