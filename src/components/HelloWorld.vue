@@ -1,19 +1,17 @@
 <template>
   <v-container fluid>
-    <v-row class="text-center" no-gutters>
-      <v-col cols="2" offset="5" align-self="center">
-        <v-btn
+    <v-btn
           elevation="2"
           fab
-          height="48px"
-          width="156px"
+          height="6vh"
+          width="12vh"
           to="/about"
           text block color="black"
           :src="require('../assets/ellipse.png')"
           style="top:5vh; margin-left: auto; margin-right: auto;">
             <span style="display: block; font-size: 2vh;">About</span>
-        </v-btn>
-      </v-col>
+    </v-btn>
+    <v-row class="text-center" no-gutters :justify="'center'">
       <v-col cols="12">
         <v-img
           :src="require('../assets/logo2.png')"
