@@ -15,7 +15,7 @@
     <v-card-title><h1>PoliX4</h1></v-card-title>
     <v-card-text class="text-justify">
         <b>PoliX4</b> is a polyrhythmic polyphonic polystrumental (and Politecnico) loop sequencer made with Vue, with the aid of Vuetify and Cordova frameworks. <br>
-        The innovative GUI allow the user to set different rythmic structures for 10 selectable instruments and 3 drum sets. 
+        The innovative GUI allow the user to set different rythmic structures for 8 selectable instruments and 3 drum sets. 
         Each rythimc structure is represented by a keyboard whose scale and scale key can be individually (and also jointly) programmed.<br>
     </v-card-text>
 
