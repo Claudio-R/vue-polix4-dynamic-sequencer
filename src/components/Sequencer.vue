@@ -175,6 +175,7 @@
             offset-y offset-x
             origin="center center"
             transition="scale-transition"
+            width="auto"
           >
             <template v-slot:activator="{ on }">
               <v-btn block small depressed :disabled="!unifiedControl && !$vuetify.breakpoint.xs" v-on="on" min-height="56px">
