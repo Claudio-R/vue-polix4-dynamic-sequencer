@@ -1,6 +1,8 @@
 # PoliX4
 PoliX4 is a polyrhythmic polyphonic polystrumental (and Politecnico) loop sequencer made with Vue.js.
-It allows the user to set completely independent rhythmic structures for 8 selectable instruments and 3 drum sets.
+It allows the user to set completely independent rhythmic structures for 8 selectable instruments and 3 drum sets. Available both in dark mode and light mode!
+
+<img src="https://user-images.githubusercontent.com/73489236/153775370-3bf45bc9-b7f3-4b5b-a297-d07b738ab86e.png" width="200"> <img src="https://user-images.githubusercontent.com/73489236/153775365-54be88cb-10ff-4dc9-bc0d-eea622a01937.png" width="200">
 
 ## Authors
 - [Andrea De Fabritiis](https://github.com/andreadefa)
@@ -77,11 +79,10 @@ npm run build
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
-# Instructions
+# Create your first pattern!
 
 ![GUI](https://user-images.githubusercontent.com/54354625/153774280-19fe2276-5715-4264-a4dc-dbc671979e9d.png)
 
-## Create your first pattern!
 ### Open your application
 As you click on the Play button in the landing page you will be redirect to the PoliX4 sequencer. 
 If you are using your phone, rotate it horizzontally to open up the full functionalities of the application. 
