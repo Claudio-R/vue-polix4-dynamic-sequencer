@@ -9,7 +9,7 @@ const comp = new Tone.Limiter(-30).toDestination();
 const synth = [];
 synth[0] = new Tone.PolySynth(Tone.AMSynth).connect(comp);
 synth[0].set({
-     volume : -10 ,
+     volume : -2 ,
      harmonicity : 1 ,
      detune : 0 ,
      oscillator : {
