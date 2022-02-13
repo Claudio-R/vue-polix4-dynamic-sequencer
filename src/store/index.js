@@ -344,7 +344,7 @@ const synth_selection = [1,3,0]
 Vue.use(Vuex)
 
 /* store the dark/light switch mode */
-var darkswitch = false
+const darkswitch = false
 
 export default new Vuex.Store({
   state: {

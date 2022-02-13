@@ -44,6 +44,7 @@
       </v-col>
       <v-col cols="12">
         <v-switch v-model="darkswitch" 
+        @change="darkMode"
         style="position: absolute; bottom:0;">
         <template v-slot:label>
           <span v-if="!darkswitch">Theme: light</span>
@@ -58,17 +59,18 @@
 <script>
   export default {
     name: 'HelloWorld',
-    data: () => ({
+    data() {
+      return{
         darkswitch: false,
-    }),
-    watch: {
-      'darkswitch': function(val) {
-          this.$vuetify.theme.dark = this.darkswitch
-          this.$store.darkswitch = this.darkswitch
+      }
+    },
+    methods: {
+      darkMode(val) {
+        this.$vuetify.theme.dark = this.darkswitch
+        this.$store.darkswitch = this.darkswitch
       }
     },
     mounted(){
-      this.$vuetify.theme.dark = this.$store.darkswitch
       this.darkswitch = this.$store.darkswitch
     }
   }
