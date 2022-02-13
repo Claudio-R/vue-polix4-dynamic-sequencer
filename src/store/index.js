@@ -58,7 +58,7 @@ synth[1].set({
         }
     }  ,
     voice1  : {
-        volume  : -10 ,
+        volume  : 3 ,
         portamento  : 0 ,
         oscillator  : {
             type  : "square"
