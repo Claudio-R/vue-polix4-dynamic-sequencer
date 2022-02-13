@@ -376,8 +376,8 @@ export default {
 
 .playing {
     /* aspect */
-    border-top: 3px solid rgb(188, 180, 255);
-    background: rgb(188, 180, 255);
+    border-top: 3px solid var(--v-player-base);
+    background: var(--v-player-base);
     // border-bottom: 3px solid rgb(188, 180, 255);
     margin-top:-3px;
 }
