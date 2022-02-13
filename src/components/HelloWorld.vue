@@ -5,6 +5,7 @@
           fab
           height="6vh"
           width="12vh"
+          min-width="0 !important"
           to="/about"
           text block color="black"
           :src="require('../assets/ellipse.png')"

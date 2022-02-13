@@ -122,6 +122,20 @@
         The <b>merge</b> button lets you control the scale, key scale and octave of all the existing layers at the same time. 
         When selected, a drop-down menu button will appear on the right.  <br>
     </v-card-text>
+    <v-card-subtitle><h4>Sequencer</h4></v-card-subtitle>
+    <v-row justify="center">
+      <v-col cols="10">
+        <v-img
+              :src="require('../assets/demo.png')"
+              class="my-0"
+              contain
+              large
+            />
+      </v-col>
+    </v-row>
+    <v-card-text class="text-justify">
+        Mo' lo scrivo
+    </v-card-text>
     <v-card-subtitle><h4>Authors Notes</h4></v-card-subtitle>
     <v-card-text class="text-justify">
         On extra small devices (or vertical positon on small devices), some controls will not be visualized.
