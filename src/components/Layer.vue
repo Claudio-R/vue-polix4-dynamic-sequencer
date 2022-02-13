@@ -106,16 +106,14 @@
                     <span>Octave: {{octaveLayer}}</span>
                   </v-btn>
                 </template>
-                <v-list class="secondary">
-                  <v-list-item @click="$emit('moreOctaveEvent')">
-                    <v-icon left>mdi-plus</v-icon>
-                    <v-list-item-title class="">Add an octave</v-list-item-title> 
-                  </v-list-item>
-                  <v-list-item @click="$emit('lessOctaveEvent')">
-                    <v-icon left>mdi-minus</v-icon>
-                    <v-list-item-title class="">Remove octave</v-list-item-title> 
-                  </v-list-item>
-                </v-list>
+                <v-card flat dense class="d-flex secondary justify-space-around pa-6" style="opacity: 1; box-shadow: none;">
+              <v-btn icon large @click="$emit('moreOctaveEvent')">
+                <v-icon color="black" >mdi-plus</v-icon>
+              </v-btn>
+              <v-btn icon large @click="$emit('lessOctaveEvent')">
+                <v-icon color="black">mdi-minus</v-icon>
+              </v-btn>
+            </v-card>
               </v-menu>
                 
               <!-- KEY -->
