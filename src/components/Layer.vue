@@ -150,13 +150,13 @@
 
               <!-- BUTTONS -->
               <v-card flat class="mt-3 d-flex justify-space-around" style="background-color:transparent">
-                <v-btn icon outlined class="layer-btn prelisten-btn" :class="{ green : prelistenLayer }" @click="prelistenLayer=!prelistenLayer">
+                <v-btn icon class="layer-btn prelisten-btn" :class="{ 'green lighten-2' : prelistenLayer }" @click="prelistenLayer=!prelistenLayer">
                   <v-icon>mdi-headphones</v-icon> 
                 </v-btn>
-                <v-btn icon outlined class="layer-btn mute-btn" :class="{red : muteLayer }" @click="$emit('toggleMuteLayerEvent')">
+                <v-btn icon class="layer-btn mute-btn" :class="{red : muteLayer }" @click="$emit('toggleMuteLayerEvent')">
                   <v-icon>mdi-volume-mute</v-icon>
                 </v-btn>
-                <v-btn icon outlined class="layer-btn clear-btn" @click="clearLayer">
+                <v-btn icon class="layer-btn clear-btn" @click="clearLayer">
                   <v-icon>mdi-delete</v-icon>
                 </v-btn>
               </v-card>
