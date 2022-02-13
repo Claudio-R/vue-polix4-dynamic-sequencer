@@ -48,7 +48,7 @@ Drums:
 - TR-909
 - Vaporwave
 
-Among the 8 instruments, 7 of them are synths synthetized directly using the __PoliSynth__ class in Tone, the Grand Piano instrument, instead, has been created combining together samples of notes and using the __Sampler__ object, which applies pitch shifting to fill gapes between notes. All the 8 instruments made in these ways are polyphonic.
+Among the 8 instruments, 7 of them are synths synthetized directly using the __PolySynth__ class in Tone, the Grand Piano instrument, instead, has been created combining together samples of notes from [Salamander Grand Piano](https://archive.org/details/SalamanderGrandPianoV3) and using the __Sampler__ object, which applies pitch shifting to fill gaps between notes. All the 8 instruments made in these ways are polyphonic.
 
 For what concern the 3 drums, the samples are stored into a [Firebase](https://firebase.google.com/) database and put together into 3 different arrays, whose elements are associated to the samples using the __Player__ object of Tone. 
 
@@ -56,7 +56,7 @@ For what concern the 3 drums, the samples are stored into a [Firebase](https://f
 To be able to create a Single Page App such as PoliX4 we used [Router](https://router.vuejs.org/), official router for Vue.js which easily integrates Vue mechanisms to easily develop SPA.
 
 ## Cordova
-To futher extend the potential of our application we decideded to convert our Web app into an hybrid app for mobile phone. To do so we have relied on [Apache Cordova](https://cordova.apache.org/), an open source mobile development framework. This conversion has not been completed, yet, but we've been able to install the hybrid app on Android and iOS devices and host it in local host.
+To futher extend the potential of our application we decided to convert our Web app into an hybrid app for mobile phone. To do so we have relied on [Apache Cordova](https://cordova.apache.org/), an open source mobile development framework. This conversion has not been completed, yet, but we have been able to install the hybrid app on Android and iOS devices and host it in local host.
 We suggest you to check for the complete documentation [here](https://cordova.apache.org/docs/en/latest/guide/cli/index.html) for installing and running the app on your mobile device. 
 
 # Project setup
