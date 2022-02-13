@@ -125,8 +125,14 @@
     <v-card-subtitle><h4>Sequencer</h4></v-card-subtitle>
     <v-row justify="center">
       <v-col cols="10">
-        <v-img
+        <v-img v-if="!this.$vuetify.theme.dark"
               :src="require('../assets/demo.png')"
+              class="my-0"
+              contain
+              large
+            />
+          <v-img v-else
+              :src="require('../assets/demoDark.png')"
               class="my-0"
               contain
               large
@@ -134,7 +140,16 @@
       </v-col>
     </v-row>
     <v-card-text class="text-justify">
-        Mo' lo scrivo
+        The selected instrurment is visualized as a colored dot on the keyboard (or a green button background if you selected a drum kit).<br>
+        Each row on the keyboard corresponds to a note (or drum component) visualized on the labels on the left.
+        On the right, if <b>merge</b> is not active, additional controllers are available, that act only on the corresponding layer keyboard.<br>
+        In this controller section you can:<br> 
+        - remove the layer from the sequencer (all instrument selections are not saved!)<br>
+        - add beats to the layer keyboard (while not playing)<br>
+        - choose a different scale or octave<br>
+        - decide if you want to listen to the note when pressed<br>
+        - mute the layer<br>
+        - clear all the instrument selections for the current layer<br>
     </v-card-text>
     <v-card-subtitle><h4>Authors Notes</h4></v-card-subtitle>
     <v-card-text class="text-justify">
