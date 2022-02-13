@@ -326,7 +326,7 @@ export default {
           })
         },
         clearLayer(){
-          for(let idx=0; idx<this.num_beats; idx++) { 
+          for(let idx=0; idx<this.num_beats*this.n_bars; idx++) { 
             this.$refs.beats_refs[idx].clearAllKeys() }
         },
     },
