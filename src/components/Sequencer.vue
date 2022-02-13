@@ -1,9 +1,8 @@
 <template>
   <v-card id="sequencer" min-width="370px">
-    <v-app-bar prominent elevate-on-scroll fixed class="primary">
+    <v-app-bar prominent hide-on-scroll fixed class="primary">
     <v-container fluid id="container-bar" class="primary py-4 px-0">
     <!-- <v-container fluid id="container-bar" class="py-4 px-0" :min-height="heightHorizontal"> -->
-
       <!--**FIRST ROW** -->
       <v-row dense>
 
@@ -137,18 +136,18 @@
               <!-- BUTTONS -->
               <v-col cols="12" sm="8">
                 <v-card-actions class="d-flex justify-space-around">
-                  <v-btn icon small color="secondary" @click="playAll">
+                  <v-btn icon small @click="playAll">
                     <v-icon large>mdi-play</v-icon>
                   </v-btn>
-                  <v-btn icon small color="secondary" @click="stopAll">
+                  <v-btn icon small @click="stopAll">
                     <v-icon large>mdi-stop</v-icon>  
                   </v-btn>
-                  <v-btn icon small color="secondary" :disabled="!unifiedControl" @click="toggleMuteSystem">
-                    <v-icon large>mdi-volume-mute</v-icon>
+                  <v-btn icon small :disabled="!unifiedControl" @click="toggleMuteSystem">
+                    <v-icon large >mdi-volume-mute</v-icon>
                   </v-btn>
 
-                  <v-btn small depressed color="secondary" @click="clearAll">
-                    <v-icon >mdi-delete</v-icon>
+                  <v-btn small depressed color="primary" @click="clearAll">
+                    <v-icon>mdi-delete</v-icon>
                   </v-btn>
                   <v-btn small depressed :class="{primary : automaticSlideControl}" @click="automaticSlideControl=!automaticSlideControl">
                     <v-icon>mdi-arrow-right-circle-outline</v-icon>
@@ -172,13 +171,13 @@
 
         <!-- MENU -->
         <v-col cols="2" md="3">
-          <v-menu :disabled="!unifiedControl" :close-on-content-click="false" max-width="100%"
+          <v-menu :disabled="!unifiedControl && !$vuetify.breakpoint.xs" :close-on-content-click="false" max-width="100%"
             offset-y offset-x
             origin="center center"
             transition="scale-transition"
           >
             <template v-slot:activator="{ on }">
-              <v-btn block small depressed :disabled="!unifiedControl" v-on="on" min-height="56px">
+              <v-btn block small depressed :disabled="!unifiedControl && !$vuetify.breakpoint.xs" v-on="on" min-height="56px">
                 <v-icon>mdi-menu</v-icon>
                 <span class="hidden-sm-and-down">Main controller</span>
               </v-btn>
@@ -286,7 +285,7 @@ export default {
 
   data(){
     return {
-      inst_color: ['red','blue','green'],
+      inst_color: ['red','blue','teal'],
       /** sequencer controller */
       systemPlaying: false,
       bpm: 120,
@@ -351,6 +350,7 @@ export default {
       addLayer() {
           // console.log(this.numBeatsNewLayer)
           if(this.numBeatsNewLayer > 12) this.numBeatsNewLayer = 12;
+          if(this.numBeatsNewLayer < 1)  this.numBeatsNewLayer = 1;
           this.layers.push(
               {   
                   id: this.nextId,

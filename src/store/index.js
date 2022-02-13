@@ -10,7 +10,7 @@ const synth = [];
 
 synth[0] = new Tone.PolySynth(Tone.AMSynth).connect(comp);
 synth[0].set({
-     volume : -10 ,
+     volume : -2 ,
      harmonicity : 1 ,
      detune : 0 ,
      oscillator : {
@@ -352,7 +352,7 @@ const synth_selection = [1,3,0]
 Vue.use(Vuex)
 
 /* store the dark/light switch mode */
-var darkswitch = false
+const darkswitch = false
 
 export default new Vuex.Store({
   state: {

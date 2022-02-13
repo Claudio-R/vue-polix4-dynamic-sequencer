@@ -87,19 +87,19 @@
             <v-row no-gutters class="d-flex align-center">
               <v-col cols="12" sm="8">
                 <v-card-actions class="d-flex justify-space-around">
-                  <v-btn icon outlined color="secondary" class="disable-events">
-                    <v-icon >mdi-play</v-icon>
+                  <v-btn icon small class="disable-events">
+                    <v-icon large>mdi-play</v-icon>
                   </v-btn>
-                  <v-btn icon outlined color="secondary" class="disable-events">
-                    <v-icon >mdi-stop</v-icon>  
+                  <v-btn icon small class="disable-events">
+                    <v-icon large>mdi-stop</v-icon>  
                   </v-btn>
-                  <v-btn icon outlined color="secondary" class="disable-events">
-                    <v-icon>mdi-volume-mute</v-icon>
+                  <v-btn icon small class="disable-events">
+                    <v-icon large>mdi-volume-mute</v-icon>
                   </v-btn>
-                  <v-btn small depressed color="secondary" class="disable-events">
-                    <v-icon >mdi-delete</v-icon>
+                  <v-btn small depressed color="primary" class="disable-events">
+                    <v-icon>mdi-delete</v-icon>
                   </v-btn>
-                  <v-btn small depressed class="disable-events">
+                  <v-btn small depressed class="primary disable-events">
                     <v-icon>mdi-arrow-right-circle-outline</v-icon>
                   </v-btn>
                 </v-card-actions>
@@ -121,6 +121,35 @@
         The <b>follow</b> button lets you follow the loop flow across the keyboards while playing. <br>
         The <b>merge</b> button lets you control the scale, key scale and octave of all the existing layers at the same time. 
         When selected, a drop-down menu button will appear on the right.  <br>
+    </v-card-text>
+    <v-card-subtitle><h4>Sequencer</h4></v-card-subtitle>
+    <v-row justify="center">
+      <v-col cols="10">
+        <v-img v-if="!this.$vuetify.theme.dark"
+              :src="require('../assets/demo.png')"
+              class="my-0"
+              contain
+              large
+            />
+          <v-img v-else
+              :src="require('../assets/demoDark.png')"
+              class="my-0"
+              contain
+              large
+            />
+      </v-col>
+    </v-row>
+    <v-card-text class="text-justify">
+        The selected instrurment is visualized as a colored dot on the keyboard (or a green button background if you selected a drum kit).<br>
+        Each row on the keyboard corresponds to a note (or drum component) visualized on the labels on the left.
+        On the right, if <b>merge</b> is not active, additional controllers are available, that act only on the corresponding layer keyboard.<br>
+        In this controller section you can:<br> 
+        - remove the layer from the sequencer (all instrument selections are not saved!)<br>
+        - add beats to the layer keyboard (while not playing)<br>
+        - choose a different scale or octave<br>
+        - decide if you want to listen to the note when pressed<br>
+        - mute the layer<br>
+        - clear all the instrument selections for the current layer<br>
     </v-card-text>
     <v-card-subtitle><h4>Authors Notes</h4></v-card-subtitle>
     <v-card-text class="text-justify">
