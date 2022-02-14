@@ -21,6 +21,8 @@ Such a complex system put us in front of several difficulties which would not ha
 Vue is a JavaScript framework enabling frontend developers to create amazing users interfaces through a declarative and component-based programming model. 
 Its core feature is the declarative rendering of HTML custom and reactive components, whose output is based on JavaScript state. State changes for each component are tracked and used to efficiently update the elements in the DOM.
 
+![albero](https://user-images.githubusercontent.com/73489236/153831982-b64160ff-d276-4990-b2de-bff76b7acfda.png)
+
 ## Vuetify
 The most captivating part of PoliX4 is its fully responsive design which makes it playable on any device and screen size.
 This responsive interface was made thanks to the [Vuetify](https://vuetifyjs.com/en/) framework, a Vue library providing developers with a huge collection of __Material Components__ and tools for designing their fully responsive application.
