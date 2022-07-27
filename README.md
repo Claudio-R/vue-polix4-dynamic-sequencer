@@ -13,7 +13,7 @@ It allows the user to set completely independent rhythmic structures for 8 selec
 The application has been deployed on the [Heroku](https://www.heroku.com/platform) platform and it's already available [here](https://polix4.herokuapp.com/#/)!
 
 # What is the PoliX4 project?
-This is the result of the joint work of four students aiming to create a dynamic instruments which ensures the user maximum freedom in the creation of rhytmic and melodic patterns. Each rhythmic structure is represented by a keyboard whose scale and tonality can be indipendently (and also jointly) programmed. Up to 3 instruments (2 synths and 1 drum set) can be selected and played within each keyboard and the number of keys can be choosen by the user. 
+This is the result of the joint work of four students of Polimi, aiming to create a dynamic instrument which ensures the user maximum freedom in the creation of rhytmic and melodic patterns. Each rhythmic structure is represented by a keyboard whose scale and tonality can be indipendently (and also jointly) programmed. Up to 3 instruments (2 synths and 1 drum set) can be selected and played within each keyboard and the number of keys can be choosen by the user. 
 Last but not least, tempo, octave and number of layers and number of bars can be dynamically modified by the user to ensure great live performaces.
 
 # How was it developed?
